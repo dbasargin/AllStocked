@@ -15,6 +15,31 @@ namespace AllStocked.Controllers
     {
         private AllStockedDBEntities db = new AllStockedDBEntities();
 
+        protected void submitted(Object sender, EventArgs e)
+        {
+            if (Request.Form["submitted"] != null)
+            {
+                string value = Request.Form["txt1"];
+                Show(value);
+            }
+            
+        }
+        //Show will accept search term from form and update product list
+        public ActionResult Show(string searchTerm)
+        {
+            int currentId = Convert.ToInt32(HttpContext.Session["AccountID"]);
+            //find product names that match search term
+            var products = db.Products.Where(p => p.AccountID == currentId && p.ProductName.Contains(searchTerm) ).Include(p => p.Account).Include(p => p.Category);
+            var productsList = products.ToList();
+            // find and add product categories that match search term
+            products = ( db.Products.Where(p => p.AccountID == currentId && p.Category.CategoryName.Contains(searchTerm)).Include(p => p.Account).Include(p => p.Category) );
+            foreach (var p in products)
+            {
+                productsList.Add(p);
+            }
+            return View(productsList);
+        }
+
         // GET: Products
         public ActionResult Index()
         {
