@@ -6,10 +6,14 @@
 
 <h2>Index</h2>
 
-<p>
+    <div>
+        <form id="submitted" method="get" action=@Html.ActionLink("submitted", "show", ) name="em_subscribe_form">
+            <input type="text" id="txt1" name="Search Category" />
+            <input id="submitsubform" type="submit" value="Submit" />
+        </form>
+    </div>
 
-    
-    Search products- <input id="txt1" type="text" /> <input type="submit" name="submitted" value="search" onserverclick="submitted" />
+<p>
     @Html.ActionLink("Create New Product", "Create")
 </p>
 <table class="table">
@@ -35,32 +39,33 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.ProductName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Par)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Demand)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Supply)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Category.CategoryName)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ProductID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ProductID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ProductID })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Par)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Demand)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Supply)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category.CategoryName)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ProductID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ProductID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ProductID })
+            </td>
+        </tr>
+    }
 
 </table>
