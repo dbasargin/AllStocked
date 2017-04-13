@@ -1,0 +1,80 @@
+﻿@model AllStocked.Product
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Product</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ProductName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Par)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Par)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Demand)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Demand)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Supply)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Supply)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Account.AccountName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Account.AccountName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Category.CategoryName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Category.CategoryName)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

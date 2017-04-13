@@ -1,0 +1,74 @@
+﻿@model AllStocked.Product
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Product</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ProductName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Par)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Par)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Demand)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Demand)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Supply)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Supply)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Account.AccountName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Account.AccountName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Category.CategoryName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Category.CategoryName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ProductID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
