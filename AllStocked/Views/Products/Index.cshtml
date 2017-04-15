@@ -4,18 +4,19 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>All Inventory Items</h2>
 
-    <div>
-        <form id="submitted" method="get" action=@Html.ActionLink("submitted", "show", ) name="em_subscribe_form">
-            <input type="text" id="txt1" name="Search Category" />
-            <input id="submitsubform" type="submit" value="Submit" />
-        </form>
-    </div>
+Search inventory items-
+@using (Html.BeginForm("Show", "Products"))
+{
+    <input type="text" name="searchTerm" />
+    <input type="submit" value="Search"/>
+}
 
 <p>
     @Html.ActionLink("Create New Product", "Create")
 </p>
+
 <table class="table">
     <tr>
         <th>

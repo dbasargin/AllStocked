@@ -25,8 +25,10 @@ namespace AllStocked.Controllers
             
         }
         //Show will accept search term from form and update product list
+        [HttpPost]
         public ActionResult Show(string searchTerm)
         {
+            searchTerm = searchTerm.ToString();
             int currentId = Convert.ToInt32(HttpContext.Session["AccountID"]);
             //find product names that match search term
             var products = db.Products.Where(p => p.AccountID == currentId && p.ProductName.Contains(searchTerm) ).Include(p => p.Account).Include(p => p.Category);
@@ -37,7 +39,7 @@ namespace AllStocked.Controllers
             {
                 productsList.Add(p);
             }
-            return View(productsList);
+            return View("Index" ,productsList);
         }
 
         // GET: Products
