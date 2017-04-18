@@ -5,9 +5,9 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="b52b65f2757d4c26a7a40dd2cce3dfe4" Name="Diagram1">
-        <EntityTypeShape EntityType="AllStockedDBModel.Account" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="AllStockedDBModel.Category" Width="1.5" PointX="3" PointY="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="AllStockedDBModel.Product" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="AllStockedDBModel.Account" Width="1.5" PointX="3.5" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="AllStockedDBModel.Category" Width="1.5" PointX="5.75" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="AllStockedDBModel.Product" Width="1.5" PointX="8" PointY="2.75" IsExpanded="true" />
         <AssociationConnector Association="AllStockedDBModel.FK__Category__Accoun__1273C1CD" ManuallyRouted="false" />
         <AssociationConnector Association="AllStockedDBModel.FK__Product__Account__15502E78" ManuallyRouted="false" />
         <AssociationConnector Association="AllStockedDBModel.FK__Product__Categor__164452B1" ManuallyRouted="false" />

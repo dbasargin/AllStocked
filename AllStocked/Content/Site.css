@@ -22,9 +22,45 @@ select,
 textarea {
     max-width: 280px;
 }
-#navbarD{
-    background-color: rgba(255, 255, 255, 0.46);
+/* This is the custom nav button css*/
+.navbarD{
+    background-color: rgba(255, 255, 255, 0.26);
+    border-style: solid;
+    border-color: black;
 }
+
+/*my custom button*/
+.CustomButton{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	color: #ffffff;
+	padding: 10px 20px;
+	background: -moz-linear-gradient(
+		top,
+		#2e261e 0%,
+		#2e261e);
+	background: -webkit-gradient(
+		linear, left top, left bottom,
+		from(#2e261e),
+		to(#2e261e));
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	border-radius: 6px;
+	border: 1px solid #2e261e;
+	-moz-box-shadow:
+		0px 1px 3px rgba(46,38,30,0.5),
+		inset 0px -1px 0px rgba(46,38,30,0.7);
+	-webkit-box-shadow:
+		0px 1px 3px rgba(46,38,30,0.5),
+		inset 0px -1px 0px rgba(46,38,30,0.7);
+	box-shadow:
+		0px 1px 3px rgba(46,38,30,0.5),
+		inset 0px -1px 0px rgba(46,38,30,0.7);
+	text-shadow:
+		0px -1px 1px rgba(000,000,000,0.2),
+		0px 1px 0px rgba(255,255,255,0.3);
+}
+
 
 #backgroundImage{
     background-image: url(../images/HomePageLogo.png);
@@ -34,6 +70,7 @@ textarea {
     margin-top: 20px;
 
 }
+
 #RegisterForm
 {
     background-color: rgba(255, 255, 255, 0.46);

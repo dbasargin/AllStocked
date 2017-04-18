@@ -22,11 +22,12 @@
                 <ul class="nav navbar-nav">
                     @if (HttpContext.Current.Session["AccountID"] == null)
                     {
-                    <li>@Html.ActionLink("login", "login", "Login")</li>
+                    <li class="navbarD">@Html.ActionLink("login", "login", "Login")</li>
                     }
                     else
                     {
-                    <li>@Html.ActionLink("Products", "Index", "Products")</li>
+                    <li class="navbarD">@Html.ActionLink("Products", "Index", "Products")</li>// products page
+                    <li class="navbarD">@Html.ActionLink("Create New Product", "Create", "Products") </li> //Create Products Page
                     
                     //Add SignOUt
                     }

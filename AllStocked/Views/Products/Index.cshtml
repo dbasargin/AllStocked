@@ -5,16 +5,18 @@
 }
 
 <h2>All Inventory Items</h2>
-
-Search inventory items-
-@using (Html.BeginForm("Show", "Products"))
-{
-    <input type="text" name="searchTerm" />
-    <input type="submit" value="Search"/>
-}
+<p>
+    Search inventory items-
+    @using (Html.BeginForm("Show", "Products"))
+    {
+        <input type="text" name="searchTerm" />
+        <input type="submit" value="Search"/>
+    }
+</p>
 
 <p>
-    @Html.ActionLink("Create New Product", "Create")
+    <span class="CustomButton">@Html.ActionLink("Create New Product", "Create")</span> 
+    <span class="CustomButton">@Html.ActionLink("Create New Category", "Index", "Categories") </span>
 </p>
 
 <table class="table">
