@@ -3,20 +3,15 @@
 @{
     ViewBag.Title = "Index";
 }
+<h2>@Model.First().Account.AccountName: Inventory Items </h2>
 
-<h2>All Inventory Items</h2>
-<p>
-    Search inventory items-
+<p class="letsGetMargin">
+    <h4>Search inventory items-</h4>
     @using (Html.BeginForm("Show", "Products"))
     {
         <input type="text" name="searchTerm" />
         <input type="submit" value="Search"/>
     }
-</p>
-
-<p>
-    <span class="CustomButton">@Html.ActionLink("Create New Product", "Create")</span> 
-    <span class="CustomButton">@Html.ActionLink("Create New Category", "Index", "Categories") </span>
 </p>
 
 <table class="table">

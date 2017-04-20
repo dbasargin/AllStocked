@@ -9,6 +9,13 @@ namespace AllStocked.Controllers
 {
     public class HomeController : Controller
     {
+        protected override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            base.OnActionExecuting(filterContext);
+            string pageClass = filterContext.RouteData.Values["controller"].ToString()
+                + "_" + filterContext.RouteData.Values["action"].ToString();
+            ViewBag.PageClass = pageClass.ToLower();
+        }
         /// <summary>
         /// Home page controller
         /// </summary>
