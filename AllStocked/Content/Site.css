@@ -80,6 +80,7 @@ body.home_index{
     background-position-x: center;
     background-size: 84%;
     margin-top: 20px;
+    color: #fff;
 }
 
 /*home page body content in transparent*/
@@ -98,6 +99,9 @@ body.home_index .body-content{
     width: 400px;
     text-align: right;
     border-style: solid;
+}
+#RegisterForm h4{
+    color: #fff;
 }
 /* row list top color*/
 .table thead > tr > th, .table tbody > tr > th, .table tfoot > tr > th, .table thead > tr > td, .table tbody > tr > td, .table tfoot > tr > td {
