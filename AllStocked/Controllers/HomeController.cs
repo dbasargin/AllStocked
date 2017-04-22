@@ -52,6 +52,6 @@ namespace AllStocked.Controllers
             }
             return View(model);
         }
-
+        
     }
 }

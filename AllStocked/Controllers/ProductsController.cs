@@ -24,7 +24,7 @@ namespace AllStocked.Controllers
             int currentId = Convert.ToInt32(HttpContext.Session["AccountID"]);
             
             //find product names that match search term
-            var products = db.Products.Where(p => p.AccountID == currentId && p.ProductName.Contains(searchTerm) ).Include(p => p.Account).Include(p => p.Category);
+            var products = db.Products.Where(p => p.AccountID == currentId && p.ProductName.Contains(searchTerm) ).OrderBy(p => p.Category.CategoryName).Include(p => p.Account).Include(p => p.Category);
             var productsList = products.ToList();
             
             // find and add product categories that match search term
@@ -56,7 +56,7 @@ namespace AllStocked.Controllers
             {
                 int currentId = Convert.ToInt32(HttpContext.Session["AccountID"]);
                 //Get list of products that have a an account id that match current session.
-                var products = db.Products.Where(p => p.AccountID == currentId).Include(p => p.Account).Include(p => p.Category);
+                var products = db.Products.Where(p => p.AccountID == currentId).OrderBy(p => p.Category.CategoryName).Include(p => p.Account).Include(p => p.Category);
                 return View(products.ToList());
             }
             else
@@ -69,24 +69,40 @@ namespace AllStocked.Controllers
         // GET: Products/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
+            if (SessionHelper.IsMemberLoggedIn())
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Product product = db.Products.Find(id);
+                if (product == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(product);
             }
-            Product product = db.Products.Find(id);
-            if (product == null)
+            else
             {
-                return HttpNotFound();
+                //if current session doesnt exist redirect user to home/register page.
+                return RedirectToAction("Index", "Home");
             }
-            return View(product);
         }
 
         // GET: Products/Create
         public ActionResult Create()
         {
-            ViewBag.AccountID = new SelectList(db.Accounts, "AccountID", "AccountName");
-            ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "CategoryName");
-            return View();
+            if (SessionHelper.IsMemberLoggedIn())
+            {
+                ViewBag.AccountID = new SelectList(db.Accounts, "AccountID", "AccountName");
+                ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "CategoryName");
+                return View();
+            }
+            else
+            {
+                //if current session doesnt exist redirect user to home/register page.
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         // POST: Products/Create
@@ -111,18 +127,26 @@ namespace AllStocked.Controllers
         // GET: Products/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
+            if (SessionHelper.IsMemberLoggedIn())
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Product product = db.Products.Find(id);
+                if (product == null)
+                {
+                    return HttpNotFound();
+                }
+                ViewBag.AccountID = new SelectList(db.Accounts, "AccountID", "AccountName", product.AccountID);
+                ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "CategoryName", product.CategoryID);
+                return View(product);
             }
-            Product product = db.Products.Find(id);
-            if (product == null)
+            else
             {
-                return HttpNotFound();
+                //if current session doesnt exist redirect user to home/register page.
+                return RedirectToAction("Index", "Home");
             }
-            ViewBag.AccountID = new SelectList(db.Accounts, "AccountID", "AccountName", product.AccountID);
-            ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "CategoryName", product.CategoryID);
-            return View(product);
         }
 
         // POST: Products/Edit/5
@@ -146,16 +170,24 @@ namespace AllStocked.Controllers
         // GET: Products/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
+            if (SessionHelper.IsMemberLoggedIn())
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Product product = db.Products.Find(id);
+                if (product == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(product);
             }
-            Product product = db.Products.Find(id);
-            if (product == null)
+            else
             {
-                return HttpNotFound();
+                //if current session doesnt exist redirect user to home/register page.
+                return RedirectToAction("Index", "Home");
             }
-            return View(product);
         }
 
         // POST: Products/Delete/5

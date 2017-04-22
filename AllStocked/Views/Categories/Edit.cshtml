@@ -41,5 +41,9 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @using (Html.BeginForm("Index", "Categories"))
+    {
+        <button type="submit">Back</button>
+    }
+    @*@Html.ActionLink("Back to List", "Index")*@
 </div>

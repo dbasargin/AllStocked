@@ -17,9 +17,9 @@ namespace AllStocked.Models
         {
             try
             {
-                using (var context = new AllStockedDBEntities())
+                using (var db = new AllStockedDBEntities())
                 {
-                    Account activeAccount = context.Accounts.Where(a => a.AccountEmail == email && a.AccountPassword == password).Single();
+                    Account activeAccount = db.Accounts.Where(a => a.AccountEmail == email && a.AccountPassword == password).Single();
                     return activeAccount;
                 }
             }
@@ -37,9 +37,9 @@ namespace AllStocked.Models
         {
             try
             {
-                using (var context = new AllStockedDBEntities())
+                using (var db = new AllStockedDBEntities())
                 {
-                    Account activeAccount = context.Accounts.Where(a => a.AccountEmail == email).Single();
+                    Account activeAccount = db.Accounts.Where(a => a.AccountEmail == email).Single();
                     return activeAccount.AccountID;
                 }
             }
@@ -56,7 +56,7 @@ namespace AllStocked.Models
         /// <returns></returns>
         public static bool RegisterMember(RegisterViewModel model)
         {
-            using (var context = new AllStockedDBEntities())
+            using (var db = new AllStockedDBEntities())
             {
                 try
                 {
@@ -67,8 +67,8 @@ namespace AllStocked.Models
                         AccountPassword = model.Password
                     };
 
-                    context.Accounts.Add(newAccount);
-                    context.SaveChanges();
+                    db.Accounts.Add(newAccount);
+                    db.SaveChanges();
                     return true;
                 }
                 catch

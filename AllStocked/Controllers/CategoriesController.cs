@@ -21,7 +21,7 @@ namespace AllStocked.Controllers
             if (SessionHelper.IsMemberLoggedIn())
             {
                 int currentId = Convert.ToInt32(HttpContext.Session["AccountID"]);
-                var categories = db.Categories.Where(p => p.AccountID == currentId).Include(c => c.Account);
+                var categories = db.Categories.Where(p => p.AccountID == currentId).OrderBy(p=> p.CategoryName).Include(c => c.Account);
             return View(categories.ToList());
             }
             else
@@ -34,23 +34,39 @@ namespace AllStocked.Controllers
         // GET: Categories/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
+            if (SessionHelper.IsMemberLoggedIn())
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Category category = db.Categories.Find(id);
+                if (category == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(category);
             }
-            Category category = db.Categories.Find(id);
-            if (category == null)
+            else
             {
-                return HttpNotFound();
+                //if current session doesnt exist redirect user to home/register page.
+                return RedirectToAction("Index", "Home");
             }
-            return View(category);
         }
 
         // GET: Categories/Create
         public ActionResult Create()
         {
-            ViewBag.AccountID = new SelectList(db.Accounts, "AccountID", "AccountName");
-            return View();
+            if (SessionHelper.IsMemberLoggedIn())
+            {
+                ViewBag.AccountID = new SelectList(db.Accounts, "AccountID", "AccountName");
+                return View();
+            }
+            else
+            {
+                //if current session doesnt exist redirect user to home/register page.
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         // POST: Categories/Create
@@ -74,17 +90,25 @@ namespace AllStocked.Controllers
         // GET: Categories/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
+            if (SessionHelper.IsMemberLoggedIn())
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Category category = db.Categories.Find(id);
+                if (category == null)
+                {
+                    return HttpNotFound();
+                }
+                ViewBag.AccountID = new SelectList(db.Accounts, "AccountID", "AccountName", category.AccountID);
+                return View(category);
             }
-            Category category = db.Categories.Find(id);
-            if (category == null)
+            else
             {
-                return HttpNotFound();
+                //if current session doesnt exist redirect user to home/register page.
+                return RedirectToAction("Index", "Home");
             }
-            ViewBag.AccountID = new SelectList(db.Accounts, "AccountID", "AccountName", category.AccountID);
-            return View(category);
         }
 
         // POST: Categories/Edit/5
@@ -107,16 +131,24 @@ namespace AllStocked.Controllers
         // GET: Categories/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
+            if (SessionHelper.IsMemberLoggedIn())
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Category category = db.Categories.Find(id);
+                if (category == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(category);
             }
-            Category category = db.Categories.Find(id);
-            if (category == null)
+            else
             {
-                return HttpNotFound();
+                //if current session doesnt exist redirect user to home/register page.
+                return RedirectToAction("Index", "Home");
             }
-            return View(category);
         }
 
         // POST: Categories/Delete/5
