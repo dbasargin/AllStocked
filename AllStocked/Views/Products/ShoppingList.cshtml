@@ -1,0 +1,81 @@
+﻿@model IEnumerable<AllStocked.Models.ShoppingListViewModel>
+
+@{
+    ViewBag.Title = "ShoppingList";
+}
+
+<h2>ShoppingList</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AccountID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CategoryID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Par)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AmountToBuy)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Demand)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Supply)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProductID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AccountID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CategoryID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProductName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Par)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AmountToBuy)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Demand)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Supply)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>

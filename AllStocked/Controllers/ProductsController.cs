@@ -49,6 +49,42 @@ namespace AllStocked.Controllers
             return View("Index" ,productsList);
         }
 
+        // GET: Products that go on shopping list.. this is where supply is less or equal to demand.
+        public ActionResult ShoppingList()
+        {
+            if (SessionHelper.IsMemberLoggedIn())
+            {
+                int currentId = Convert.ToInt32(HttpContext.Session["AccountID"]);
+                //Get list of products that have a an account id that match current session.
+                var products = db.Products.Where(p => p.AccountID == currentId && p.Supply <= p.Demand ).OrderBy(p => p.Category.CategoryName).Include(p => p.Account).Include(p => p.Category);
+
+                List<ShoppingListViewModel> prodShoppingList = new List<ShoppingListViewModel>();
+                foreach (var p in products)
+                {
+                    ShoppingListViewModel newListItem = new ShoppingListViewModel();
+                    newListItem.AccountID = p.AccountID;
+                    newListItem.Category = p.Category;
+                    newListItem.ProductID = p.ProductID;
+                    newListItem.ProductName = p.ProductName;
+                    newListItem.Par = p.Par;
+                    newListItem.Supply = p.Supply;
+                    newListItem.Demand = p.Demand;
+                    newListItem.Description = p.Description;
+                    newListItem.AmountToBuy = p.Demand - p.Supply;
+
+                    prodShoppingList.Add(newListItem);
+
+                }
+                return View(prodShoppingList.ToList());
+            }
+            else
+            {
+                //if current session doesnt exist redirect user to home/register page.
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+
         // GET: Products
         public ActionResult Index()
         {

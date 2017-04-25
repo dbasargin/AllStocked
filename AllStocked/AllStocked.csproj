@@ -162,6 +162,7 @@
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\RegisterViewModel.cs" />
     <Compile Include="Models\SessionHelper.cs" />
+    <Compile Include="Models\ShoppingListViewModel.cs" />
     <Compile Include="Product.cs">
       <DependentUpon>AllStockedModel.tt</DependentUpon>
     </Compile>
@@ -229,6 +230,7 @@
     <Content Include="Views\Categories\Details.cshtml" />
     <Content Include="Views\Categories\Edit.cshtml" />
     <Content Include="Views\Categories\Index.cshtml" />
+    <Content Include="Views\Products\ShoppingList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
