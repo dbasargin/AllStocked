@@ -24,7 +24,8 @@ namespace AllStocked.Controllers
                 Account ActiveAccount = DbHelper.getAccount(model.Email, model.Password);
                 if (ActiveAccount == null)
                 {
-                    return View(model); // todo add custom error messsage. user credentials not found.
+                    //user credentials not found error view
+                    return View("Error");
                 }
 
                 // create session

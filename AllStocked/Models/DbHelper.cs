@@ -25,7 +25,9 @@ namespace AllStocked.Models
             }
             catch
             {
-                throw new Exception("Issue Getting member from database");
+                //throw new Exception("Issue Getting member from database");
+                Account nullAccount = null;
+                return nullAccount;
             }
         }
         /// <summary>
