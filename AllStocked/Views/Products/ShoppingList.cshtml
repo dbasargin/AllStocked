@@ -4,76 +4,74 @@
     ViewBag.Title = "ShoppingList";
 }
 
-<h2>ShoppingList</h2>
+<h2>Shopping List</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    Click corresponding button to reset item supply to par.
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.ProductID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AccountID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CategoryID)
-        </th>
+            Remove
+            </th>
         <th>
             @Html.DisplayNameFor(model => model.ProductName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Par)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.AmountToBuy)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.CategoryID)
+        </th>
+        @*<th>
+            @Html.DisplayNameFor(model => model.Par)
+        </th>*@
+        @*<th>
             @Html.DisplayNameFor(model => model.Demand)
-        </th>
-        <th>
+        </th>*@
+        @*<th>
             @Html.DisplayNameFor(model => model.Supply)
-        </th>
-        <th>
+        </th>*@
+        @*<th>
             @Html.DisplayNameFor(model => model.Description)
-        </th>
+        </th>*@
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.ProductID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AccountID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CategoryID)
-        </td>
+            @using (Html.BeginForm("UpdateSupply", "Products"))
+            {
+                <button type="submit" name="buy" value="@item.ProductID">Buy</button>
+            }
+            </td>
         <td>
             @Html.DisplayFor(modelItem => item.ProductName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Par)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.AmountToBuy)
         </td>
         <td>
+            @Html.DisplayFor(modelItem => item.Category.CategoryName)
+        </td>
+        @*<td>
+            @Html.DisplayFor(modelItem => item.Par)
+        </td>*@
+        @*<td>
             @Html.DisplayFor(modelItem => item.Demand)
-        </td>
-        <td>
+        </td>*@
+        @*<td>
             @Html.DisplayFor(modelItem => item.Supply)
-        </td>
-        <td>
+        </td>*@
+        @*<td>
             @Html.DisplayFor(modelItem => item.Description)
-        </td>
+        </td>*@
         <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ })
+            @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+             |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
         </td>
     </tr>
 }

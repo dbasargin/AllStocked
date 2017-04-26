@@ -78,8 +78,16 @@ namespace AllStocked.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Categories.Add(category);
-                db.SaveChanges();
+                try
+                {
+                    category.AccountID = Convert.ToInt32(HttpContext.Session["AccountID"]);
+                    db.Categories.Add(category);
+                    db.SaveChanges();
+                }
+                catch{
+
+                    return View("error");
+                }
                 return RedirectToAction("Index");
             }
 

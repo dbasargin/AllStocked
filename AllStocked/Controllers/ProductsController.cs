@@ -16,6 +16,21 @@ namespace AllStocked.Controllers
         //get connection to db
         private AllStockedDBEntities db = new AllStockedDBEntities();
 
+        public ActionResult UpdateSupply(int buy)
+        {
+            var getProd = db.Products.First(p => p.ProductID == buy);
+            getProd.Supply = getProd.Par;
+            try
+            {
+                db.SaveChanges();
+            }
+            catch
+            {
+                return RedirectToAction("ShoppingList", "Products");
+            }
+            return RedirectToAction("ShoppingList", "Products");
+        }
+
         //Show will accept search term from form and update product list
         [HttpPost]
         public ActionResult Show(string searchTerm)
@@ -70,7 +85,7 @@ namespace AllStocked.Controllers
                     newListItem.Supply = p.Supply;
                     newListItem.Demand = p.Demand;
                     newListItem.Description = p.Description;
-                    newListItem.AmountToBuy = p.Demand - p.Supply;
+                    newListItem.AmountToBuy = p.Par - p.Supply;
 
                     prodShoppingList.Add(newListItem);
 
@@ -111,6 +126,7 @@ namespace AllStocked.Controllers
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
+
                 Product product = db.Products.Find(id);
                 if (product == null)
                 {
@@ -150,6 +166,7 @@ namespace AllStocked.Controllers
         {
             if (ModelState.IsValid)
             {
+                product.AccountID = Convert.ToInt32(HttpContext.Session["AccountID"]);
                 db.Products.Add(product);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -194,6 +211,7 @@ namespace AllStocked.Controllers
         {
             if (ModelState.IsValid)
             {
+                product.AccountID = Convert.ToInt32(HttpContext.Session["AccountID"]);
                 db.Entry(product).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
