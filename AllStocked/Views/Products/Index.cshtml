@@ -3,8 +3,9 @@
 @{
     ViewBag.Title = "Index";
 }
-
-<h2>using @*@Model.First().Account.AccountName:*@ Inventory Items </h2>
+@using PagedList.Mvc;
+@using PagedList;
+<h2>@*using @Model.First().Account.AccountName:*@ Inventory Items </h2>
 
 <p class="letsGetMargin">
     <h4>Search inventory items-</h4>
@@ -68,3 +69,4 @@
     }
 
 </table>
+@Html.PagedListPager((IPagedList)ViewBag.OnePageOfProducts, page => Url.Action("Index", new { page }))

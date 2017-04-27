@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using AllStocked;
 using AllStocked.Models;
+using PagedList;
 
 namespace AllStocked.Controllers
 {
@@ -31,9 +32,9 @@ namespace AllStocked.Controllers
             return RedirectToAction("ShoppingList", "Products");
         }
 
-        //Show will accept search term from form and update product list
+        //Show will accept search term from Product(index)form and update product list
         [HttpPost]
-        public ActionResult Show(string searchTerm)
+        public ActionResult Show(string searchTerm, int? page)
         {
             searchTerm = searchTerm.ToString();
             int currentId = Convert.ToInt32(HttpContext.Session["AccountID"]);
@@ -61,10 +62,17 @@ namespace AllStocked.Controllers
                     productsList.Add(p);
                 }
             }
-            return View("Index" ,productsList);
+            //This is pagination code for search
+            var pageNumber = page ?? 1;
+            var onePageOfProducts = productsList.ToPagedList(pageNumber, 10);
+            ViewBag.OnePageOfProducts = onePageOfProducts;
+
+            return View("Index" , onePageOfProducts);
         }
 
-        // GET: Products that go on shopping list.. this is where supply is less or equal to demand.
+        /// <summary>
+        /// Products that go on shopping list.. this is where supply is less or equal to demand.
+        /// </summary>
         public ActionResult ShoppingList()
         {
             if (SessionHelper.IsMemberLoggedIn())
@@ -101,14 +109,19 @@ namespace AllStocked.Controllers
 
 
         // GET: Products
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
             if (SessionHelper.IsMemberLoggedIn())
             {
                 int currentId = Convert.ToInt32(HttpContext.Session["AccountID"]);
                 //Get list of products that have a an account id that match current session.
                 var products = db.Products.Where(p => p.AccountID == currentId).OrderBy(p => p.Category.CategoryName).Include(p => p.Account).Include(p => p.Category);
-                return View(products.ToList());
+
+                //pagination code
+                var pageNumber = page ?? 1;
+                var onePageOfProducts = products.ToPagedList(pageNumber, 10);
+                ViewBag.OnePageOfProducts = onePageOfProducts;
+                return View(onePageOfProducts);
             }
             else
             {
