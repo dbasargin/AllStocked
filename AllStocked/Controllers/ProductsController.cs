@@ -17,6 +17,12 @@ namespace AllStocked.Controllers
         //get connection to db
         private AllStockedDBEntities db = new AllStockedDBEntities();
 
+        /// <summary>
+        /// Action for the products list buy button. This button takes a product id as parameter
+        /// and updates it supply to the amount of it par property.
+        /// </summary>
+        /// <param name="buy"> is the productsID</param>
+        /// <returns> updated Products list page</returns>
         public ActionResult UpdateSupply(int buy)
         {
             var getProd = db.Products.First(p => p.ProductID == buy);
@@ -32,13 +38,24 @@ namespace AllStocked.Controllers
             return RedirectToAction("ShoppingList", "Products");
         }
 
-        //Show will accept search term from Product(index)form and update product list
+        /// <summary>
+        /// Show will accept search term from Product(index)form and update product list
+        /// </summary>
         [HttpPost]
-        public ActionResult Show(string searchTerm, int? page)
+        public ActionResult Show(string searchTerm,  int? page)
         {
             searchTerm = searchTerm.ToString();
             int currentId = Convert.ToInt32(HttpContext.Session["AccountID"]);
-            
+            if (searchTerm != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchTerm = ViewBag.currentFilter;
+
+            }
+            ViewBag.currentFilter = searchTerm;
             //find product names that match search term
             var products = db.Products.Where(p => p.AccountID == currentId && p.ProductName.Contains(searchTerm) ).OrderBy(p => p.Category.CategoryName).Include(p => p.Account).Include(p => p.Category);
             var productsList = products.ToList();
@@ -68,6 +85,7 @@ namespace AllStocked.Controllers
             ViewBag.OnePageOfProducts = onePageOfProducts;
 
             return View("Index" , onePageOfProducts);
+            
         }
 
         /// <summary>
@@ -108,9 +126,14 @@ namespace AllStocked.Controllers
         }
 
 
-        // GET: Products
+        /// <summary>
+        /// This is the Products page Controller.
+        /// </summary>
+        /// <param name="page">Accepts a integer for page number</param>
+        /// <returns>return updated view with a new page of inventory items</returns>
         public ActionResult Index(int? page)
         {
+
             if (SessionHelper.IsMemberLoggedIn())
             {
                 int currentId = Convert.ToInt32(HttpContext.Session["AccountID"]);
@@ -130,7 +153,7 @@ namespace AllStocked.Controllers
             }
         }
 
-        // GET: Products/Details/5
+        // GET: Products/Details Controller
         public ActionResult Details(int? id)
         {
             if (SessionHelper.IsMemberLoggedIn())
@@ -154,7 +177,7 @@ namespace AllStocked.Controllers
             }
         }
 
-        // GET: Products/Create
+        // GET: Products/Create controller
         public ActionResult Create()
         {
             if (SessionHelper.IsMemberLoggedIn())
@@ -171,8 +194,6 @@ namespace AllStocked.Controllers
         }
 
         // POST: Products/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ProductID,AccountID,CategoryID,ProductName,Par,Demand,Supply,Description")] Product product)
