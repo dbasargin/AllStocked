@@ -168,6 +168,7 @@
     </Compile>
     <Compile Include="Models\DbHelper.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
+    <Compile Include="Models\ProductViewModel.cs" />
     <Compile Include="Models\RegisterViewModel.cs" />
     <Compile Include="Models\SessionHelper.cs" />
     <Compile Include="Models\ShoppingListViewModel.cs" />

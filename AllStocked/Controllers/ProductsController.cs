@@ -38,55 +38,55 @@ namespace AllStocked.Controllers
             return RedirectToAction("ShoppingList", "Products");
         }
 
-        /// <summary>
-        /// Show will accept search term from Product(index)form and update product list
-        /// </summary>
-        [HttpPost]
-        public ActionResult Show(string searchTerm,  int? page)
-        {
-            searchTerm = searchTerm.ToString();
-            int currentId = Convert.ToInt32(HttpContext.Session["AccountID"]);
-            if (searchTerm != null)
-            {
-                page = 1;
-            }
-            else
-            {
-                searchTerm = ViewBag.currentFilter;
+        ///// <summary>
+        ///// Show will accept search term from Product(index)form and update product list
+        ///// </summary>
+        //[HttpPost]
+        //public ActionResult Show(string searchTerm,  int? page)
+        //{
+        //    searchTerm = searchTerm.ToString();
+        //    int currentId = Convert.ToInt32(HttpContext.Session["AccountID"]);
+        //    if (searchTerm != null)
+        //    {
+        //        page = 1;
+        //    }
+        //    else
+        //    {
+        //        searchTerm = ViewBag.currentFilter;
 
-            }
-            ViewBag.currentFilter = searchTerm;
-            //find product names that match search term
-            var products = db.Products.Where(p => p.AccountID == currentId && p.ProductName.Contains(searchTerm) ).OrderBy(p => p.Category.CategoryName).Include(p => p.Account).Include(p => p.Category);
-            var productsList = products.ToList();
+        //    }
+        //    ViewBag.currentFilter = searchTerm;
+        //    //find product names that match search term
+        //    var products = db.Products.Where(p => p.AccountID == currentId && p.ProductName.Contains(searchTerm) ).OrderBy(p => p.Category.CategoryName).Include(p => p.Account).Include(p => p.Category);
+        //    var productsList = products.ToList();
             
-            // find and add product categories that match search term
-            products = ( db.Products.Where(p => p.AccountID == currentId && p.Category.CategoryName.Contains(searchTerm)).Include(p => p.Account).Include(p => p.Category) );
+        //    // find and add product categories that match search term
+        //    products = ( db.Products.Where(p => p.AccountID == currentId && p.Category.CategoryName.Contains(searchTerm)).Include(p => p.Account).Include(p => p.Category) );
             
-            //if product doesnt already exist in list add to list
-            foreach (var p in products)
-            {
-                bool doesNotExist = true;
-                foreach (var i in productsList)
-                {
-                    if(p.ProductID == i.ProductID)
-                    {
-                        doesNotExist = false;
-                    }
-                }
-                if (doesNotExist)
-                {
-                    productsList.Add(p);
-                }
-            }
-            //This is pagination code for search
-            var pageNumber = page ?? 1;
-            var onePageOfProducts = productsList.ToPagedList(pageNumber, 10);
-            ViewBag.OnePageOfProducts = onePageOfProducts;
+        //    //if product doesnt already exist in list add to list
+        //    foreach (var p in products)
+        //    {
+        //        bool doesNotExist = true;
+        //        foreach (var i in productsList)
+        //        {
+        //            if(p.ProductID == i.ProductID)
+        //            {
+        //                doesNotExist = false;
+        //            }
+        //        }
+        //        if (doesNotExist)
+        //        {
+        //            productsList.Add(p);
+        //        }
+        //    }
+        //    //This is pagination code for search
+        //    var pageNumber = page ?? 1;
+        //    var onePageOfProducts = productsList.ToPagedList(pageNumber, 10);
+        //    ViewBag.OnePageOfProducts = onePageOfProducts;
 
-            return View("Index" , onePageOfProducts);
+        //    return View("Index" , onePageOfProducts);
             
-        }
+        //}
 
         /// <summary>
         /// Products that go on shopping list.. this is where supply is less or equal to demand.
@@ -125,14 +125,19 @@ namespace AllStocked.Controllers
             }
         }
 
-
-        /// <summary>
-        /// This is the Products page Controller.
-        /// </summary>
-        /// <param name="page">Accepts a integer for page number</param>
-        /// <returns>return updated view with a new page of inventory items</returns>
-        public ActionResult Index(int? page)
+        public ActionResult Index(string currentFilter, string searchString, int? page)
         {
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
 
             if (SessionHelper.IsMemberLoggedIn())
             {
@@ -140,9 +145,20 @@ namespace AllStocked.Controllers
                 //Get list of products that have a an account id that match current session.
                 var products = db.Products.Where(p => p.AccountID == currentId).OrderBy(p => p.Category.CategoryName).Include(p => p.Account).Include(p => p.Category);
 
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    //find product names that match search term
+                    products = db.Products.Where(p => p.AccountID == currentId && p.ProductName.Contains(searchString)).OrderBy(p => p.Category.CategoryName).Include(p => p.Account).Include(p => p.Category);
+                    var productsList = products.ToList();
+
+                    // find and add product categories that match search term
+                    products = (db.Products.Where(p => p.AccountID == currentId && p.Category.CategoryName.Contains(searchString)).Include(p => p.Account).Include(p => p.Category));
+
+                }
+
                 //pagination code
                 var pageNumber = page ?? 1;
-                var onePageOfProducts = products.ToPagedList(pageNumber, 10);
+                var onePageOfProducts = products.OrderBy(p => p.Category.CategoryName).ToPagedList(pageNumber, 10);
                 ViewBag.OnePageOfProducts = onePageOfProducts;
                 return View(onePageOfProducts);
             }

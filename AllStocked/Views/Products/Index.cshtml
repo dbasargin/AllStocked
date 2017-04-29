@@ -3,18 +3,25 @@
 @{
     ViewBag.Title = "Index";
 }
+
 @using PagedList.Mvc;
 @using PagedList;
+
 <h2>@*using @Model.First().Account.AccountName:*@ Inventory Items </h2>
 
-<p class="letsGetMargin">
     <h4>Search inventory items-</h4>
-    @using (Html.BeginForm("Show", "Products"))
+    @*@using (Html.BeginForm("Show", "Products"))
+        {
+            <input type="text" name="searchTerm" />
+            <input type="submit" value="Search"/>
+        }*@
+    @using (Html.BeginForm("Index", "Products", FormMethod.Get))
     {
-        <input type="text" name="searchTerm" />
-        <input type="submit" value="Search"/>
+    <p>
+        Find by name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Search" />
+    </p>
     }
-</p>
 
 <table class="table">
     <tr>
@@ -38,7 +45,6 @@
         </th>
         <th></th>
     </tr>
-
     @foreach (var item in Model)
     {
         <tr>
@@ -69,4 +75,8 @@
     }
 
 </table>
-@Html.PagedListPager((IPagedList)ViewBag.OnePageOfProducts, page => Url.Action("Index", new { page }))
+@*@Html.PagedListPager((IPagedList)ViewBag.OnePageOfProducts, page => Url.Action("Index", new { page }))*@
+Page @(((IPagedList)Model).PageCount < ((IPagedList)Model).PageNumber ? 0 : ((IPagedList)Model).PageNumber) of @((IPagedList)Model).PageCount
+
+@Html.PagedListPager((IPagedList)Model, page => Url.Action("Index",
+    new { page, currentFilter = ViewBag.CurrentFilter }))
