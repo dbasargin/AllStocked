@@ -29,10 +29,15 @@
                     <li class="navbarD">@Html.ActionLink("Products", "Index", "Products")</li>// products page
                     <li class="navbarD">@Html.ActionLink("Create New Product", "Create", "Products") </li> //Create Products Page
                     <li class="navbarD">@Html.ActionLink("Shopping List", "ShoppingList", "Products") </li> //Create Products Page
-                        //Add SignOUt
                     }
                 </ul>
-            </div>
+                @if (HttpContext.Current.Session["AccountID"] != null)
+                {
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="logoff">@Html.ActionLink("Log Off", "LogOff", "Login")</li>
+                </ul>
+                }
+</div>
         </div>
     </div>
     <div class="container body-content">

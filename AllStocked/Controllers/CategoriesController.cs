@@ -165,8 +165,18 @@ namespace AllStocked.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Category category = db.Categories.Find(id);
+
+            //First cahnge all product references To CategoryID to null
+            using (db)
+            {
+                 db.Products.Where(p => p.CategoryID == id).ToList().ForEach(p => p.CategoryID = null);
+                db.SaveChanges();
+            
+            //Then We should be able to remove category..
             db.Categories.Remove(category);
             db.SaveChanges();
+            }
+
             return RedirectToAction("Index");
         }
 
@@ -175,7 +185,7 @@ namespace AllStocked.Controllers
             if (disposing)
             {
                 db.Dispose();
-            }
+            } 
             base.Dispose(disposing);
         }
     }

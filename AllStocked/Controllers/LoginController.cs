@@ -9,6 +9,13 @@ namespace AllStocked.Controllers
 {
     public class LoginController : Controller
     {
+
+        public ActionResult LogOff()
+        {
+            SessionHelper.AbandonSession();
+            return RedirectToAction("Index", "Home");
+        }
+
         // GET: Login
         [HttpGet]
         public ActionResult Login()

@@ -7,7 +7,7 @@
 @using PagedList.Mvc;
 @using PagedList;
 
-<h2>@*using @Model.First().Account.AccountName:*@ Inventory Items </h2>
+<h2>Inventory Items </h2>
 
     <h4>Search inventory items-</h4>
     @*@using (Html.BeginForm("Show", "Products"))
@@ -15,6 +15,8 @@
             <input type="text" name="searchTerm" />
             <input type="submit" value="Search"/>
         }*@
+
+@*SEARCH FORM*@
     @using (Html.BeginForm("Index", "Products", FormMethod.Get))
     {
     <p>
@@ -23,6 +25,7 @@
     </p>
     }
 
+@*Display Product attributes*@
 <table class="table">
     <tr>
         <th>
@@ -45,6 +48,7 @@
         </th>
         <th></th>
     </tr>
+    @*Show product values*@
     @foreach (var item in Model)
     {
         <tr>
@@ -76,7 +80,7 @@
 
 </table>
 @*@Html.PagedListPager((IPagedList)ViewBag.OnePageOfProducts, page => Url.Action("Index", new { page }))*@
-Page @(((IPagedList)Model).PageCount < ((IPagedList)Model).PageNumber ? 0 : ((IPagedList)Model).PageNumber) of @((IPagedList)Model).PageCount
+@*Page @(((IPagedList)Model).PageCount < ((IPagedList)Model).PageNumber ? 0 : ((IPagedList)Model).PageNumber) of @((IPagedList)Model).PageCount*@
 
 @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index",
     new { page, currentFilter = ViewBag.CurrentFilter }))
