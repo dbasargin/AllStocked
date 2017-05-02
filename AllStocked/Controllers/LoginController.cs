@@ -9,6 +9,7 @@ namespace AllStocked.Controllers
 {
     public class LoginController : Controller
     {
+        AllStockedDBEntities db = new AllStockedDBEntities();
 
         public ActionResult LogOff()
         {
@@ -43,5 +44,46 @@ namespace AllStocked.Controllers
             //return model with error messages
             return View(model);
         }
+
+        
+        //[ValidateAntiForgeryToken]
+        //public ActionResult RecoverPassword(string email)
+        //{
+        //    //check user existance
+            
+
+        //    var user = db.Accounts.Where(u => u.AccountEmail == email);
+
+        //    if (user == null)
+        //    {
+        //        TempData["Message"] = "User Not exist.";
+        //    }
+        //    else
+        //    {
+        //        //generate password token
+        //        //var token = WebSecurity.GeneratePasswordResetToken(UserName);
+        //        //create url with above token
+        //        //var resetLink = "<a href='" + Url.Action("ResetPassword", "Account", new { un = UserName, rt = token }, "http") + "'>Reset Password</a>";
+        //        ////get user emailid
+        //        //UsersContext db = new UsersContext();
+        //        var emailid = email;
+        //        //send mail
+        //        string subject = "Password recovery";
+        //        string body = "<b>password for account</b>" + email + ": " + user.; //edit it
+        //        try
+        //        {
+        //            SendEMail(emailid, subject, body);
+        //            TempData["Message"] = "Mail Sent.";
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            TempData["Message"] = "Error occured while sending email." + ex.Message;
+        //        }
+        //        //only for testing
+        //        TempData["Message"] = resetLink;
+        //    }
+
+        //    return View();
+        //}
     }
 }
