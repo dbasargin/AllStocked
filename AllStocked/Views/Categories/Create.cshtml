@@ -32,7 +32,8 @@
 
         <div class="form-group" >
             @Html.LabelFor(model => model.CategoryName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10 " > <span> This is the name of your new category. This helps when searching inventory items. </span>
+            <a href="#" data-toggle="tooltip" title="This is the name of your new category. This helps when searching inventory items." style="border-style:solid; border-radius: 50%; padding: 0 3px;">?</a>
+            <div class="col-md-10 " > 
                 @Html.EditorFor(model => model.CategoryName, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.CategoryName, "", new { @class = "text-danger" })
             </div>

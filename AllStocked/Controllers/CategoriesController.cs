@@ -120,16 +120,22 @@ namespace AllStocked.Controllers
         }
 
         // POST: Categories/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "CategoryID,AccountID,CategoryName")] Category category)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(category).State = EntityState.Modified;
-                db.SaveChanges();
+                int currentAccount = Convert.ToInt32(HttpContext.Session["AccountID"]);
+                using (db)
+                {
+                    //find category in database
+                    Category editCategoryName = db.Categories.First(c => c.CategoryID == category.CategoryID);
+                    //edit name with the parameter value
+                    editCategoryName.CategoryName = category.CategoryName;
+                    //and save
+                    db.SaveChanges();
+                }
                 return RedirectToAction("Index");
             }
             ViewBag.AccountID = new SelectList(db.Accounts, "AccountID", "AccountName", category.AccountID);

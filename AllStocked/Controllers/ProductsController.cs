@@ -93,22 +93,22 @@ namespace AllStocked.Controllers
             {
                 int currentId = Convert.ToInt32(HttpContext.Session["AccountID"]);
                 //Get list of products that have a an account id that match current session.
-                var products = db.Products.Where(p => p.AccountID == currentId).OrderBy(p => p.Category.CategoryName).Include(p => p.Account).Include(p => p.Category);
+                var products = db.Products.Where(p => p.AccountID == currentId).OrderBy(p => p.Category.CategoryName).ThenBy(p => p.ProductName).Include(p => p.Account).Include(p => p.Category);
 
                 if (!String.IsNullOrEmpty(searchString))
                 {
                     //find product names that match search term
-                    products = db.Products.Where(p => p.AccountID == currentId && p.ProductName.Contains(searchString)).OrderBy(p => p.Category.CategoryName).Include(p => p.Account).Include(p => p.Category);
+                    products = db.Products.Where(p => p.AccountID == currentId && p.ProductName.Contains(searchString) || (p.AccountID == currentId && p.Category.CategoryName.Contains(searchString))).OrderBy(p => p.Category.CategoryName).ThenBy(p => p.ProductName).Include(p => p.Account).Include(p => p.Category);
                     var productsList = products.ToList();
 
                     // find and add product categories that match search term
-                    products = (db.Products.Where(p => p.AccountID == currentId && p.Category.CategoryName.Contains(searchString)).Include(p => p.Account).Include(p => p.Category));
+                    //products = (db.Products.Where(p => p.AccountID == currentId && p.Category.CategoryName.Contains(searchString)).Include(p => p.Account).Include(p => p.Category));
 
                 }
 
                 //pagination code
                 var pageNumber = page ?? 1;
-                var onePageOfProducts = products.OrderBy(p => p.Category.CategoryName).ToPagedList(pageNumber, 10);
+                var onePageOfProducts = products.OrderBy(p => p.Category.CategoryName).ThenBy(p => p.ProductName).ToPagedList(pageNumber, 10);
                 ViewBag.OnePageOfProducts = onePageOfProducts;
                 return View(onePageOfProducts);
             }
