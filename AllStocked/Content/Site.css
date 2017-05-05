@@ -44,7 +44,7 @@ textarea {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 16px;
 	color: #050505;
-	padding: 10px 20px;
+	padding: 5px 10px;
 	background: -moz-linear-gradient(
 		top,
 		#ffffff 0%,
@@ -73,11 +73,12 @@ textarea {
 	text-shadow:
 		0px -1px 0px rgba(000,000,000,0.2),
 		0px 1px 0px rgba(255,255,255,1);
+    margin:1px;
 }
 
 
 .letsGetMargin {
-    margin: 20px;
+    margin: 20px 0;
 }
 
 /*override color for autogerated create items*/
@@ -115,6 +116,21 @@ body.home_index .body-content{
 #RegisterForm h4{
     color: #fff;
 }
+@media (min-width: 600px) {
+    #CategorySidebar {
+        background-color: rgba(255, 255, 255, 0.46);
+        padding: 10px;
+        /*margin-top: 25px;*/
+        overflow: auto;
+        position: absolute;
+        top: 50%;
+        right: 15%;
+        width: 220px;
+        height: 160px;
+        border-style: solid;
+    }
+}
+
 /* row list top color*/
 .table thead > tr > th, .table tbody > tr > th, .table tfoot > tr > th, .table thead > tr > td, .table tbody > tr > td, .table tfoot > tr > td {
     border-top-color: cadetblue;
@@ -122,22 +138,3 @@ body.home_index .body-content{
 #allPagesBackground{
     background-color: #D80000;
 }
-
-/*.form-group a:link .help{
-    background: #000000;
-    border-radius: 6px;
-    box-shadow: 0px 1px 0px #800000;
-    color: #FFFFFF;
-}*/
-
-
-/*body#allPagesBackground .tooltip-arrow {
-    background-color: green;
-    padding:13px;
-}
-.form-group{
-    margin-left: 40px;
-}
- a.tooltip-inner{
-     border-radius: 6px;
- }*/
