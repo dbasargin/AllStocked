@@ -9,7 +9,7 @@ namespace AllStocked.Controllers
 {
     public class LoginController : Controller
     {
-        AllStockedDBEntities db = new AllStockedDBEntities();
+        private AllStockedDBEntities db = new AllStockedDBEntities();
 
         public ActionResult LogOff()
         {

@@ -183,6 +183,7 @@ namespace AllStocked.Controllers
         // GET: Products/Edit/5
         public ActionResult Edit(int? id)
         {
+            int currentId = Convert.ToInt32(HttpContext.Session["AccountID"]);
             if (SessionHelper.IsMemberLoggedIn())
             {
                 if (id == null)
@@ -195,7 +196,7 @@ namespace AllStocked.Controllers
                     return HttpNotFound();
                 }
                 ViewBag.AccountID = new SelectList(db.Accounts, "AccountID", "AccountName", product.AccountID);
-                ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "CategoryName", product.CategoryID);
+                ViewBag.CategoryID = new SelectList(db.Categories.Where(c => c.AccountID == currentId), "CategoryID", "CategoryName", product.CategoryID);
                 return View(product);
             }
             else

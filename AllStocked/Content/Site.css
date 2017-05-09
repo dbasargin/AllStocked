@@ -26,15 +26,13 @@ select,
 textarea {
     max-width: 280px;
 }
-div.collapse ul li a.navToBlack { /*div.collapse ul li */
+
+/*CONTROLLS Nav Button link Colors*/
+div.collapse ul li a.navToBlack {
     color: white !important;
 }
 
-/*div.collapse div.navbar-right ul li a.logoff:link {
-    color: white !important;
-}*/
-
-div.collapse ul li a.navToBlack:link { /*div.collapse ul li */
+div.collapse ul li a.navToBlack:link {
     color: white !important;
 }
 
@@ -56,6 +54,11 @@ div.collapse ul li a.navToBlack:hover{
     background-color: rgba(255, 255, 255, 0.7);
 }
 
+/*logoff button Link Color*/
+div.collapse .navbar-nav ul li .logoff a.logoffATag:link {
+    color: white !important;
+}
+
 /*custom css form logoff button*/
 .logoff{
 background-color: rgba(193, 66, 66, 0.78);
@@ -68,41 +71,42 @@ box-shadow:inset 0px 0px 8px 0px rgba(000,000,000,0.8);
 .logoff:hover {
     background-color: rgba(193, 66, 66, 1);
 }
-    /*my custom button*/
-    .CustomButton{
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 16px;
-	color: #050505;
-	padding: 5px 10px;
-	background: -moz-linear-gradient(
-		top,
-		#ffffff 0%,
-		#ebebeb 99%,
-		#dbdbdb 27%,
-		#b5b5b5);
-	background: -webkit-gradient(
-		linear, left top, left bottom,
-		from(#ffffff),
-		color-stop(0.99, #ebebeb),
-		color-stop(0.27, #dbdbdb),
-		to(#b5b5b5));
-	-moz-border-radius: 10px;
-	-webkit-border-radius: 10px;
-	border-radius: 10px;
-	border: 1px solid #949494;
-	-moz-box-shadow:
-		0px 1px 3px rgba(000,000,000,0.5),
-		inset 0px 0px 2px rgba(255,255,255,1);
-	-webkit-box-shadow:
-		0px 1px 3px rgba(000,000,000,0.5),
-		inset 0px 0px 2px rgba(255,255,255,1);
-	box-shadow:
-		0px 1px 3px rgba(000,000,000,0.5),
-		inset 0px 0px 2px rgba(255,255,255,1);
-	text-shadow:
-		0px -1px 0px rgba(000,000,000,0.2),
-		0px 1px 0px rgba(255,255,255,1);
-    margin:1px;
+
+/*my custom button*/
+.CustomButton{
+font-family: Arial, Helvetica, sans-serif;
+font-size: 16px;
+color: #050505;
+padding: 5px 10px;
+background: -moz-linear-gradient(
+	top,
+	#ffffff 0%,
+	#fff 99%,
+	#dbdbdb 27%,
+	#b5b5b5);
+background: -webkit-gradient(
+	linear, left top, left bottom,
+	from(#ffffff),
+	color-stop(0.99, #ebebeb),
+	color-stop(0.27, #dbdbdb),
+	to(#b5b5b5));
+-moz-border-radius: 0px;
+-webkit-border-radius: 3px;
+border-radius: 3px;
+border: 1px solid #949494;
+-moz-box-shadow:
+	0px 1px 3px rgba(000,000,000,0.5),
+	inset 0px 0px 2px rgba(255,255,255,1);
+-webkit-box-shadow:
+	0px 1px 3px rgba(000,000,000,0.5),
+	inset 0px 0px 2px rgba(255,255,255,1);
+box-shadow:
+	0px 1px 3px rgba(000,000,000,0.5),
+	inset 0px 0px 2px rgba(255,255,255,1);
+text-shadow:
+	0px -1px 0px rgba(000,000,000,0.2),
+	0px 1px 0px rgba(255,255,255,1);
+margin:1px;
 }
 
 
@@ -129,6 +133,7 @@ body.home_index{
 body.home_index .body-content{
     background-color: transparent;
 }
+
 /*this is css for home register form*/
 #RegisterForm
 {
@@ -142,12 +147,15 @@ body.home_index .body-content{
     text-align: right;
     border-style: solid;
 }
+
 #RegisterForm h4{
     color: #fff;
 }
 @media (min-width: 600px) {
     #CategorySidebar {
-        background-color: rgba(255, 255, 255, 0.46);
+        background-color: firebrick;
+        color: aliceblue;
+        font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
         padding: 10px;
         /*margin-top: 25px;*/
         overflow: auto;
@@ -157,6 +165,8 @@ body.home_index .body-content{
         width: 230px;
         height: 200px;
         border-style: solid;
+        border-color: black;
+        box-shadow:inset 0px 0px 15px 0px #000000;
     }
 }
 

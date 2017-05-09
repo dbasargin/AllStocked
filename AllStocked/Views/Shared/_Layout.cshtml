@@ -7,19 +7,6 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
-    @*<style type="text/css">
-        a.navToBlack {
-            color: black;
-        }
-
-            a.navToBlack:active {
-                color: green;
-            }
-
-            a.navToBlack:link {
-                color: black;
-            }
-    </style>*@
 
 </head>
 <body class="@ViewBag.PageClass" id="allPagesBackground"> @*set all background colors to red*@
@@ -49,7 +36,7 @@
                 @if (HttpContext.Current.Session["AccountID"] != null)
                 {
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="logoff">@Html.ActionLink("Log Off", "LogOff", "Login")</li>
+                    <li class="logoff">@Html.ActionLink("Log Off", "LogOff", "Login", null, new { @class = "logoffATag" })</li>
                 </ul>
                 }
 </div>
