@@ -7,7 +7,7 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
-    <style type="text/css">
+    @*<style type="text/css">
         a.navToBlack {
             color: black;
         }
@@ -19,7 +19,7 @@
             a.navToBlack:link {
                 color: black;
             }
-    </style>
+    </style>*@
 
 </head>
 <body class="@ViewBag.PageClass" id="allPagesBackground"> @*set all background colors to red*@
@@ -37,13 +37,13 @@
                 <ul class="nav navbar-nav">
                     @if (HttpContext.Current.Session["AccountID"] == null)
                     {
-                    <li class="navbarD">@Html.ActionLink("login", "login", "Login", null, new { @class = "navToBlack;" })</li>
+                    <li class="navbarD">@Html.ActionLink("login", "login", "Login", null, new { @class = "navToBlack" })</li>
                     }
                     else
                     {
-                    <li class="navbarD">@Html.ActionLink("Products", "Index", "Products")</li>// products page
-                    <li class="navbarD">@Html.ActionLink("Create New Product", "Create", "Products") </li> //Create Products Page
-                    <li class="navbarD">@Html.ActionLink("Shopping List", "ShoppingList", "Products") </li> //Create Products Page
+                    <li class="navbarD">@Html.ActionLink("Products", "Index", "Products", null, new { @class = "navToBlack" })</li>// products page
+                    <li class="navbarD">@Html.ActionLink("Create New Product", "Create", "Products", null, new { @class = "navToBlack" }) </li> //Create Products Page
+                    <li class="navbarD">@Html.ActionLink("Shopping List", "ShoppingList", "Products", null, new { @class = "navToBlack" }) </li> //Create Products Page
                     }
                 </ul>
                 @if (HttpContext.Current.Session["AccountID"] != null)

@@ -26,27 +26,50 @@ select,
 textarea {
     max-width: 280px;
 }
-/* This is the custom nav button css*/
-.navbarD{
-    color: black;
-    background-color: rgba(255, 255, 255, 0.2);
-    border-style: solid;
-    border-color: black;
-    box-shadow:inset 0px 0px 100px 0px rgba(000,000,000,0.5);
-
+div.collapse ul li a.navToBlack { /*div.collapse ul li */
+    color: white !important;
 }
 
+/*div.collapse div.navbar-right ul li a.logoff:link {
+    color: white !important;
+}*/
+
+div.collapse ul li a.navToBlack:link { /*div.collapse ul li */
+    color: white !important;
+}
+
+div.collapse ul li a.navToBlack:hover{
+    color: chartreuse !important;
+}
+
+/* This is the custom nav button css*/
+.navbarD {
+    color: black;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-style: solid;
+    border-color: black;
+    box-shadow: inset 0px 0px 90px 87px rgba(000,000,000,0.4);
+}
+
+/*nav button on HOVER*/
+.navbarD:hover {
+    background-color: rgba(255, 255, 255, 0.7);
+}
 
 /*custom css form logoff button*/
 .logoff{
-    background-color: rgba(193, 66, 66, 0.60);
-    border-style: solid;
-    border-color: black;
-    box-shadow:inset 0px 0px 8px 0px rgba(000,000,000,0.9);
+background-color: rgba(193, 66, 66, 0.78);
+border-style: solid;
+border-color: black;
+box-shadow:inset 0px 0px 8px 0px rgba(000,000,000,0.8);
 }
 
-/*my custom button*/
-.CustomButton{
+/*.logoff button on hover*/
+.logoff:hover {
+    background-color: rgba(193, 66, 66, 1);
+}
+    /*my custom button*/
+    .CustomButton{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 16px;
 	color: #050505;
@@ -131,8 +154,8 @@ body.home_index .body-content{
         position: absolute;
         top: 25%;
         right: 15%;
-        width: 220px;
-        height: 160px;
+        width: 230px;
+        height: 200px;
         border-style: solid;
     }
 }
