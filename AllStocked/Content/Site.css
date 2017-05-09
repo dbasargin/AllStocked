@@ -28,15 +28,21 @@ textarea {
 }
 /* This is the custom nav button css*/
 .navbarD{
-    background-color: rgba(255, 255, 255, 0.26);
+    color: black;
+    background-color: rgba(255, 255, 255, 0.2);
     border-style: solid;
     border-color: black;
+    box-shadow:inset 0px 0px 100px 0px rgba(000,000,000,0.5);
+
 }
+
+
 /*custom css form logoff button*/
 .logoff{
-    background-color: rgba(193, 66, 66, 0.40);
+    background-color: rgba(193, 66, 66, 0.60);
     border-style: solid;
     border-color: black;
+    box-shadow:inset 0px 0px 8px 0px rgba(000,000,000,0.9);
 }
 
 /*my custom button*/
@@ -123,7 +129,7 @@ body.home_index .body-content{
         /*margin-top: 25px;*/
         overflow: auto;
         position: absolute;
-        top: 50%;
+        top: 25%;
         right: 15%;
         width: 220px;
         height: 160px;

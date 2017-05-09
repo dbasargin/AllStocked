@@ -6,6 +6,21 @@
     <title>@ViewBag.Title AllStocked</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+
+    <style type="text/css">
+        a.navToBlack {
+            color: black;
+        }
+
+            a.navToBlack:active {
+                color: green;
+            }
+
+            a.navToBlack:link {
+                color: black;
+            }
+    </style>
+
 </head>
 <body class="@ViewBag.PageClass" id="allPagesBackground"> @*set all background colors to red*@
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -22,7 +37,7 @@
                 <ul class="nav navbar-nav">
                     @if (HttpContext.Current.Session["AccountID"] == null)
                     {
-                    <li class="navbarD">@Html.ActionLink("login", "login", "Login")</li>
+                    <li class="navbarD">@Html.ActionLink("login", "login", "Login", null, new { @class = "navToBlack;" })</li>
                     }
                     else
                     {
