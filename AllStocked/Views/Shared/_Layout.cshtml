@@ -49,7 +49,7 @@
                 @if (HttpContext.Current.Session["AccountID"] != null)
                 {
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="logoff">@Html.ActionLink("Log Off", "LogOff", "Login")</li>
+                    <li class="logoff">@Html.ActionLink("Log Off", "LogOff", "Login", null, new { @class = "logoffLink" })</li>
                 </ul>
                 }
 </div>
