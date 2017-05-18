@@ -94,11 +94,12 @@ namespace AllStocked.Controllers
                 int currentId = Convert.ToInt32(HttpContext.Session["AccountID"]);
                 //Get list of products that have a an account id that match current session.
                 var products = db.Products.Where(p => p.AccountID == currentId).OrderBy(p => p.Category.CategoryName).ThenBy(p => p.ProductName).Include(p => p.Account).Include(p => p.Category);
-
                 if (!String.IsNullOrEmpty(searchString))
                 {
+                    var keywords = searchString.Split(' ').ToList();
+
                     //find product names that match search term
-                    products = db.Products.Where(p => p.AccountID == currentId && p.ProductName.Contains(searchString) || (p.AccountID == currentId && p.Category.CategoryName.Contains(searchString))).OrderBy(p => p.Category.CategoryName).ThenBy(p => p.ProductName).Include(p => p.Account).Include(p => p.Category);
+                    products = db.Products.Where( (p => p.AccountID == currentId && keywords.All(word => p.ProductName.ToLower().Contains(word.ToLower())) || (p.AccountID == currentId && keywords.All(word => p.Category.CategoryName.ToLower().Contains(word))))).OrderBy(p => p.Category.CategoryName).ThenBy(p => p.ProductName).Include(p => p.Account).Include(p => p.Category);
                     var productsList = products.ToList();
 
                     // find and add product categories that match search term

@@ -36,7 +36,8 @@ div.collapse ul li a.navToBlack:link {
     color: white !important;
 }
 
-div.collapse ul li a.logoffLink:link {
+
+div.collapse ul li a.logofflink, div.collapse ul li a.logofflink:link {
     color: white !important;
 }
 /*clear cache' */
