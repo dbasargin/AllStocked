@@ -36,6 +36,11 @@ div.collapse ul li a.navToBlack:link {
     color: white !important;
 }
 
+div.collapse ul li a.logoffLink:link {
+    color: white !important;
+}
+/*clear cache' */
+
 div.collapse ul li a.navToBlack:hover{
     color: chartreuse !important;
 }
@@ -54,10 +59,12 @@ div.collapse ul li a.navToBlack:hover{
     background-color: rgba(255, 255, 255, 0.7);
 }
 
-/*logoff button Link Color*/
-div.collapse .navbar-nav ul li .logoff a.logoffATag:link {
+/*div.navbar-collapse collapse ul.nav navbar-nav navbar-right li.logoff { /*div.collapse ul li
     color: white !important;
 }
+    */
+
+
 
 /*custom css form logoff button*/
 .logoff{
@@ -142,7 +149,7 @@ body.home_index .body-content{
     margin-top: 90px;
     overflow: hidden;
     float: right;
-    display: inline-block;
+    /*display: inline-block;*/
     width: 400px;
     text-align: right;
     border-style: solid;
