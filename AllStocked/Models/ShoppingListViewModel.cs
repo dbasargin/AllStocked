@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Web;
 
@@ -13,7 +14,7 @@ namespace AllStocked.Models
         public string ProductName { get; set; }
         public int Par { get; set; }
 
-
+        [DisplayName("Amount Needed")]
         public int AmountToBuy { get; set; }
 
         public int Demand { get; set; }

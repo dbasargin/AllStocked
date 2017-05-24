@@ -60,13 +60,6 @@ div.collapse ul li a.navToBlack:hover{
     background-color: rgba(255, 255, 255, 0.7);
 }
 
-/*div.navbar-collapse collapse ul.nav navbar-nav navbar-right li.logoff { /*div.collapse ul li
-    color: white !important;
-}
-    */
-
-
-
 /*custom css form logoff button*/
 .logoff{
 background-color: rgba(193, 66, 66, 0.78);
@@ -133,8 +126,39 @@ body.home_index{
     background-repeat:no-repeat;
     background-position-x: center;
     background-size: 84%;
+    padding: 20px;
     margin-top: 20px;
     color: #fff;
+}
+@media (max-width: 1100px) {
+    body.home_index{
+    background-image: url(../images/HomePageLogo.png);
+    background-repeat:no-repeat;
+    background-position-x: left;
+    /*background-position: center;*/
+    background-size: 100%;
+    padding: 20px;
+    margin-bottom: 0;
+    color: #fff;
+}
+}
+@media (max-width: 995px) {
+    body.home_index{
+    background-image: url(../images/HomePageLogo.png);
+    background-repeat:no-repeat;
+    background-position-x: left;
+    background-position: left;
+    background-size: 52%;
+    margin-bottom: 30px;
+    padding: 10px;
+    color: #fff;
+}
+}
+@media (max-width: 695px) {
+    body.home_index{
+    background-image: none;
+    color: #fff;
+}
 }
 
 /*home page body content in transparent*/
@@ -147,13 +171,18 @@ body.home_index .body-content{
 {
     background-color: rgba(255, 255, 255, 0.46);
     padding: 10px;
-    margin-top: 90px;
+    margin-top: 50px;
+    margin-right: 5%;
     overflow: hidden;
     float: right;
     /*display: inline-block;*/
-    width: 400px;
-    text-align: right;
+    width: 300px;
+    /*text-align: right;*/
     border-style: solid;
+}
+
+#RegisterForm .col-md-10{
+    margin-left: 1px;
 }
 
 #RegisterForm h4{
