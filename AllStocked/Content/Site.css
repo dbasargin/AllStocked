@@ -1,4 +1,16 @@
-﻿
+﻿#searchform{
+    background-color: lightsteelblue;
+    /*width: 420px;*/
+    padding: 2px;
+    margin-bottom: 0 10px;
+    /*border-colo/*r: black;*/
+    box-shadow:inset 0px 0px 5px 0px #000000;
+}
+#searchform h4{
+    color: white;
+    font-size: 18px;
+    /*font-weight: 200;*/
+}
 body {
     padding-top: 50px;
     padding-bottom: 20px;
@@ -125,7 +137,7 @@ body.home_index{
     background-image: url(../images/HomePageLogo.png);
     background-repeat:no-repeat;
     background-position-x: center;
-    background-size: 84%;
+    background-size: 90%;
     padding: 20px;
     margin-top: 20px;
     color: #fff;
@@ -187,23 +199,33 @@ body.home_index .body-content{
 
 #RegisterForm h4{
     color: #fff;
+    font-size: 20px;
 }
-@media (min-width: 600px) {
+@media (min-width: 645px) {
     #CategorySidebar {
-        background-color: firebrick;
+        background-color:lightsteelblue /*firebrick*/;
         color: aliceblue;
         font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-        padding: 10px;
-        /*margin-top: 25px;*/
         overflow: auto;
         position: absolute;
         top: 25%;
-        right: 15%;
-        width: 230px;
+        right: 10%;
+        width: 270px;
         height: 200px;
         border-style: solid;
         border-color: black;
-        box-shadow:inset 0px 0px 15px 0px #000000;
+        box-shadow:inset 0px 0px 5px 0px #000000;
+    }
+    #CategorySidebar h5{
+        font-size: 22px;
+        background-color: slategrey;
+        padding: 20px;
+        margin-top: 0;
+        border-bottom-style: solid;
+    }
+
+    #CategorySidebar .CustomButton{
+        margin-left: 15px;
     }
 }
 

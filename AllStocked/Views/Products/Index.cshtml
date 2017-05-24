@@ -9,22 +9,19 @@
 
 <h2>Inventory Items </h2>
 
+<div id="searchform">
     <h4>Search inventory items-</h4>
-    @*@using (Html.BeginForm("Show", "Products"))
-        {
-            <input type="text" name="searchTerm" />
-            <input type="submit" value="Search"/>
-        }*@
 
-@*SEARCH FORM*@
+    @*SEARCH FORM*@
+
     @using (Html.BeginForm("Index", "Products", FormMethod.Get))
     {
-    <p>
-        Find by name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
-        <input type="submit" value="Search" />
-    </p>
+        <p>
+            Find by Name or Category: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+            <input type="submit" value="Search" />
+        </p>
     }
-
+</div>
 @*Display Product attributes*@
 <table class="table">
     <tr>

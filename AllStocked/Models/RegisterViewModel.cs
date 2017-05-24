@@ -22,7 +22,7 @@ namespace AllStocked.Models
 
             [DataType(DataType.Password)]
             [Compare("Password", ErrorMessage = "Your Passwords must match")]
-            [Display(Name = "Confirm Pass")]
+            [Display(Name = "Confirm Password")]
             public string ConfirmPassword { get; set; }
         
     }
