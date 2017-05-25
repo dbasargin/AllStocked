@@ -18,10 +18,9 @@ namespace AllStocked
         public string ProductName { get; set; }
 
         [Range(0, Int32.MaxValue, ErrorMessage = "Cannot be below 0")]
-        [GreaterThanOrEqualTo("Demand")]
         public int Par { get; set; }
 
-        [LessThanOrEqualTo("Par")]
+        [LessThan("Par",ErrorMessage ="test")]
         [Range(0, Int32.MaxValue, ErrorMessage = "Cannot be below 0")]
         public int Demand { get; set; }
 
