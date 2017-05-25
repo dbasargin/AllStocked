@@ -6,74 +6,77 @@
 
 <h2>Shopping List</h2>
 
-<p>
-    Click corresponding button to reset item supply to par.
-</p>
-<table class="table">
-    <tr>
-        <th>
-            Remove
+<div class="shoppinglist">
+    <p>
+        Click corresponding BUY button to reset items supply to par and remove item from shopping list.
+    </p>
+</div>
+    <table class="table">
+        <tr>
+            <th>
+                Remove
             </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ProductName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AmountToBuy)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Category)
-        </th>
-        @*<th>
-            @Html.DisplayNameFor(model => model.Par)
-        </th>*@
-        @*<th>
-            @Html.DisplayNameFor(model => model.Demand)
-        </th>*@
-        @*<th>
-            @Html.DisplayNameFor(model => model.Supply)
-        </th>*@
-        @*<th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>*@
-        <th></th>
-    </tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AmountToBuy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Category)
+            </th>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.Par)
+                </th>*@
+            @*<th>
+                    @Html.DisplayNameFor(model => model.Demand)
+                </th>*@
+            @*<th>
+                    @Html.DisplayNameFor(model => model.Supply)
+                </th>*@
+            @*<th>
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>*@
+            <th></th>
+        </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @using (Html.BeginForm("UpdateSupply", "Products"))
-            {
-                <button type="submit" name="buy" value="@item.ProductID">Buy</button>
-            }
-            </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ProductName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AmountToBuy)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Category.CategoryName)
-        </td>
-        @*<td>
-            @Html.DisplayFor(modelItem => item.Par)
-        </td>*@
-        @*<td>
-            @Html.DisplayFor(modelItem => item.Demand)
-        </td>*@
-        @*<td>
-            @Html.DisplayFor(modelItem => item.Supply)
-        </td>*@
-        @*<td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>*@
-        <td>
-            @Html.ActionLink("Details", "Details", new { id=item.ProductID })
-            @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-             |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
-        </td>
-    </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @using (Html.BeginForm("UpdateSupply", "Products"))
+                    {
+                        <button type="submit" name="buy" value="@item.ProductID">Buy</button>
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AmountToBuy)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category.CategoryName)
+                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.Par)
+                    </td>*@
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.Demand)
+                    </td>*@
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.Supply)
+                    </td>*@
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>*@
+                <td>
+                    @Html.ActionLink("Details", "Details", new { id = item.ProductID })
+                    @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                         |
+                        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
+                </td>
+            </tr>
+        }
 
-</table>
+    </table>

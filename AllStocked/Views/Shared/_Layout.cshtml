@@ -24,7 +24,7 @@
                 <ul class="nav navbar-nav">
                     @if (HttpContext.Current.Session["AccountID"] == null)
                     {
-                    <li class="navbarD">@Html.ActionLink("login", "login", "Login", null, new { @class = "navToBlack" })</li>
+                    <li class="navbarD">@Html.ActionLink("Log In", "login", "Login", null, new { @class = "navToBlack" })</li>
                     }
                     else
                     {

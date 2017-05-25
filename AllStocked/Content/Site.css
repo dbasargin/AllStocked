@@ -1,15 +1,26 @@
-﻿#searchform{
+﻿.searchform{
     background-color: lightsteelblue;
     /*width: 420px;*/
-    padding: 2px;
-    margin-bottom: 0 10px;
+    padding: 2px 5px 10px;
+    /*margin-bottom: 10px;*/
     /*border-colo/*r: black;*/
-    box-shadow:inset 0px 0px 5px 0px #000000;
+    font-size: 16px;
+    box-shadow: inset 0px 1px 5px 0px #000000;
 }
-#searchform h4{
+.searchform h4{
     color: white;
-    font-size: 18px;
+    font-weight: 600;
+    font-size: 20px;
     /*font-weight: 200;*/
+}
+.shoppinglist{
+    background-color: lightsteelblue;
+    /*width: 420px;*/
+    font-size: 18px;
+    padding: 10px 5px 5px;
+    /*margin-bottom: 10px;*/
+    /*border-colo/*r: black;*/
+    box-shadow: inset 0px 1px 5px 0px #000000;
 }
 body {
     padding-top: 50px;
@@ -182,7 +193,7 @@ body.home_index .body-content{
 #RegisterForm
 {
     background-color: rgba(255, 255, 255, 0.46);
-    padding: 10px;
+    padding-left: 10px;
     margin-top: 50px;
     margin-right: 5%;
     overflow: hidden;
@@ -200,6 +211,7 @@ body.home_index .body-content{
 #RegisterForm h4{
     color: #fff;
     font-size: 20px;
+    margin-bottom: 0px;
 }
 @media (min-width: 645px) {
     #CategorySidebar {
@@ -208,20 +220,21 @@ body.home_index .body-content{
         font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
         overflow: auto;
         position: absolute;
-        top: 25%;
+        top: 175px;
         right: 10%;
         width: 270px;
         height: 200px;
         border-style: solid;
         border-color: black;
-        box-shadow:inset 0px 0px 5px 0px #000000;
+        
     }
     #CategorySidebar h5{
         font-size: 22px;
-        background-color: slategrey;
+        background-color: #7893bf;
         padding: 20px;
         margin-top: 0;
         border-bottom-style: solid;
+        box-shadow:inset 0px 1px 5px 0px #000000;
     }
 
     #CategorySidebar .CustomButton{
