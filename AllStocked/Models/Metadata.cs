@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
+using System.Web.Mvc;
 
 namespace AllStocked
 {
@@ -16,10 +17,16 @@ namespace AllStocked
         [DisplayName("Product Name")]
         public string ProductName { get; set; }
 
-        [GreaterThan("Demand", ErrorMessage = "Must be larger than Demand")]
+        [Display(Name = "Par")]
+        [GreaterThan("Demand", "Must be greater than demand")]
+        [GenericCompare(CompareToPropertyName = "Demand",
+        OperatorName = GenericCompareOperator.GreaterThanOrEqual,
+        ErrorMessageResourceName = "resourcekey",
+        ErrorMessageResourceType = typeof(Product))]
         [Range(0, Int32.MaxValue, ErrorMessage = "Cannot be below 0")]
         public int Par { get; set; }
 
+        [Display(Name = "Demand")]
         [Range(0, Int32.MaxValue, ErrorMessage = "Cannot be below 0")]
         public int Demand { get; set; }
 
@@ -33,59 +40,109 @@ namespace AllStocked
         public virtual Category Category { get; set; }
     }
 
+    [AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
     public class GreaterThanAttribute : ValidationAttribute
     {
+        string otherPropertyName;
 
-        public GreaterThanAttribute(string otherProperty)
-            : base("{0} must be greater than {1}")
+        public GreaterThanAttribute(string otherPropertyName, string errorMessage)
+            : base(errorMessage)
         {
-            OtherProperty = otherProperty;
+            this.otherPropertyName = otherPropertyName;
         }
 
-        public string OtherProperty { get; set; }
-
-        public string FormatErrorMessage(string name, string otherName)
+        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            return string.Format(ErrorMessageString, name, otherName);
-        }
-
-        protected override ValidationResult
-            IsValid(object firstValue, ValidationContext validationContext)
-        {
-            var firstComparable = firstValue as IComparable;
-            var secondComparable = GetSecondComparable(validationContext);
-
-            if (firstComparable != null && secondComparable != null)
+            ValidationResult validationResult = ValidationResult.Success;
+            try
             {
-                if (firstComparable.CompareTo(secondComparable) < 1)
+                // Using reflection we can get a reference to the other date property, in this example the project start date
+                var otherPropertyInfo = validationContext.ObjectType.GetProperty(this.otherPropertyName);
+                // Let's check that otherProperty is of type DateTime as we expect it to be
+                if (otherPropertyInfo.PropertyType.Equals(new Int32().GetType()))
                 {
-                    object obj = validationContext.ObjectInstance;
-                    var thing = obj.GetType().GetProperty(OtherProperty);
-                    var displayName = (DisplayAttribute)Attribute.GetCustomAttribute(thing, typeof(DisplayAttribute));
-
-                    return new ValidationResult(
-                        FormatErrorMessage(validationContext.DisplayName));
+                    int toValidate = (int)value;
+                    int referenceProperty = (int)otherPropertyInfo.GetValue(validationContext.ObjectInstance, null);
+                    // if the end date is lower than the start date, than the validationResult will be set to false and return
+                    // a properly formatted error message
+                    if (toValidate.CompareTo(referenceProperty) < 1)
+                    {
+                        validationResult = new ValidationResult(ErrorMessageString);
+                    }
+                }
+                else
+                {
+                    validationResult = new ValidationResult("An error occurred while validating the property. OtherProperty is not of type DateTime");
                 }
             }
-
-            return ValidationResult.Success;
-        }
-
-        protected IComparable GetSecondComparable(
-            ValidationContext validationContext)
-        {
-            var propertyInfo = validationContext
-                                  .ObjectType
-                                  .GetProperty(OtherProperty);
-            if (propertyInfo != null)
+            catch (Exception ex)
             {
-                var secondValue = propertyInfo.GetValue(
-                    validationContext.ObjectInstance, null);
-                return secondValue as IComparable;
+                // Do stuff, i.e. log the exception
+                // Let it go through the upper levels, something bad happened
+                throw ex;
             }
-            return null;
+
+            return validationResult;
         }
     }
 
+    public enum GenericCompareOperator
+    {
+        GreaterThan,
+        GreaterThanOrEqual,
+        LessThan,
+        LessThanOrEqual
+    }
 
+    public sealed class GenericCompareAttribute : ValidationAttribute, IClientValidatable
+    {
+     
+        private GenericCompareOperator operatorname = AllStocked.GenericCompareOperator.GreaterThanOrEqual;
+
+        public string CompareToPropertyName { get; set; }
+        public GenericCompareOperator OperatorName { get { return operatorname; } set { operatorname = value; } }
+
+        public static object GenericCompareOperator { get; private set; }
+
+        // public IComparable CompareDataType { get; set; }
+
+        public GenericCompareAttribute() : base() { }
+        //Override IsValid
+        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+        {
+            string operstring = (OperatorName == AllStocked.GenericCompareOperator.GreaterThan ?
+            "greater than " : (OperatorName == AllStocked.GenericCompareOperator.GreaterThanOrEqual ?
+            "greater than or equal to " :
+            (OperatorName == AllStocked.GenericCompareOperator.LessThan ? "less than " :
+            (OperatorName == AllStocked.GenericCompareOperator.LessThanOrEqual ? "less than or equal to " : ""))));
+            var basePropertyInfo = validationContext.ObjectType.GetProperty(CompareToPropertyName);
+
+            var valOther = (IComparable)basePropertyInfo.GetValue(validationContext.ObjectInstance, null);
+
+            var valThis = (IComparable)value;
+
+            if ((operatorname == AllStocked.GenericCompareOperator.GreaterThan && valThis.CompareTo(valOther) <= 0) ||
+                (operatorname == AllStocked.GenericCompareOperator.GreaterThanOrEqual && valThis.CompareTo(valOther) < 0) ||
+                (operatorname == AllStocked.GenericCompareOperator.LessThan && valThis.CompareTo(valOther) >= 0) ||
+                (operatorname == AllStocked.GenericCompareOperator.LessThanOrEqual && valThis.CompareTo(valOther) > 0))
+                return new ValidationResult(base.ErrorMessage);
+            return null;
+        }
+        #region IClientValidatable Members
+
+        public IEnumerable<ModelClientValidationRule>
+        GetClientValidationRules(ModelMetadata metadata, ControllerContext context)
+        {
+            string errorMessage = this.FormatErrorMessage(metadata.DisplayName);
+            ModelClientValidationRule compareRule = new ModelClientValidationRule();
+            compareRule.ErrorMessage = errorMessage;
+            compareRule.ValidationType = "genericcompare";
+            compareRule.ValidationParameters.Add("comparetopropertyname", CompareToPropertyName);
+            compareRule.ValidationParameters.Add("operatorname", OperatorName.ToString());
+            yield return compareRule;
+        }
+
+        #endregion
+    }
+    ////////////////////////
 }
