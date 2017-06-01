@@ -32,7 +32,7 @@ namespace AllStocked
         [Range(0, Int32.MaxValue, ErrorMessage = "Cannot be below 0")]
         public int Supply { get; set; }
 
-        [StringLength(500, ErrorMessage = "Description is above Max Length")]
+        [StringLength(250, ErrorMessage = "Description is above Max Length")]
         public string Description { get; set; }
 
         public virtual Account Account { get; set; }
