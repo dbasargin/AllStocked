@@ -27,7 +27,8 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.ProductName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10"><span>Name of your product here.</span>
+            <a href="#" data-toggle="tooltip" data-placement="inherit" title="Name of your product here." style="border-style:solid; border-radius: 50%; padding: 0 3px;">?</a>
+            <div class="col-md-10">
                 @Html.EditorFor(model => model.ProductName, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.ProductName, "", new { @class = "text-danger" })
             </div>
@@ -35,7 +36,8 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.CategoryID, "Category", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10"><span>This is the name of your new category. This helps when searching inventory items.</span>
+            <a href="#" data-toggle="tooltip" title="Choose a category this item belongs to. This helps when searching." style="border-style:solid; border-radius: 50%; padding: 0 3px;">?</a>
+            <div class="col-md-10">
                 @Html.DropDownList("CategoryID", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.CategoryID, "", new { @class = "text-danger" })
             </div>
@@ -43,7 +45,8 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.Par, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10"><span>The optimal quantity of your product when fully stocked.</span>
+            <a href="#" data-toggle="tooltip" title="The optimal quantity of your product when fully stocked." style="border-style:solid; border-radius: 50%; padding: 0 3px;">?</a>
+            <div class="col-md-10">
                 @Html.EditorFor(model => model.Par, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Par, "", new { @class = "text-danger" })
             </div>
@@ -51,7 +54,8 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.Demand, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10"><span>The supply quantity when item will be added to shopping list.</span>
+            <a href="#" data-toggle="tooltip" title="The supply quantity when item will be added to shopping list." style="border-style:solid; border-radius: 50%; padding: 0 3px;">?</a>
+            <div class="col-md-10">
                 @Html.EditorFor(model => model.Demand, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Demand, "", new { @class = "text-danger" })
             </div>
@@ -59,7 +63,8 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.Supply, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10"><span>The current quantity of a product you have or last updated.</span>
+            <a href="#" data-toggle="tooltip" title="The current quantity of a product you have or last updated." style="border-style:solid; border-radius: 50%; padding: 0 3px;">?</a>
+            <div class="col-md-10">
                 @Html.EditorFor(model => model.Supply, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Supply, "", new { @class = "text-danger" })
             </div>
@@ -67,7 +72,8 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10"><span>Description of product. (example: suppliers/ size/ cost ect.)</span>
+            <a href="#" data-toggle="tooltip" title="Description of product. (example: suppliers/ size/ cost ect.)" style="border-style:solid; border-radius: 50%; padding: 0 3px;">?</a>
+            <div class="col-md-10">
                 @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
             </div>
@@ -87,4 +93,5 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/Scripts/customcompare.js")
 }

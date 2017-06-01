@@ -143,6 +143,7 @@ hr{
     border-color: black;
 }
 
+
 /*homepage background image command css*/
 body.home_index{
     background-image: url(../images/HomePageLogo.png);
@@ -153,6 +154,15 @@ body.home_index{
     margin-top: 20px;
     color: #fff;
 }
+.homewords{
+    font-size: xx-large; 
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; 
+}
+@media (min-width: 1100px) {
+    body.home_index div.homewords, body.home_index hr, body.home_index footer {
+        margin-left: 30px;
+    }
+}
 @media (max-width: 1100px) {
     body.home_index{
     background-image: url(../images/HomePageLogo.png);
@@ -162,8 +172,11 @@ body.home_index{
     background-size: 100%;
     padding: 20px;
     margin-bottom: 0;
+
     color: #fff;
-}
+    }
+    
+    
 }
 @media (max-width: 995px) {
     body.home_index{
@@ -175,14 +188,20 @@ body.home_index{
     margin-bottom: 30px;
     padding: 10px;
     color: #fff;
-}
+    }
+    
 }
 @media (max-width: 695px) {
     body.home_index{
     background-image: none;
+    
     color: #fff;
 }
 }
+
+
+/*                     DENNIS Last thing you tried to maake register form not bleed              */
+
 
 /*home page body content in transparent*/
 body.home_index .body-content{
@@ -194,24 +213,49 @@ body.home_index .body-content{
 {
     background-color: rgba(255, 255, 255, 0.46);
     padding-left: 10px;
+    padding-right: 10px;
     margin-top: 50px;
-    margin-right: 5%;
+    margin-right: 3%;
+    /*margin-left: 120px;*/
     overflow: hidden;
     float: right;
-    /*display: inline-block;*/
-    width: 300px;
-    /*text-align: right;*/
+    width: 270px;
     border-style: solid;
 }
 
 #RegisterForm .col-md-10{
     margin-left: 1px;
+    margin-right: 10px;
+    padding-right: 1px;
+}
+#RegisterForm .form-horizontal{
+    padding-right: 10px;
+    margin-right: 10px;
+    margin-left: 120px;
+}
+@media (max-width: 415px) {
+    #RegisterForm {
+        width: 250px;
+        margin-right: 0;
+        margin-left: 0;
+        float: none;
+    }
+    #RegisterForm .form-horizontal{
+    margin-right: 0;
+    margin-left: 0;
+    }
+    body.home_index footer{
+        display: none;
+    }
+
 }
 
 #RegisterForm h4{
     color: #fff;
     font-size: 20px;
-    margin-bottom: 0px;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+    border-bottom: solid;
 }
 @media (min-width: 645px) {
     #CategorySidebar {

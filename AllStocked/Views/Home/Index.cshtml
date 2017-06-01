@@ -3,7 +3,7 @@
     ViewBag.Title = "HomePage";
 }
 <body class="home_index" style="background-color:#D80000;">
-        <div style="font-size: xx-large; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; "> Are you new? Register to manage your inventory! </div>
+        <div class="homewords"> Are you new? Register to manage your inventory! </div>
 
         @*<img src="~/images/HomePageLogo.png" width="100%" height="100%" />*@
         @using (Html.BeginForm())
@@ -12,7 +12,6 @@
 
             <div class="form-horizontal" id="RegisterForm">
                 <h4>Register Here</h4>
-                <hr />
 
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 <div class="form-group">

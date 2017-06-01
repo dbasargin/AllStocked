@@ -170,7 +170,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\DbHelper.cs" />
-    <Compile Include="Models\genericcompare.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\Metadata.cs" />
     <Compile Include="Models\PartialClasses.cs" />

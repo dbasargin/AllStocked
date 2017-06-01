@@ -13,6 +13,9 @@
     <div class="form-horizontal">
         <h4>New Category</h4>
         <hr />
+
+        @Html.ValidationSummary(true)
+
         @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
             @Html.LabelFor(model => model.CategoryID, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -45,4 +48,9 @@
             </div>
         </div>
     </div>
+}
+@section Scripts {
+    @*This bundle created in App_Start/bundleconfig.cs and registered the bundle in application_start event in global.asax.cs*@
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/Scripts/customcompare.js")
 }

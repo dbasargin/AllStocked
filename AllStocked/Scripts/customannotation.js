@@ -1,5 +1,5 @@
-﻿Hide   Copy Code
-$.validator.addMethod("genericcompare", function (value, element, params) {
+﻿
+$validator.addMethod("genericcompare", function (value, element, params) {
     // debugger;
     var propelename = params.split(",")[0];
     var operName = params.split(",")[1];
@@ -21,7 +21,7 @@ $.validator.addMethod("genericcompare", function (value, element, params) {
     if (operName == "LessThanOrEqual")
         return val1 <= val2;
 })
-    ; $.validator.unobtrusive.adapters.add("genericcompare",
+; $validator.unobtrusive.adapters.add("genericcompare",
         ["comparetopropertyname", "operatorname"], function (options) {
             options.rules["genericcompare"] = "#" +
                 options.params.comparetopropertyname + "," + options.params.operatorname;
