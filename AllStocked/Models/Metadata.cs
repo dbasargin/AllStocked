@@ -5,6 +5,7 @@ using System.Web;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 using System.Web.Mvc;
+using System.Resources;
 
 namespace AllStocked
 {
@@ -16,12 +17,13 @@ namespace AllStocked
 
         [DisplayName("Product Name")]
         public string ProductName { get; set; }
-
+        
         [Display(Name = "Par")]
         //[GreaterThan("Demand", "Must be greater than demand")]
         [GenericCompare(CompareToPropertyName = "Demand",
         OperatorName = GenericCompareOperator.GreaterThan,
-        ErrorMessage = "Par must be greater than demand")]
+            ErrorMessage="Par needs to be greater than demand",
+        ErrorMessageResourceType = typeof(ProductMetadata))]
         [Range(0, Int32.MaxValue, ErrorMessage = "Cannot be below 0")]
         public int Par { get; set; }
 
@@ -38,6 +40,7 @@ namespace AllStocked
         public virtual Account Account { get; set; }
         public virtual Category Category { get; set; }
     }
+
 
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
     public class GreaterThanAttribute : ValidationAttribute
@@ -132,7 +135,7 @@ namespace AllStocked
         public IEnumerable<ModelClientValidationRule>
         GetClientValidationRules(ModelMetadata metadata, ControllerContext context)
         {
-            string errorMessage = this.FormatErrorMessage(metadata.DisplayName);
+            string errorMessage = "Par needs than demand";//this.FormatErrorMessage(metadata.DisplayName);
             ModelClientValidationRule compareRule = new ModelClientValidationRule();
             compareRule.ErrorMessage = errorMessage;
             compareRule.ValidationType = "genericcompare";
