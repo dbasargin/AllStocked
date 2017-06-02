@@ -12,9 +12,7 @@ namespace AllStocked
                         "~/Scripts/jquery-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
-                        "~/Scripts/jquery.validate*",
-                        "~/Scripts/jquery.unobtrusive*",
-                        "~/Scripts/jquery.unobtrusive.min*",
+                        "~/Scripts/jquery.validate.unobtrusive.min.js",
                         "~/Scipts/customcompare.js"));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
