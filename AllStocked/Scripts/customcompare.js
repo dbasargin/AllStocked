@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-    alert("something");
+    //alert("something");
     jQuery.validator.addMethod("genericcompare", function (value, element, params) {
         // debugger;
         var propelename = params.split(",")[0];
