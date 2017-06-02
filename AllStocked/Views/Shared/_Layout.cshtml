@@ -6,6 +6,7 @@
     <title>@ViewBag.Title AllStocked</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    
 
 
 </head>
@@ -53,7 +54,8 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/Scripts/customcompare.js")
 </body>
 </html>
-@Scripts.Render("~/bundles/jqueryval")
-@Scripts.Render("~/Scripts/customcompare.js")
+

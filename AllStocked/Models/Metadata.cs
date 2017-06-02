@@ -18,12 +18,12 @@ namespace AllStocked
         [DisplayName("Product Name")]
         public string ProductName { get; set; }
         
+        [Required]
         [Display(Name = "Par")]
         //[GreaterThan("Demand", "Must be greater than demand")]
         [GenericCompare(CompareToPropertyName = "Demand",
         OperatorName = GenericCompareOperator.GreaterThan,
-            ErrorMessage="Par needs to be greater than demand",
-        ErrorMessageResourceType = typeof(ProductMetadata))]
+            ErrorMessage="Par needs to be greater than demand")]
         [Range(0, Int32.MaxValue, ErrorMessage = "Cannot be below 0")]
         public int Par { get; set; }
 
