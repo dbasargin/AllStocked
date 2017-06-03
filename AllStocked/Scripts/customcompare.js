@@ -1,5 +1,4 @@
-﻿$(document).ready(function () {
-    //alert("something");
+﻿
     jQuery.validator.addMethod("genericcompare", function (value, element, params) {
         // debugger;
         var propelename = params.split(",")[0];
@@ -8,17 +7,17 @@
             value === undefined || value === null || value.length === 0 ||
             propelename === undefined || propelename === null || propelename.length === 0 ||
             operName === undefined || operName === null || operName.length === 0) {
-            alert("test");
+            //alert("test");
             return true;
 
         }
         var valueOther = $(propelename).val();
         var val1 = (isNaN(value) ? Date.parse(value) : eval(value));
         var val2 = (isNaN(valueOther) ? Date.parse(valueOther) : eval(valueOther));
-        alert("test2");
+        //alert("test2");
 
         if (operName === "GreaterThan") {
-            alert("Greaterthan3");
+            //alert("Greaterthan3");
             return val1 > val2;
         }
         if (operName === "LessThan")
@@ -34,4 +33,3 @@
                     options.params.comparetopropertyname + "," + options.params.operatorname;
                 options.messages["genericcompare"] = options.message;
             });
-});
