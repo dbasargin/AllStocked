@@ -3,10 +3,15 @@
         // debugger;
         var propelename = params.split(",")[0];
         var operName = params.split(",")[1];
-        if (params === undefined || params === null || params.length === 0 ||
-            value === undefined || value === null || value.length === 0 ||
-            propelename === undefined || propelename === null || propelename.length === 0 ||
-            operName === undefined || operName === null || operName.length === 0) {
+
+        if (jQuery.type(propelename) != jQuery.type(operName) ){
+            return true;
+        }
+
+        if (params == undefined || params == null || params.length == 0 ||
+            value == undefined || value == null || value.length == 0 ||
+            propelename == undefined || propelename == null || propelename.length == 0 ||
+            operName == undefined || operName == null || operName.length == 0) {
             //alert("test");
             return true;
 
@@ -16,15 +21,15 @@
         var val2 = (isNaN(valueOther) ? Date.parse(valueOther) : eval(valueOther));
         //alert("test2");
 
-        if (operName === "GreaterThan") {
+        if (operName == "GreaterThan") {
             //alert("Greaterthan3");
             return val1 > val2;
         }
-        if (operName === "LessThan")
+        if (operName == "LessThan")
             return val1 < val2;
-        if (operName === "GreaterThanOrEqual")
+        if (operName == "GreaterThanOrEqual")
             return val1 >= val2;
-        if (operName === "LessThanOrEqual")
+        if (operName == "LessThanOrEqual")
             return val1 <= val2;
     })
     ; jQuery.validator.unobtrusive.adapters.add("genericcompare",

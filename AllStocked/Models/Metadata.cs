@@ -20,16 +20,19 @@ namespace AllStocked
         
         //[Required]
         [Display(Name = "Par")]
+        [RegularExpression("([0-9][0-9]*)", ErrorMessage = "Count must be a natural number")]
+        [Range(0, Int32.MaxValue, ErrorMessage = "Cannot be below 0")]
         [GenericCompare(CompareToPropertyName = "Demand",
         OperatorName = GenericCompareOperator.GreaterThan,
             ErrorMessage="Par needs to be greater than demand")]
-        [Range(0, Int32.MaxValue, ErrorMessage = "Cannot be below 0")]
         public int Par { get; set; }
 
         [Display(Name = "Demand")]
+        [RegularExpression("([0-9][0-9]*)", ErrorMessage = "Count must be a natural number")]
         [Range(0, Int32.MaxValue, ErrorMessage = "Cannot be below 0")]
         public int Demand { get; set; }
 
+        [RegularExpression("([0-9][0-9]*)", ErrorMessage = "Count must be a natural number")]
         [Range(0, Int32.MaxValue, ErrorMessage = "Cannot be below 0")]
         public int Supply { get; set; }
 
@@ -64,6 +67,12 @@ namespace AllStocked
         //Override IsValid
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
+            if(value == null)
+            {
+                //return null;
+                return new ValidationResult(base.ErrorMessage);
+
+            }
             string operstring = (OperatorName == AllStocked.GenericCompareOperator.GreaterThan ?
             "greater than " : (OperatorName == AllStocked.GenericCompareOperator.GreaterThanOrEqual ?
             "greater than or equal to " :
