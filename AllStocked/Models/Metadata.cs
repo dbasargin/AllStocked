@@ -87,7 +87,8 @@ namespace AllStocked
         public IEnumerable<ModelClientValidationRule>
         GetClientValidationRules(ModelMetadata metadata, ControllerContext context)
         {
-            string errorMessage = "Par needs than demand";//this.FormatErrorMessage(metadata.DisplayName);
+            //string errorMessage = "Par needs than demand";//
+            string errorMessage = this.FormatErrorMessage(metadata.DisplayName);
             ModelClientValidationRule compareRule = new ModelClientValidationRule();
             compareRule.ErrorMessage = errorMessage;
             compareRule.ValidationType = "genericcompare";

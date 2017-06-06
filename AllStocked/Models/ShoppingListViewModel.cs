@@ -14,7 +14,7 @@ namespace AllStocked.Models
         public string ProductName { get; set; }
         public int Par { get; set; }
 
-        [DisplayName("Amount Needed")]
+        [DisplayName("Quantity Needed")]
         public int AmountToBuy { get; set; }
 
         public int Demand { get; set; }

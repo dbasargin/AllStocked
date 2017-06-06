@@ -257,6 +257,24 @@ body.home_index .body-content{
     margin-bottom: 10px;
     border-bottom: solid;
 }
+#CategorySidebar {
+    background-color: lightsteelblue;
+    padding-bottom: 20px;
+}
+
+#CategorySidebar h5{
+        font-size: 22px;
+        color: #fff;
+        background-color: #7893bf;
+        padding: 20px;
+        margin-top: 0;
+        border-bottom-style: solid;
+        box-shadow:inset 0px 1px 5px 0px #000000;
+    }
+#CategorySidebar .CustomButton{
+        margin-left: 15px;
+    }
+
 @media (min-width: 645px) {
     #CategorySidebar {
         background-color:lightsteelblue /*firebrick*/;
@@ -267,7 +285,7 @@ body.home_index .body-content{
         top: 175px;
         right: 10%;
         width: 270px;
-        height: 200px;
+        height: 220px;
         border-style: solid;
         border-color: black;
         
