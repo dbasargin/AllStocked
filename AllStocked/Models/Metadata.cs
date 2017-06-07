@@ -20,7 +20,7 @@ namespace AllStocked
         
         //[Required]
         [Display(Name = "Par")]
-        [RegularExpression("([0-9][0-9]*)", ErrorMessage = "Count must be a natural number")]
+        [RegularExpression("([0-9][0-9]*)", ErrorMessage = "Par must be a whole number")]
         [Range(0, Int32.MaxValue, ErrorMessage = "Cannot be below 0")]
         [GenericCompare(CompareToPropertyName = "Demand",
         OperatorName = GenericCompareOperator.GreaterThan,
@@ -28,11 +28,11 @@ namespace AllStocked
         public int Par { get; set; }
 
         [Display(Name = "Demand")]
-        [RegularExpression("([0-9][0-9]*)", ErrorMessage = "Count must be a natural number")]
+        [RegularExpression("([0-9][0-9]*)", ErrorMessage = "Demand must be a whole number")]
         [Range(0, Int32.MaxValue, ErrorMessage = "Cannot be below 0")]
         public int Demand { get; set; }
 
-        [RegularExpression("([0-9][0-9]*)", ErrorMessage = "Count must be a natural number")]
+        [RegularExpression("([0-9][0-9]*)", ErrorMessage = "Supply must be a whole number")]
         [Range(0, Int32.MaxValue, ErrorMessage = "Cannot be below 0")]
         public int Supply { get; set; }
 
