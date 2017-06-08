@@ -37,7 +37,7 @@
             @*<th>
                     @Html.DisplayNameFor(model => model.Description)
                 </th>*@
-            <th></th>
+            <th class="removewhenphonesize"></th>
         </tr>
 
         @foreach (var item in Model)
@@ -70,7 +70,7 @@
                 @*<td>
                         @Html.DisplayFor(modelItem => item.Description)
                     </td>*@
-                <td>
+                <td class="removewhenphonesize">
                     @Html.ActionLink("Details", "Details", new { id = item.ProductID })
                     @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
                          |

@@ -25,6 +25,7 @@
 body {
     padding-top: 50px;
     padding-bottom: 20px;
+    min-width: 360px;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -250,6 +251,8 @@ body.home_index .body-content{
 
 }
 
+
+
 #RegisterForm h4{
     color: #fff;
     font-size: 20px;
@@ -302,6 +305,7 @@ body.home_index .body-content{
     #CategorySidebar .CustomButton{
         margin-left: 15px;
     }
+
 }
 
 /* row list top color*/
@@ -310,4 +314,17 @@ body.home_index .body-content{
 }
 #allPagesBackground{
     background-color: #D80000;
+}
+
+/* This removes columns in tables when window gets smaller*/
+@media (max-width: 600px) {
+   table.table th.removewhenphonesize, table.table td.removewhenphonesize{
+        display: none;
+    }
+}
+/* THis is so the body title doesnt disapear below body title when window gets smaller*/
+@media (max-width: 300px) {
+    body{
+        margin-top: 30px;
+    }
 }
