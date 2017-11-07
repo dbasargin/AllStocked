@@ -1,3 +1,6 @@
+**This is the first release of AllStocked developed from start to finish in under 3 months as part time work.
+**Future iterations and goals are described in the Issues section of this repository.
+
 # AllStocked
 
 All Stocked is a solution to inventory management. Developed to make managing inventories easier, 
