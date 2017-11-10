@@ -1,3 +1,6 @@
+ Please View ISSUES#42:  For my current progress toward release 2.
+
+
 **This is the first release of AllStocked developed from start to finish in under 3 months as part time work.
 **Future iterations and goals are described in the Issues section of this repository.
 
