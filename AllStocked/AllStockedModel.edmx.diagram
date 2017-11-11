@@ -5,12 +5,18 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="b52b65f2757d4c26a7a40dd2cce3dfe4" Name="Diagram1">
-        <EntityTypeShape EntityType="AllStockedDBModel.Account" Width="1.5" PointX="3.5" PointY="3.125" IsExpanded="true" />
         <EntityTypeShape EntityType="AllStockedDBModel.Category" Width="1.5" PointX="5.75" PointY="3.25" IsExpanded="true" />
         <EntityTypeShape EntityType="AllStockedDBModel.Product" Width="1.5" PointX="8" PointY="2.75" IsExpanded="true" />
-        <AssociationConnector Association="AllStockedDBModel.FK__Category__Accoun__1273C1CD" ManuallyRouted="false" />
-        <AssociationConnector Association="AllStockedDBModel.FK__Product__Account__15502E78" ManuallyRouted="false" />
         <AssociationConnector Association="AllStockedDBModel.FK__Product__Categor__164452B1" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="AllStockedDBModel.AccountStatu" Width="1.5" PointX="1.25" PointY="2.75" />
+        <EntityTypeShape EntityType="AllStockedDBModel.AccountType" Width="1.5" PointX="1.25" PointY="5.125" />
+        <EntityTypeShape EntityType="AllStockedDBModel.AccountLogin" Width="1.5" PointX="5.75" PointY="6.5" />
+        <EntityTypeShape EntityType="AllStockedDBModel.Account" Width="1.5" PointX="3.5" PointY="3.25" />
+        <AssociationConnector Association="AllStockedDBModel.FK__Account__Status__45F365D3" />
+        <AssociationConnector Association="AllStockedDBModel.FK__Account__Type__46E78A0C" />
+        <AssociationConnector Association="AllStockedDBModel.FK__AccountLo__Accou__3B75D760" />
+        <AssociationConnector Association="AllStockedDBModel.FK__Category__Accoun__1273C1CD" />
+        <AssociationConnector Association="AllStockedDBModel.FK__Product__Account__15502E78" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

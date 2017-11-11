@@ -23,7 +23,7 @@ namespace AllStocked
         public int Supply { get; set; }
         public string Description { get; set; }
     
-        public virtual Account Account { get; set; }
         public virtual Category Category { get; set; }
+        public virtual Account Account { get; set; }
     }
 }

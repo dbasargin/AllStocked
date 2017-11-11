@@ -25,8 +25,11 @@ namespace AllStocked
             throw new UnintentionalCodeFirstException();
         }
     
-        public DbSet<Account> Accounts { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<AccountStatu> AccountStatus { get; set; }
+        public DbSet<AccountType> AccountTypes { get; set; }
+        public DbSet<AccountLogin> AccountLogins { get; set; }
+        public DbSet<Account> Accounts { get; set; }
     }
 }

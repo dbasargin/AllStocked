@@ -12,18 +12,15 @@ namespace AllStocked
     using System;
     using System.Collections.Generic;
     
-    public partial class Category
+    public partial class AccountLogin
     {
-        public Category()
-        {
-            this.Products = new HashSet<Product>();
-        }
-    
-        public int CategoryID { get; set; }
+        public int LoginID { get; set; }
         public int AccountID { get; set; }
-        public string CategoryName { get; set; }
+        public string Password { get; set; }
+        public string Hash { get; set; }
+        public Nullable<System.DateTime> LastLogin { get; set; }
+        public string RecoveryKey { get; set; }
     
-        public virtual ICollection<Product> Products { get; set; }
         public virtual Account Account { get; set; }
     }
 }

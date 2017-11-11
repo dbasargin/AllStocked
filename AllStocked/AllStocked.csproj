@@ -138,6 +138,15 @@
     <Compile Include="Account.cs">
       <DependentUpon>AllStockedModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="AccountLogin.cs">
+      <DependentUpon>AllStockedModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AccountStatu.cs">
+      <DependentUpon>AllStockedModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AccountType.cs">
+      <DependentUpon>AllStockedModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="AllStockedModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

@@ -12,18 +12,16 @@ namespace AllStocked
     using System;
     using System.Collections.Generic;
     
-    public partial class Category
+    public partial class AccountType
     {
-        public Category()
+        public AccountType()
         {
-            this.Products = new HashSet<Product>();
+            this.Accounts = new HashSet<Account>();
         }
     
-        public int CategoryID { get; set; }
-        public int AccountID { get; set; }
-        public string CategoryName { get; set; }
+        public int TypeID { get; set; }
+        public string TypeName { get; set; }
     
-        public virtual ICollection<Product> Products { get; set; }
-        public virtual Account Account { get; set; }
+        public virtual ICollection<Account> Accounts { get; set; }
     }
 }
