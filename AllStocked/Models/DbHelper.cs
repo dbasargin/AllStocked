@@ -19,7 +19,7 @@ namespace AllStocked.Models
             {
                 using (var db = new AllStockedDBEntities())
                 {
-                    Account activeAccount = db.Accounts.Where(a => a.AccountEmail == email && a.AccountPassword == password).Single();
+                    Account activeAccount = db.Accounts.Where(a => a.AccountEmail == email && a.Password == password).Single();
                     return activeAccount;
                 }
             }
@@ -66,7 +66,7 @@ namespace AllStocked.Models
                     {
                         AccountName = model.Name,
                         AccountEmail = model.Email,
-                        AccountPassword = model.Password
+                        Password = model.Password
                     };
 
                     db.Accounts.Add(newAccount);

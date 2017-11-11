@@ -14,17 +14,10 @@
           <Property Name="AccountEmail" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Status" Type="int" />
           <Property Name="Type" Type="int" />
-        </EntityType>
-        <EntityType Name="AccountLogin">
-          <Key>
-            <PropertyRef Name="LoginID" />
-          </Key>
-          <Property Name="LoginID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="AccountID" Type="int" Nullable="false" />
-          <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Hash" Type="varchar" MaxLength="8" />
           <Property Name="LastLogin" Type="datetime" />
           <Property Name="RecoveryKey" Type="varchar" MaxLength="8" />
+          <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="AccountStatus">
           <Key>
@@ -85,18 +78,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__AccountLo__Accou__3B75D760">
-          <End Role="Account" Type="Self.Account" Multiplicity="1" />
-          <End Role="AccountLogin" Type="Self.AccountLogin" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Account">
-              <PropertyRef Name="AccountID" />
-            </Principal>
-            <Dependent Role="AccountLogin">
-              <PropertyRef Name="AccountID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__Category__Accoun__1273C1CD">
           <End Role="Account" Type="Self.Account" Multiplicity="1" />
           <End Role="Category" Type="Self.Category" Multiplicity="*" />
@@ -135,7 +116,6 @@
         </Association>
         <EntityContainer Name="AllStockedDBModelStoreContainer">
           <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="AccountLogin" EntityType="Self.AccountLogin" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AccountStatus" EntityType="Self.AccountStatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AccountType" EntityType="Self.AccountType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
@@ -147,10 +127,6 @@
           <AssociationSet Name="FK__Account__Type__46E78A0C" Association="Self.FK__Account__Type__46E78A0C">
             <End Role="AccountType" EntitySet="AccountType" />
             <End Role="Account" EntitySet="Account" />
-          </AssociationSet>
-          <AssociationSet Name="FK__AccountLo__Accou__3B75D760" Association="Self.FK__AccountLo__Accou__3B75D760">
-            <End Role="Account" EntitySet="Account" />
-            <End Role="AccountLogin" EntitySet="AccountLogin" />
           </AssociationSet>
           <AssociationSet Name="FK__Category__Accoun__1273C1CD" Association="Self.FK__Category__Accoun__1273C1CD">
             <End Role="Account" EntitySet="Account" />
@@ -215,7 +191,6 @@
           </AssociationSet>
           <EntitySet Name="AccountStatus" EntityType="AllStockedDBModel.AccountStatu" />
           <EntitySet Name="AccountTypes" EntityType="AllStockedDBModel.AccountType" />
-          <EntitySet Name="AccountLogins" EntityType="AllStockedDBModel.AccountLogin" />
           <EntitySet Name="Accounts" EntityType="AllStockedDBModel.Account" />
           <AssociationSet Name="FK__Account__Status__45F365D3" Association="AllStockedDBModel.FK__Account__Status__45F365D3">
             <End Role="AccountStatu" EntitySet="AccountStatus" />
@@ -224,10 +199,6 @@
           <AssociationSet Name="FK__Account__Type__46E78A0C" Association="AllStockedDBModel.FK__Account__Type__46E78A0C">
             <End Role="AccountType" EntitySet="AccountTypes" />
             <End Role="Account" EntitySet="Accounts" />
-          </AssociationSet>
-          <AssociationSet Name="FK__AccountLo__Accou__3B75D760" Association="AllStockedDBModel.FK__AccountLo__Accou__3B75D760">
-            <End Role="Account" EntitySet="Accounts" />
-            <End Role="AccountLogin" EntitySet="AccountLogins" />
           </AssociationSet>
           <AssociationSet Name="FK__Category__Accoun__1273C1CD" Association="AllStockedDBModel.FK__Category__Accoun__1273C1CD">
             <End Role="Account" EntitySet="Accounts" />
@@ -254,20 +225,6 @@
           <Property Name="TypeName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Accounts" Relationship="AllStockedDBModel.FK__Account__Type__46E78A0C" FromRole="AccountType" ToRole="Account" />
         </EntityType>
-        <EntityType Name="AccountLogin">
-          <Key>
-            <PropertyRef Name="LoginID" />
-            <PropertyRef Name="AccountID" />
-            <PropertyRef Name="Password" />
-          </Key>
-          <Property Name="LoginID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="AccountID" Type="Int32" Nullable="false" />
-          <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Hash" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
-          <Property Name="LastLogin" Type="DateTime" Precision="3" />
-          <Property Name="RecoveryKey" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Account" Relationship="AllStockedDBModel.FK__AccountLo__Accou__3B75D760" FromRole="AccountLogin" ToRole="Account" />
-        </EntityType>
         <EntityType Name="Account">
           <Key>
             <PropertyRef Name="AccountID" />
@@ -277,9 +234,12 @@
           <Property Name="AccountEmail" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Status" Type="Int32" />
           <Property Name="Type" Type="Int32" />
+          <Property Name="Hash" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="LastLogin" Type="DateTime" Precision="3" />
+          <Property Name="RecoveryKey" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="AccountStatu" Relationship="AllStockedDBModel.FK__Account__Status__45F365D3" FromRole="Account" ToRole="AccountStatu" />
           <NavigationProperty Name="AccountType" Relationship="AllStockedDBModel.FK__Account__Type__46E78A0C" FromRole="Account" ToRole="AccountType" />
-          <NavigationProperty Name="AccountLogins" Relationship="AllStockedDBModel.FK__AccountLo__Accou__3B75D760" FromRole="Account" ToRole="AccountLogin" />
           <NavigationProperty Name="Categories" Relationship="AllStockedDBModel.FK__Category__Accoun__1273C1CD" FromRole="Account" ToRole="Category" />
           <NavigationProperty Name="Products" Relationship="AllStockedDBModel.FK__Product__Account__15502E78" FromRole="Account" ToRole="Product" />
         </EntityType>
@@ -304,18 +264,6 @@
             </Principal>
             <Dependent Role="Account">
               <PropertyRef Name="Type" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__AccountLo__Accou__3B75D760">
-          <End Type="AllStockedDBModel.Account" Role="Account" Multiplicity="1" />
-          <End Type="AllStockedDBModel.AccountLogin" Role="AccountLogin" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Account">
-              <PropertyRef Name="AccountID" />
-            </Principal>
-            <Dependent Role="AccountLogin">
-              <PropertyRef Name="AccountID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -388,21 +336,13 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="AccountLogins">
-            <EntityTypeMapping TypeName="AllStockedDBModel.AccountLogin">
-              <MappingFragment StoreEntitySet="AccountLogin">
-                <ScalarProperty Name="RecoveryKey" ColumnName="RecoveryKey" />
-                <ScalarProperty Name="LastLogin" ColumnName="LastLogin" />
-                <ScalarProperty Name="Hash" ColumnName="Hash" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="AccountID" ColumnName="AccountID" />
-                <ScalarProperty Name="LoginID" ColumnName="LoginID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Accounts">
             <EntityTypeMapping TypeName="AllStockedDBModel.Account">
               <MappingFragment StoreEntitySet="Account">
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="RecoveryKey" ColumnName="RecoveryKey" />
+                <ScalarProperty Name="LastLogin" ColumnName="LastLogin" />
+                <ScalarProperty Name="Hash" ColumnName="Hash" />
                 <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="AccountEmail" ColumnName="AccountEmail" />

@@ -16,7 +16,6 @@ namespace AllStocked
     {
         public Account()
         {
-            this.AccountLogins = new HashSet<AccountLogin>();
             this.Categories = new HashSet<Category>();
             this.Products = new HashSet<Product>();
         }
@@ -26,10 +25,13 @@ namespace AllStocked
         public string AccountEmail { get; set; }
         public Nullable<int> Status { get; set; }
         public Nullable<int> Type { get; set; }
+        public string Hash { get; set; }
+        public Nullable<System.DateTime> LastLogin { get; set; }
+        public string RecoveryKey { get; set; }
+        public string Password { get; set; }
     
         public virtual AccountStatu AccountStatu { get; set; }
         public virtual AccountType AccountType { get; set; }
-        public virtual ICollection<AccountLogin> AccountLogins { get; set; }
         public virtual ICollection<Category> Categories { get; set; }
         public virtual ICollection<Product> Products { get; set; }
     }
