@@ -32,16 +32,22 @@ namespace AllStocked.Controllers
                 Account ActiveAccount = DbHelper.getAccount(model.Email, model.Password);
                 if (ActiveAccount == null)
                 {
-                    //user credentials not found error view
-                    return View("Error");
+                    //user credentials not found:
+                    ModelState.AddModelError("", "Invalid Username or Password");
+                    return View();
                 }
-
                 // create session
                 Session["AccountID"] = ActiveAccount.AccountID;
+
+
+                //update Account lastLogin property
+                DbHelper.UpdateUsersLastLogin(ActiveAccount);
+
                 // redirect to index
                 return RedirectToAction("Index", "Products"); // Need to change this to send user to products page!!!
             }
             //return model with error messages
+
             return View(model);
         }
 

@@ -14,10 +14,10 @@
           <Property Name="AccountEmail" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Status" Type="int" />
           <Property Name="Type" Type="int" />
-          <Property Name="Hash" Type="varchar" MaxLength="8" />
           <Property Name="LastLogin" Type="datetime" />
           <Property Name="RecoveryKey" Type="varchar" MaxLength="8" />
-          <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="100" />
+          <Property Name="Hash" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="AccountStatus">
           <Key>
@@ -54,7 +54,7 @@
           <Property Name="Supply" Type="int" Nullable="false" />
           <Property Name="Description" Type="varchar" MaxLength="250" />
         </EntityType>
-        <Association Name="FK__Account__Status__45F365D3">
+        <Association Name="FK__Account__Status__03F0984C">
           <End Role="AccountStatus" Type="Self.AccountStatus" Multiplicity="0..1" />
           <End Role="Account" Type="Self.Account" Multiplicity="*" />
           <ReferentialConstraint>
@@ -66,7 +66,103 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Account__Type__46E78A0C">
+        <Association Name="FK__Account__Status__07C12930">
+          <End Role="AccountStatus" Type="Self.AccountStatus" Multiplicity="0..1" />
+          <End Role="Account" Type="Self.Account" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccountStatus">
+              <PropertyRef Name="StatusID" />
+            </Principal>
+            <Dependent Role="Account">
+              <PropertyRef Name="Status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Account__Status__0A9D95DB">
+          <End Role="AccountStatus" Type="Self.AccountStatus" Multiplicity="0..1" />
+          <End Role="Account" Type="Self.Account" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccountStatus">
+              <PropertyRef Name="StatusID" />
+            </Principal>
+            <Dependent Role="Account">
+              <PropertyRef Name="Status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Account__Status__0D7A0286">
+          <End Role="AccountStatus" Type="Self.AccountStatus" Multiplicity="0..1" />
+          <End Role="Account" Type="Self.Account" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccountStatus">
+              <PropertyRef Name="StatusID" />
+            </Principal>
+            <Dependent Role="Account">
+              <PropertyRef Name="Status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Account__Status__114A936A">
+          <End Role="AccountStatus" Type="Self.AccountStatus" Multiplicity="0..1" />
+          <End Role="Account" Type="Self.Account" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccountStatus">
+              <PropertyRef Name="StatusID" />
+            </Principal>
+            <Dependent Role="Account">
+              <PropertyRef Name="Status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Account__Type__04E4BC85">
+          <End Role="AccountType" Type="Self.AccountType" Multiplicity="0..1" />
+          <End Role="Account" Type="Self.Account" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccountType">
+              <PropertyRef Name="TypeID" />
+            </Principal>
+            <Dependent Role="Account">
+              <PropertyRef Name="Type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Account__Type__08B54D69">
+          <End Role="AccountType" Type="Self.AccountType" Multiplicity="0..1" />
+          <End Role="Account" Type="Self.Account" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccountType">
+              <PropertyRef Name="TypeID" />
+            </Principal>
+            <Dependent Role="Account">
+              <PropertyRef Name="Type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Account__Type__0B91BA14">
+          <End Role="AccountType" Type="Self.AccountType" Multiplicity="0..1" />
+          <End Role="Account" Type="Self.Account" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccountType">
+              <PropertyRef Name="TypeID" />
+            </Principal>
+            <Dependent Role="Account">
+              <PropertyRef Name="Type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Account__Type__0E6E26BF">
+          <End Role="AccountType" Type="Self.AccountType" Multiplicity="0..1" />
+          <End Role="Account" Type="Self.Account" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccountType">
+              <PropertyRef Name="TypeID" />
+            </Principal>
+            <Dependent Role="Account">
+              <PropertyRef Name="Type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Account__Type__123EB7A3">
           <End Role="AccountType" Type="Self.AccountType" Multiplicity="0..1" />
           <End Role="Account" Type="Self.Account" Multiplicity="*" />
           <ReferentialConstraint>
@@ -120,11 +216,43 @@
           <EntitySet Name="AccountType" EntityType="Self.AccountType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Account__Status__45F365D3" Association="Self.FK__Account__Status__45F365D3">
+          <AssociationSet Name="FK__Account__Status__03F0984C" Association="Self.FK__Account__Status__03F0984C">
             <End Role="AccountStatus" EntitySet="AccountStatus" />
             <End Role="Account" EntitySet="Account" />
           </AssociationSet>
-          <AssociationSet Name="FK__Account__Type__46E78A0C" Association="Self.FK__Account__Type__46E78A0C">
+          <AssociationSet Name="FK__Account__Status__07C12930" Association="Self.FK__Account__Status__07C12930">
+            <End Role="AccountStatus" EntitySet="AccountStatus" />
+            <End Role="Account" EntitySet="Account" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Account__Status__0A9D95DB" Association="Self.FK__Account__Status__0A9D95DB">
+            <End Role="AccountStatus" EntitySet="AccountStatus" />
+            <End Role="Account" EntitySet="Account" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Account__Status__0D7A0286" Association="Self.FK__Account__Status__0D7A0286">
+            <End Role="AccountStatus" EntitySet="AccountStatus" />
+            <End Role="Account" EntitySet="Account" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Account__Status__114A936A" Association="Self.FK__Account__Status__114A936A">
+            <End Role="AccountStatus" EntitySet="AccountStatus" />
+            <End Role="Account" EntitySet="Account" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Account__Type__04E4BC85" Association="Self.FK__Account__Type__04E4BC85">
+            <End Role="AccountType" EntitySet="AccountType" />
+            <End Role="Account" EntitySet="Account" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Account__Type__08B54D69" Association="Self.FK__Account__Type__08B54D69">
+            <End Role="AccountType" EntitySet="AccountType" />
+            <End Role="Account" EntitySet="Account" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Account__Type__0B91BA14" Association="Self.FK__Account__Type__0B91BA14">
+            <End Role="AccountType" EntitySet="AccountType" />
+            <End Role="Account" EntitySet="Account" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Account__Type__0E6E26BF" Association="Self.FK__Account__Type__0E6E26BF">
+            <End Role="AccountType" EntitySet="AccountType" />
+            <End Role="Account" EntitySet="Account" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Account__Type__123EB7A3" Association="Self.FK__Account__Type__123EB7A3">
             <End Role="AccountType" EntitySet="AccountType" />
             <End Role="Account" EntitySet="Account" />
           </AssociationSet>
@@ -234,10 +362,10 @@
           <Property Name="AccountEmail" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Status" Type="Int32" />
           <Property Name="Type" Type="Int32" />
-          <Property Name="Hash" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="Hash" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="LastLogin" Type="DateTime" Precision="3" />
           <Property Name="RecoveryKey" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
-          <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AccountStatu" Relationship="AllStockedDBModel.FK__Account__Status__45F365D3" FromRole="Account" ToRole="AccountStatu" />
           <NavigationProperty Name="AccountType" Relationship="AllStockedDBModel.FK__Account__Type__46E78A0C" FromRole="Account" ToRole="AccountType" />
           <NavigationProperty Name="Categories" Relationship="AllStockedDBModel.FK__Category__Accoun__1273C1CD" FromRole="Account" ToRole="Category" />
