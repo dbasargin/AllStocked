@@ -3,6 +3,10 @@
     ViewBag.Title = "Login";
 }
 
+<div>
+    @Html.ActionLink("Forgot password?", "SendRecoveryKey", "Login")
+</div>
+
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()

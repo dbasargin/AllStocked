@@ -176,6 +176,7 @@
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\Metadata.cs" />
     <Compile Include="Models\PartialClasses.cs" />
+    <Compile Include="Models\PasswordRecoveryViewModel.cs" />
     <Compile Include="Models\ProductViewModel.cs" />
     <Compile Include="Models\RegisterViewModel.cs" />
     <Compile Include="Models\SessionHelper.cs" />
@@ -251,7 +252,8 @@
     <Content Include="Views\Categories\Edit.cshtml" />
     <Content Include="Views\Categories\Index.cshtml" />
     <Content Include="Views\Products\ShoppingList.cshtml" />
-    <Content Include="Views\Login\PasswordRecovery.cshtml" />
+    <Content Include="Views\Login\SendRecoveryKey.cshtml" />
+    <Content Include="Views\Login\RecoverPassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

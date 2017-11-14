@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 
 namespace AllStocked.Controllers
@@ -23,6 +24,7 @@ namespace AllStocked.Controllers
         {
             return View();
         }
+
         [HttpPost]
         public ActionResult LogIn(LoginViewModel model)
         {
@@ -51,45 +53,118 @@ namespace AllStocked.Controllers
             return View(model);
         }
 
-        
-        //[ValidateAntiForgeryToken]
-        //public ActionResult RecoverPassword(string email)
-        //{
-        //    //check user existance
+        /// <summary>
+        /// allows user to create a password recovery sent to them by email.
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult SendRecoveryKey()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// validates user AccountEmail submission, if email is valid, creates RecoveryKey, store in database and emails
+        /// it to the user.
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult SendRecoveryKey(string email)
+        {
+            email = email.Trim();
+            var account = db.Accounts.Where(u => u.AccountEmail == email).Single();
+
+            if (account == null)
+            {
+                TempData["Message"] = "User does not exist.";
+                return View();
+            }
+            else
+            {
+                //generate password RecoveryKey token and update database
+                string token = DbHelper.RandomString();
+                account.RecoveryKey = token;
+                db.SaveChanges();
+                
+                //send mail
+                try
+                {
+
+                    DbHelper.EmailRecoveryKey(email, token);
+                    TempData["Message"] = "Mail Sent.";
+                }
+                catch (Exception ex)
+                {
+                    TempData["Message"] = "Error occured while sending email." + ex.Message;
+                }
+            }
+
+            //send to RecoverPassword View
+            return RedirectToAction("RecoverPassword", "Login");
+        }
+
+        /// <summary>
+        /// The view for this controller has a form, a user fills out to
+        /// change their password. They need to be emailed their recoveryKey 
+        /// in order to complete this form
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult RecoverPassword()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// Updates users password if Recovery Token is valid
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult RecoverPassword(PasswordRecoveryViewModel model)
+        {
+            var account = db.Accounts.Where(u => u.AccountEmail == model.AccountEmail.Trim()).Single();
             
+            //
+            if (account == null)
+            {
+                TempData["Message"] = "Invalid Email";
+            }
+            else if (account.RecoveryKey == model.RecoveryKey)
+            {
+                //Generate new Salt
+                string newSalt = Crypto.GenerateSalt();
+                //HashPassword with salt
+                string hashedPassword = Crypto.Hash(newSalt + model.Password, "SHA256");
 
-        //    var user = db.Accounts.Where(u => u.AccountEmail == email);
+                //change Account property values
+                account.Password = hashedPassword;
+                account.Hash = newSalt;
+                account.RecoveryKey = null;
 
-        //    if (user == null)
-        //    {
-        //        TempData["Message"] = "User Not exist.";
-        //    }
-        //    else
-        //    {
-        //        //generate password token
-        //        //var token = WebSecurity.GeneratePasswordResetToken(UserName);
-        //        //create url with above token
-        //        //var resetLink = "<a href='" + Url.Action("ResetPassword", "Account", new { un = UserName, rt = token }, "http") + "'>Reset Password</a>";
-        //        ////get user emailid
-        //        //UsersContext db = new UsersContext();
-        //        var emailid = email;
-        //        //send mail
-        //        string subject = "Password recovery";
-        //        string body = "<b>password for account</b>" + email + ": " + user.; //edit it
-        //        try
-        //        {
-        //            SendEMail(emailid, subject, body);
-        //            TempData["Message"] = "Mail Sent.";
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            TempData["Message"] = "Error occured while sending email." + ex.Message;
-        //        }
-        //        //only for testing
-        //        TempData["Message"] = resetLink;
-        //    }
+                try
+                {
+                    db.SaveChanges();
+                    // TO DO: Send email verification password has been changed
+                }
+                catch(Exception ex)
+                {
+                    //TO DO: log error eventually
+                    throw ex;
+                }
 
-        //    return View();
-        //}
+                //TO DO: May send to a new page displaying password change successfull
+                return RedirectToAction("Login", "Login");
+
+            }
+            else
+            {
+                TempData["Message"] = "Error processing your request";
+            }
+
+            return View();
+        }
     }
 }

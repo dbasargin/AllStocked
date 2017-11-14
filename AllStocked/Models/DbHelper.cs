@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
 using System.Web;
 using System.Web.Helpers;
 
@@ -127,5 +128,67 @@ namespace AllStocked.Models
             }
 
         }
+
+        //generates a random string of characters of length 8
+        public static string RandomString()
+        {
+            Random random = new Random();
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            return new string(Enumerable.Repeat(chars, 8).Select(s => s[random.Next(s.Length)]).ToArray());
+        }
+
+
+        /// <summary>
+        /// sends recoveryKey to userEmail
+        /// </summary>
+        /// <param name="userEmail"></param>
+        /// <param name="recoveryKey"></param>
+        /// <returns></returns>
+        public static bool EmailRecoveryKey(string userEmail, string recoveryKey)
+        {
+            //email message
+            MailMessage mail = new MailMessage();
+            mail.To.Add(userEmail.Trim());
+            mail.From = new MailAddress("CompanyEmail@fake.com", "Password Recovery", System.Text.Encoding.UTF8);
+            mail.Subject = "AllStocked password recovery";
+            mail.SubjectEncoding = System.Text.Encoding.UTF8;
+            mail.Body = "Your Recovery Key is =  " + recoveryKey;
+            mail.BodyEncoding = System.Text.Encoding.UTF8;
+            mail.IsBodyHtml = true;
+            mail.Priority = MailPriority.High;
+
+            //email Credential for outlook
+            SmtpClient client = new SmtpClient();
+            client.Credentials = new System.Net.NetworkCredential("CompanyEmail@fake.com", "password");
+            client.Port = 587;
+            client.Host = "smtp-mail.outlook.com";
+            client.EnableSsl = true;
+
+            try
+            {
+                client.Send(mail);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                //TO DO: Some exception handling I viewed on the Stack, will look into it..
+                Exception ex2 = ex;
+                string errorMessage = string.Empty;
+                while (ex2 != null)
+                {
+                    errorMessage += ex2.ToString();
+                    ex2 = ex2.InnerException;
+                }
+
+                return false;
+            }
+            finally
+            {
+                mail.Dispose();
+                client.Dispose();
+            }   
+        }
+
+
     }
 }

@@ -1,0 +1,17 @@
+﻿
+@{
+    ViewBag.Title = "SendRecoveryKey";
+}
+
+<h2>Password Recovery</h2>
+
+@using (Html.BeginForm("SendRecoveryKey", "Login"))
+{
+    @Html.AntiForgeryToken()
+    
+    <h4>Enter your email address:</h4>
+
+    <input type="text" name="email" />
+        <input type="submit" value="Submit" />
+}
+

@@ -16,7 +16,7 @@ namespace AllStocked.Models
             public string Email { get; set; }
 
             [DataType(DataType.Password)]
-            [StringLength(150, MinimumLength = 6)]
+            [StringLength(50, MinimumLength = 6)]
             [Required]
             public string Password { get; set; }
 
