@@ -10,7 +10,7 @@
             <PropertyRef Name="AccountID" />
           </Key>
           <Property Name="AccountID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="AccountName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="AccountEmail" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Status" Type="int" />
           <Property Name="Type" Type="int" />
@@ -18,6 +18,7 @@
           <Property Name="RecoveryKey" Type="varchar" MaxLength="8" />
           <Property Name="Password" Type="nvarchar" MaxLength="100" />
           <Property Name="Hash" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="AccountStatus">
           <Key>
@@ -53,6 +54,18 @@
           <Property Name="Demand" Type="int" Nullable="false" />
           <Property Name="Supply" Type="int" Nullable="false" />
           <Property Name="Description" Type="varchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="SecondaryAccountAccess">
+          <Key>
+            <PropertyRef Name="SecondaryAccountAccessID" />
+          </Key>
+          <Property Name="SecondaryAccountAccessID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OwnerAccountID" Type="int" Nullable="false" />
+          <Property Name="SecondaryAccountEmail" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="AccessToken" Type="varchar" MaxLength="8" />
+          <Property Name="OwnerEnabled" Type="bit" Nullable="false" />
+          <Property Name="SecondaryEnabled" Type="bit" Nullable="false" />
+          <Property Name="LastEdited" Type="datetime" />
         </EntityType>
         <Association Name="FK__Account__Status__03F0984C">
           <End Role="AccountStatus" Type="Self.AccountStatus" Multiplicity="0..1" />
@@ -210,12 +223,28 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Secondary__Owner__29221CFB">
+          <End Role="Account" Type="Self.Account" Multiplicity="1" />
+          <End Role="SecondaryAccountAccess" Type="Self.SecondaryAccountAccess" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="AccountID" />
+            </Principal>
+            <Dependent Role="SecondaryAccountAccess">
+              <PropertyRef Name="OwnerAccountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <!--Errors Found During Generation:
+warning 6035: The relationship 'FK__Secondary__Secon__2A164134' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
+        <Association Name="FK__Secondary__Secon__2A164134" />-->
         <EntityContainer Name="AllStockedDBModelStoreContainer">
           <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AccountStatus" EntityType="Self.AccountStatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AccountType" EntityType="Self.AccountType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SecondaryAccountAccess" EntityType="Self.SecondaryAccountAccess" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK__Account__Status__03F0984C" Association="Self.FK__Account__Status__03F0984C">
             <End Role="AccountStatus" EntitySet="AccountStatus" />
             <End Role="Account" EntitySet="Account" />
@@ -268,6 +297,10 @@
             <End Role="Category" EntitySet="Category" />
             <End Role="Product" EntitySet="Product" />
           </AssociationSet>
+          <AssociationSet Name="FK__Secondary__Owner__29221CFB" Association="Self.FK__Secondary__Owner__29221CFB">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="SecondaryAccountAccess" EntitySet="SecondaryAccountAccess" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -319,14 +352,15 @@
           </AssociationSet>
           <EntitySet Name="AccountStatus" EntityType="AllStockedDBModel.AccountStatu" />
           <EntitySet Name="AccountTypes" EntityType="AllStockedDBModel.AccountType" />
+          <EntitySet Name="SecondaryAccountAccesses" EntityType="AllStockedDBModel.SecondaryAccountAccess" />
           <EntitySet Name="Accounts" EntityType="AllStockedDBModel.Account" />
-          <AssociationSet Name="FK__Account__Status__45F365D3" Association="AllStockedDBModel.FK__Account__Status__45F365D3">
+          <AssociationSet Name="FK__Account__Status__0D7A0286" Association="AllStockedDBModel.FK__Account__Status__0D7A0286">
             <End Role="AccountStatu" EntitySet="AccountStatus" />
             <End Role="Account" EntitySet="Accounts" />
           </AssociationSet>
-          <AssociationSet Name="FK__Account__Type__46E78A0C" Association="AllStockedDBModel.FK__Account__Type__46E78A0C">
-            <End Role="AccountType" EntitySet="AccountTypes" />
-            <End Role="Account" EntitySet="Accounts" />
+          <AssociationSet Name="FK__Account__Type__04E4BC85" Association="AllStockedDBModel.FK__Account__Type__04E4BC85">
+            <End EntitySet="AccountTypes" Role="AccountType" />
+            <End EntitySet="Accounts" Role="Account" />
           </AssociationSet>
           <AssociationSet Name="FK__Category__Accoun__1273C1CD" Association="AllStockedDBModel.FK__Category__Accoun__1273C1CD">
             <End Role="Account" EntitySet="Accounts" />
@@ -336,6 +370,10 @@
             <End Role="Account" EntitySet="Accounts" />
             <End Role="Product" EntitySet="Products" />
           </AssociationSet>
+          <AssociationSet Name="FK__Secondary__Owner__29221CFB" Association="AllStockedDBModel.FK__Secondary__Owner__29221CFB">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="SecondaryAccountAccess" EntitySet="SecondaryAccountAccesses" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="AccountStatu">
           <Key>
@@ -343,7 +381,6 @@
           </Key>
           <Property Name="StatusID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="StatusName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Accounts" Relationship="AllStockedDBModel.FK__Account__Status__45F365D3" FromRole="AccountStatu" ToRole="Account" />
         </EntityType>
         <EntityType Name="AccountType">
           <Key>
@@ -351,27 +388,41 @@
           </Key>
           <Property Name="TypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TypeName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Accounts" Relationship="AllStockedDBModel.FK__Account__Type__46E78A0C" FromRole="AccountType" ToRole="Account" />
+          <NavigationProperty Name="Accounts" Relationship="AllStockedDBModel.FK__Account__Type__04E4BC85" FromRole="AccountType" ToRole="Account" />
+        </EntityType>
+        <EntityType Name="SecondaryAccountAccess">
+          <Key>
+            <PropertyRef Name="SecondaryAccountAccessID" />
+          </Key>
+          <Property Name="SecondaryAccountAccessID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OwnerAccountID" Type="Int32" Nullable="false" />
+          <Property Name="SecondaryAccountEmail" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AccessToken" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="OwnerEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="SecondaryEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="LastEdited" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Account" Relationship="AllStockedDBModel.FK__Secondary__Owner__29221CFB" FromRole="SecondaryAccountAccess" ToRole="Account" />
         </EntityType>
         <EntityType Name="Account">
           <Key>
             <PropertyRef Name="AccountID" />
           </Key>
           <Property Name="AccountID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="AccountName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="AccountEmail" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Status" Type="Int32" />
           <Property Name="Type" Type="Int32" />
-          <Property Name="Hash" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="LastLogin" Type="DateTime" Precision="3" />
           <Property Name="RecoveryKey" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
           <Property Name="Password" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AccountStatu" Relationship="AllStockedDBModel.FK__Account__Status__45F365D3" FromRole="Account" ToRole="AccountStatu" />
-          <NavigationProperty Name="AccountType" Relationship="AllStockedDBModel.FK__Account__Type__46E78A0C" FromRole="Account" ToRole="AccountType" />
+          <Property Name="Hash" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="AccountType" Relationship="AllStockedDBModel.FK__Account__Type__04E4BC85" FromRole="Account" ToRole="AccountType" />
           <NavigationProperty Name="Categories" Relationship="AllStockedDBModel.FK__Category__Accoun__1273C1CD" FromRole="Account" ToRole="Category" />
           <NavigationProperty Name="Products" Relationship="AllStockedDBModel.FK__Product__Account__15502E78" FromRole="Account" ToRole="Product" />
+          <NavigationProperty Name="SecondaryAccountAccesses" Relationship="AllStockedDBModel.FK__Secondary__Owner__29221CFB" FromRole="Account" ToRole="SecondaryAccountAccess" />
         </EntityType>
-        <Association Name="FK__Account__Status__45F365D3">
+        <Association Name="FK__Account__Status__0D7A0286">
           <End Type="AllStockedDBModel.AccountStatu" Role="AccountStatu" Multiplicity="0..1" />
           <End Type="AllStockedDBModel.Account" Role="Account" Multiplicity="*" />
           <ReferentialConstraint>
@@ -383,9 +434,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Account__Type__46E78A0C">
-          <End Type="AllStockedDBModel.AccountType" Role="AccountType" Multiplicity="0..1" />
-          <End Type="AllStockedDBModel.Account" Role="Account" Multiplicity="*" />
+        <Association Name="FK__Account__Type__04E4BC85">
+          <End Type="AllStockedDBModel.AccountType" Multiplicity="0..1" Role="AccountType" />
+          <End Type="AllStockedDBModel.Account" Multiplicity="*" Role="Account" />
           <ReferentialConstraint>
             <Principal Role="AccountType">
               <PropertyRef Name="TypeID" />
@@ -416,6 +467,18 @@
             </Principal>
             <Dependent Role="Product">
               <PropertyRef Name="AccountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Secondary__Owner__29221CFB">
+          <End Type="AllStockedDBModel.Account" Role="Account" Multiplicity="1" />
+          <End Type="AllStockedDBModel.SecondaryAccountAccess" Role="SecondaryAccountAccess" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="AccountID" />
+            </Principal>
+            <Dependent Role="SecondaryAccountAccess">
+              <PropertyRef Name="OwnerAccountID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -464,17 +527,31 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="SecondaryAccountAccesses">
+            <EntityTypeMapping TypeName="AllStockedDBModel.SecondaryAccountAccess">
+              <MappingFragment StoreEntitySet="SecondaryAccountAccess">
+                <ScalarProperty Name="LastEdited" ColumnName="LastEdited" />
+                <ScalarProperty Name="SecondaryEnabled" ColumnName="SecondaryEnabled" />
+                <ScalarProperty Name="OwnerEnabled" ColumnName="OwnerEnabled" />
+                <ScalarProperty Name="AccessToken" ColumnName="AccessToken" />
+                <ScalarProperty Name="SecondaryAccountEmail" ColumnName="SecondaryAccountEmail" />
+                <ScalarProperty Name="OwnerAccountID" ColumnName="OwnerAccountID" />
+                <ScalarProperty Name="SecondaryAccountAccessID" ColumnName="SecondaryAccountAccessID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Accounts">
             <EntityTypeMapping TypeName="AllStockedDBModel.Account">
               <MappingFragment StoreEntitySet="Account">
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Hash" ColumnName="Hash" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="RecoveryKey" ColumnName="RecoveryKey" />
                 <ScalarProperty Name="LastLogin" ColumnName="LastLogin" />
-                <ScalarProperty Name="Hash" ColumnName="Hash" />
                 <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="AccountEmail" ColumnName="AccountEmail" />
-                <ScalarProperty Name="AccountName" ColumnName="AccountName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="AccountID" ColumnName="AccountID" />
               </MappingFragment>
             </EntityTypeMapping>

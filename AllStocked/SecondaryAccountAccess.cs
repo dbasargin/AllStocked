@@ -12,9 +12,16 @@ namespace AllStocked
     using System;
     using System.Collections.Generic;
     
-    public partial class AccountStatu
+    public partial class SecondaryAccountAccess
     {
-        public int StatusID { get; set; }
-        public string StatusName { get; set; }
+        public int SecondaryAccountAccessID { get; set; }
+        public int OwnerAccountID { get; set; }
+        public string SecondaryAccountEmail { get; set; }
+        public string AccessToken { get; set; }
+        public bool OwnerEnabled { get; set; }
+        public bool SecondaryEnabled { get; set; }
+        public Nullable<System.DateTime> LastEdited { get; set; }
+    
+        public virtual Account Account { get; set; }
     }
 }

@@ -9,7 +9,9 @@ namespace AllStocked.Models
     public class RegisterViewModel
     {
             [Required]
-            public string Name { get; set; }
+            public string FirstName { get; set; }
+            [Required]
+            public string LastName { get; set; }
 
             [Required]
             [EmailAddress]

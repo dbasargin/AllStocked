@@ -88,7 +88,8 @@ namespace AllStocked.Models
                 {
                     var newAccount = new Account
                     {
-                        AccountName = model.Name,
+                        FirstName = model.FirstName,
+                        LastName = model.LastName,
                         AccountEmail = model.Email,
                         Status = 1,                     //Initialize status to be active
                         LastLogin = DateTime.Now,

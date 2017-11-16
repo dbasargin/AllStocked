@@ -29,6 +29,7 @@ namespace AllStocked
         public DbSet<Product> Products { get; set; }
         public DbSet<AccountStatu> AccountStatus { get; set; }
         public DbSet<AccountType> AccountTypes { get; set; }
+        public DbSet<SecondaryAccountAccess> SecondaryAccountAccesses { get; set; }
         public DbSet<Account> Accounts { get; set; }
     }
 }
