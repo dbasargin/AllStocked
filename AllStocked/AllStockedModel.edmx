@@ -350,14 +350,9 @@ warning 6035: The relationship 'FK__Secondary__Secon__2A164134' has columns that
             <End Role="Category" EntitySet="Categories" />
             <End Role="Product" EntitySet="Products" />
           </AssociationSet>
-          <EntitySet Name="AccountStatus" EntityType="AllStockedDBModel.AccountStatu" />
           <EntitySet Name="AccountTypes" EntityType="AllStockedDBModel.AccountType" />
           <EntitySet Name="SecondaryAccountAccesses" EntityType="AllStockedDBModel.SecondaryAccountAccess" />
           <EntitySet Name="Accounts" EntityType="AllStockedDBModel.Account" />
-          <AssociationSet Name="FK__Account__Status__0D7A0286" Association="AllStockedDBModel.FK__Account__Status__0D7A0286">
-            <End Role="AccountStatu" EntitySet="AccountStatus" />
-            <End Role="Account" EntitySet="Accounts" />
-          </AssociationSet>
           <AssociationSet Name="FK__Account__Type__04E4BC85" Association="AllStockedDBModel.FK__Account__Type__04E4BC85">
             <End EntitySet="AccountTypes" Role="AccountType" />
             <End EntitySet="Accounts" Role="Account" />
@@ -374,14 +369,12 @@ warning 6035: The relationship 'FK__Secondary__Secon__2A164134' has columns that
             <End Role="Account" EntitySet="Accounts" />
             <End Role="SecondaryAccountAccess" EntitySet="SecondaryAccountAccesses" />
           </AssociationSet>
+          <EntitySet Name="AccountStatus" EntityType="AllStockedDBModel.AccountStatu" />
+          <AssociationSet Name="FK__Account__Status__03F0984C" Association="AllStockedDBModel.FK__Account__Status__03F0984C">
+            <End EntitySet="AccountStatus" Role="AccountStatu" />
+            <End EntitySet="Accounts" Role="Account" />
+          </AssociationSet>
           </EntityContainer>
-        <EntityType Name="AccountStatu">
-          <Key>
-            <PropertyRef Name="StatusID" />
-          </Key>
-          <Property Name="StatusID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="StatusName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-        </EntityType>
         <EntityType Name="AccountType">
           <Key>
             <PropertyRef Name="TypeID" />
@@ -421,19 +414,8 @@ warning 6035: The relationship 'FK__Secondary__Secon__2A164134' has columns that
           <NavigationProperty Name="Categories" Relationship="AllStockedDBModel.FK__Category__Accoun__1273C1CD" FromRole="Account" ToRole="Category" />
           <NavigationProperty Name="Products" Relationship="AllStockedDBModel.FK__Product__Account__15502E78" FromRole="Account" ToRole="Product" />
           <NavigationProperty Name="SecondaryAccountAccesses" Relationship="AllStockedDBModel.FK__Secondary__Owner__29221CFB" FromRole="Account" ToRole="SecondaryAccountAccess" />
+          <NavigationProperty Name="AccountStatu" Relationship="AllStockedDBModel.FK__Account__Status__03F0984C" FromRole="Account" ToRole="AccountStatu" />
         </EntityType>
-        <Association Name="FK__Account__Status__0D7A0286">
-          <End Type="AllStockedDBModel.AccountStatu" Role="AccountStatu" Multiplicity="0..1" />
-          <End Type="AllStockedDBModel.Account" Role="Account" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AccountStatu">
-              <PropertyRef Name="StatusID" />
-            </Principal>
-            <Dependent Role="Account">
-              <PropertyRef Name="Status" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__Account__Type__04E4BC85">
           <End Type="AllStockedDBModel.AccountType" Multiplicity="0..1" Role="AccountType" />
           <End Type="AllStockedDBModel.Account" Multiplicity="*" Role="Account" />
@@ -482,6 +464,26 @@ warning 6035: The relationship 'FK__Secondary__Secon__2A164134' has columns that
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="AccountStatu">
+          <Key>
+            <PropertyRef Name="StatusID" />
+          </Key>
+          <Property Name="StatusID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StatusName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Accounts" Relationship="AllStockedDBModel.FK__Account__Status__03F0984C" FromRole="AccountStatu" ToRole="Account" />
+        </EntityType>
+        <Association Name="FK__Account__Status__03F0984C">
+          <End Type="AllStockedDBModel.AccountStatu" Multiplicity="0..1" Role="AccountStatu" />
+          <End Type="AllStockedDBModel.Account" Multiplicity="*" Role="Account" />
+          <ReferentialConstraint>
+            <Principal Role="AccountStatu">
+              <PropertyRef Name="StatusID" />
+            </Principal>
+            <Dependent Role="Account">
+              <PropertyRef Name="Status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -508,14 +510,6 @@ warning 6035: The relationship 'FK__Secondary__Secon__2A164134' has columns that
                 <ScalarProperty Name="Demand" ColumnName="Demand" />
                 <ScalarProperty Name="Supply" ColumnName="Supply" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="AccountStatus">
-            <EntityTypeMapping TypeName="AllStockedDBModel.AccountStatu">
-              <MappingFragment StoreEntitySet="AccountStatus">
-                <ScalarProperty Name="StatusName" ColumnName="StatusName" />
-                <ScalarProperty Name="StatusID" ColumnName="StatusID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -553,6 +547,14 @@ warning 6035: The relationship 'FK__Secondary__Secon__2A164134' has columns that
                 <ScalarProperty Name="AccountEmail" ColumnName="AccountEmail" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="AccountID" ColumnName="AccountID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AccountStatus">
+            <EntityTypeMapping TypeName="AllStockedDBModel.AccountStatu">
+              <MappingFragment StoreEntitySet="AccountStatus">
+                <ScalarProperty Name="StatusName" ColumnName="StatusName" />
+                <ScalarProperty Name="StatusID" ColumnName="StatusID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

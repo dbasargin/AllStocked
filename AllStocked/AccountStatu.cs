@@ -14,7 +14,14 @@ namespace AllStocked
     
     public partial class AccountStatu
     {
+        public AccountStatu()
+        {
+            this.Accounts = new HashSet<Account>();
+        }
+    
         public int StatusID { get; set; }
         public string StatusName { get; set; }
+    
+        public virtual ICollection<Account> Accounts { get; set; }
     }
 }

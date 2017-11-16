@@ -8,15 +8,15 @@
         <EntityTypeShape EntityType="AllStockedDBModel.Category" Width="1.5" PointX="5.75" PointY="3.25" IsExpanded="true" />
         <EntityTypeShape EntityType="AllStockedDBModel.Product" Width="1.5" PointX="8" PointY="2.75" IsExpanded="true" />
         <AssociationConnector Association="AllStockedDBModel.FK__Product__Categor__164452B1" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="AllStockedDBModel.AccountStatu" Width="1.5" PointX="1.25" PointY="2.75" />
         <EntityTypeShape EntityType="AllStockedDBModel.AccountType" Width="1.5" PointX="1.25" PointY="5.125" />
         <EntityTypeShape EntityType="AllStockedDBModel.SecondaryAccountAccess" Width="1.5" PointX="5.75" PointY="6.75" />
         <EntityTypeShape EntityType="AllStockedDBModel.Account" Width="1.5" PointX="3.625" PointY="2.625" />
-        <AssociationConnector Association="AllStockedDBModel.FK__Account__Status__0D7A0286" />
         <AssociationConnector Association="AllStockedDBModel.FK__Account__Type__04E4BC85" />
         <AssociationConnector Association="AllStockedDBModel.FK__Category__Accoun__1273C1CD" />
         <AssociationConnector Association="AllStockedDBModel.FK__Product__Account__15502E78" />
         <AssociationConnector Association="AllStockedDBModel.FK__Secondary__Owner__29221CFB" />
+        <EntityTypeShape EntityType="AllStockedDBModel.AccountStatu" Width="1.5" PointX="1.375" PointY="1.75" />
+        <AssociationConnector Association="AllStockedDBModel.FK__Account__Status__03F0984C" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

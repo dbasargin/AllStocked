@@ -36,5 +36,6 @@ namespace AllStocked
         public virtual ICollection<Category> Categories { get; set; }
         public virtual ICollection<Product> Products { get; set; }
         public virtual ICollection<SecondaryAccountAccess> SecondaryAccountAccesses { get; set; }
+        public virtual AccountStatu AccountStatu { get; set; }
     }
 }
