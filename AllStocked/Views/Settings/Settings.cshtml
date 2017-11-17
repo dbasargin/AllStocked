@@ -1,0 +1,20 @@
+﻿@model AllStocked.Models.SettingsViewModel
+@{
+    ViewBag.Title = "Settings";
+}
+
+<h2>Settings</h2>
+
+<br />
+@*display editAccount Partial View*@
+@Html.Partial("EditAccount", @Model.Account)
+
+<br />
+@*display list of Accounts Partial View*@
+@Html.Partial("SecondaryAccountList", @Model.ListSecondaryAccounts)
+
+<br />
+@*display Create Secondary Account Partial View*@
+@Html.Partial("CreateSecondaryAccountAccess", new SecondaryAccountAccess())
+
+<hr />

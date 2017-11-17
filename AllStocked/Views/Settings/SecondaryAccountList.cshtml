@@ -1,0 +1,42 @@
+﻿@model IEnumerable<AllStocked.Models.SecondaryAccountAccessViewModel>
+
+<h4>Manage Accounts</h4>
+<table class="table">
+    <tr>
+        <th>
+
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.SecondaryAccountEmail)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastEdited)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SecondaryAccountEmail)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Status)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastEdited)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>

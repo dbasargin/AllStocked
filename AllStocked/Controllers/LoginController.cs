@@ -31,19 +31,19 @@ namespace AllStocked.Controllers
             if (ModelState.IsValid)
             {
                 //db code
-                Account ActiveAccount = DbHelper.getAccount(model.Email, model.Password);
-                if (ActiveAccount == null)
+                Account currAccount = DbHelper.getAccount(model.Email, model.Password);
+                if (currAccount == null)
                 {
                     //user credentials not found:
                     ModelState.AddModelError("", "Invalid Username or Password");
                     return View();
                 }
                 // create session
-                Session["AccountID"] = ActiveAccount.AccountID;
+                Session["AccountID"] = currAccount.AccountID;
 
 
                 //update Account lastLogin property
-                DbHelper.UpdateUsersLastLogin(ActiveAccount);
+                DbHelper.UpdateUsersLastLogin(currAccount);
 
                 // redirect to index
                 return RedirectToAction("Index", "Products"); // Need to change this to send user to products page!!!
@@ -130,7 +130,7 @@ namespace AllStocked.Controllers
             //
             if (account == null)
             {
-                TempData["Message"] = "Invalid Email";
+                ModelState.AddModelError("", "Invalid Email");
             }
             else if (account.RecoveryKey == model.RecoveryKey)
             {
@@ -161,7 +161,7 @@ namespace AllStocked.Controllers
             }
             else
             {
-                TempData["Message"] = "Error processing your request";
+                ModelState.AddModelError("", "Error processing your request");
             }
 
             return View();

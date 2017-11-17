@@ -36,7 +36,8 @@ namespace AllStocked.Models
                     { 
                         return Account;
                     }
-                    else {
+                    else
+                    {
                         return nullAccount;
                     }
                 }
@@ -49,6 +50,31 @@ namespace AllStocked.Models
             }
         }
 
+        /// <summary>
+        /// Checks database if the account exists by email
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        public static bool DoesAccountExist(string email)
+        {
+            bool exists = false;
+            try
+            {
+                using (var db = new AllStockedDBEntities())
+                {
+                    Account account = db.Accounts.Where(a => a.AccountEmail == email).Single();
+                    if(account != null)
+                    {
+                        exists = true;
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+            return exists;
+        }
         /// <summary>
         /// This retrieves the entire account by email later change to just account ID
         /// </summary>
@@ -67,6 +93,7 @@ namespace AllStocked.Models
             catch
             {
                 throw new Exception("Issue Getting member from database");
+                
             }
         }
 

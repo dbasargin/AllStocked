@@ -169,17 +169,21 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
+    <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\DbHelper.cs" />
+    <Compile Include="Models\EditAccountViewModel.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\Metadata.cs" />
     <Compile Include="Models\PartialClasses.cs" />
     <Compile Include="Models\PasswordRecoveryViewModel.cs" />
     <Compile Include="Models\ProductViewModel.cs" />
     <Compile Include="Models\RegisterViewModel.cs" />
+    <Compile Include="Models\SecondaryAccountAccessViewModel.cs" />
     <Compile Include="Models\SessionHelper.cs" />
+    <Compile Include="Models\SettingsViewModel.cs" />
     <Compile Include="Models\ShoppingListViewModel.cs" />
     <Compile Include="Product.cs">
       <DependentUpon>AllStockedModel.tt</DependentUpon>
@@ -257,6 +261,10 @@
     <Content Include="Views\Products\ShoppingList.cshtml" />
     <Content Include="Views\Login\SendRecoveryKey.cshtml" />
     <Content Include="Views\Login\RecoverPassword.cshtml" />
+    <Content Include="Views\Settings\Settings.cshtml" />
+    <Content Include="Views\Settings\EditAccount.cshtml" />
+    <Content Include="Views\Settings\SecondaryAccountList.cshtml" />
+    <Content Include="Views\Settings\CreateSecondaryAccountAccess.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -91,7 +91,8 @@ namespace AllStocked.Controllers
 
             if (SessionHelper.IsMemberLoggedIn())
             {
-                int currentId = Convert.ToInt32(HttpContext.Session["AccountID"]);
+                int currentId = SessionHelper.getAccountIdFromSession();
+                
                 //Get list of products that have a an account id that match current session.
                 var products = db.Products.Where(p => p.AccountID == currentId).OrderBy(p => p.Category.CategoryName).ThenBy(p => p.ProductName).Include(p => p.Account).Include(p => p.Category);
                 if (!String.IsNullOrEmpty(searchString))

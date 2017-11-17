@@ -32,6 +32,7 @@
                     <li class="navbarD">@Html.ActionLink("Products", "Index", "Products", null, new { @class = "navToBlack" })</li>// products page
                     <li class="navbarD">@Html.ActionLink("Create New Product", "Create", "Products", null, new { @class = "navToBlack" }) </li> //Create Products Page
                     <li class="navbarD">@Html.ActionLink("Shopping List", "ShoppingList", "Products", null, new { @class = "navToBlack" }) </li> //Create Products Page
+                    <li class="navbarD">@Html.ActionLink("Settings", "Settings", "Settings", null, new { @class = "navToBlack" }) </li> //Create Products Page
                     }
                 </ul>
                 @if (HttpContext.Current.Session["AccountID"] != null)

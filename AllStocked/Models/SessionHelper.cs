@@ -18,10 +18,15 @@ namespace AllStocked.Models
                 return true;
             }
         }
+
         public static void AbandonSession()
         {
             HttpContext.Current.Session.Remove("AccountID");
         }
 
+        public static int getAccountIdFromSession(){
+
+            return Convert.ToInt32(HttpContext.Current.Session["AccountID"]);
+        }
     }
 }
