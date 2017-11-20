@@ -9,6 +9,7 @@ using System.Resources;
 
 namespace AllStocked
 {
+    // This Metadata class allows me to add Data Annotations to my Project, While using a Ef Database First Design
     public class ProductMetadata
     {
         public int ProductID { get; set; }
@@ -43,6 +44,7 @@ namespace AllStocked
         public virtual Category Category { get; set; }
     }
 
+    //Enum needed for custom Data Anotations
     public enum GenericCompareOperator
     {
         GreaterThan,
@@ -51,6 +53,7 @@ namespace AllStocked
         LessThanOrEqual
     }
 
+    //This Class Adds Custom Data Annotations: GreaterThan, GreaterThanOrEqual, LessThan, and  LessThanOrEqual 
     public sealed class GenericCompareAttribute : ValidationAttribute, IClientValidatable
     {
      

@@ -45,7 +45,7 @@ namespace AllStocked.Controllers
 
                 if (isSuccessful)
                 {
-                    Session["AccountID"] = DbHelper.getAccountIdByEmail(model.Email);
+                    Session["AccountID"] = DbHelper.GetAccountIdByEmail(model.Email);
                     return RedirectToAction("Index", "Home");
                 }
                 // todo return to home page

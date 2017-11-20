@@ -27,11 +27,26 @@ namespace AllStocked
             SecondaryEnabled = false;
             LastEdited = DateTime.Now;
         }
-    }
 
-    public partial class SecondaryAccountAccess
-    {
-        public SecondaryAccountAccess(){ } // Parameterless constructor
+        // Parameterless constructor
+        public SecondaryAccountAccess(){ } 
+
+        //Determines the status of the secondary account
+        public string getStatus()
+        {
+            if (OwnerEnabled == true && SecondaryEnabled == true)
+            {
+                return "Active";
+            }
+            else if (OwnerEnabled == true && SecondaryEnabled == false)
+            {
+                return "Pending";
+            }
+            else
+            {
+                return "Disabled";
+            }
+        }
     }
 
 }

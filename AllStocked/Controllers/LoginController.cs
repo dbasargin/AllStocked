@@ -31,7 +31,7 @@ namespace AllStocked.Controllers
             if (ModelState.IsValid)
             {
                 //db code
-                Account currAccount = DbHelper.getAccount(model.Email, model.Password);
+                Account currAccount = DbHelper.GetAccountByLogin(model.Email, model.Password);
                 if (currAccount == null)
                 {
                     //user credentials not found:

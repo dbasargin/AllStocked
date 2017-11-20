@@ -17,22 +17,26 @@ namespace AllStocked.Models
         [Display(Name = "Last Edited")]
         public Nullable<System.DateTime> LastEdited { get; set; }
 
+        //Turns model into View Model
         public SecondaryAccountAccessViewModel(SecondaryAccountAccess model)
         {
             SecondaryAccountEmail = model.SecondaryAccountEmail;
             LastEdited = model.LastEdited;
+            Status = model.getStatus();
+        }
 
-            if (model.OwnerEnabled == true && model.SecondaryEnabled == true)
+        // On The SecondaryAccountAccessList Partial View there is a button that needs to be calculated.
+        // If Account is Active or Pending the button needs to say Disable else Activate.
+        // This method makes this easier 
+        public string GetChangeStatusButtonName()
+        {
+            if(Status == "Pending" || Status ==  "Active")
             {
-                Status = "Active";
-            }
-            else if (model.OwnerEnabled == true && model.SecondaryEnabled == false)
-            {
-                Status = "Pending";
+                return "Disable";
             }
             else
             {
-                Status = "Suspended";
+                return "Activate";
             }
         }
     }

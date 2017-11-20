@@ -13,7 +13,8 @@ namespace AllStocked.Models
         public string AccountEmail { get; set; }
         public AccountType AccountType { get; set; }
 
-        public EditAccountViewModel(){ } //Parameterless constructor
+        //Parameterless constructor
+        public EditAccountViewModel(){ } 
 
         //Constructor(turn account into EditAccountViewModel)
         public EditAccountViewModel(Account account)

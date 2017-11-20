@@ -22,7 +22,10 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            @using (Html.BeginForm("DeleteSecondaryAccount", "Settings"))
+            {
+                <button type="submit" name="email" value="@item.SecondaryAccountEmail"> Delete</button>
+            }
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.SecondaryAccountEmail)
@@ -36,7 +39,15 @@
         <td>
             @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ })
         </td>
-    </tr>
+
+        @*Only Display this message if account is of type Owner*@
+        <td>
+            @using (Html.BeginForm("ChangeSecondaryAccountStatus", "Settings"))
+            {
+                <button type="submit" name ="email"value="@item.SecondaryAccountEmail"> @item.GetChangeStatusButtonName()</button>
+            }
+        </td>
+</tr>
 }
 
 </table>

@@ -15,7 +15,7 @@ namespace AllStocked.Models
         /// <param name="email"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        public static Account getAccount(string email, string passwordAttempt)
+        public static Account GetAccountByLogin(string email, string passwordAttempt)
         {
             Account nullAccount = null;
 
@@ -75,12 +75,13 @@ namespace AllStocked.Models
             }
             return exists;
         }
+
         /// <summary>
         /// This retrieves the entire account by email later change to just account ID
         /// </summary>
         /// <param name="email"></param>
         /// <returns></returns>
-        public static int getAccountIdByEmail(string email)
+        public static int GetAccountIdByEmail(string email)
         {
             try
             {
@@ -92,8 +93,106 @@ namespace AllStocked.Models
             }
             catch
             {
-                throw new Exception("Issue Getting member from database");
+                throw new Exception("Could not get AccountID with an AccountEmail of: " + email);
                 
+            }
+        }
+
+        //return the first name and last name of account by given AccountID
+        public static string GetAccountFullNameById(int id)
+        {
+            try
+            {
+                using (var db = new AllStockedDBEntities())
+                {
+                    Account account = db.Accounts.Where(a => a.AccountID == id).Single();
+                    return account.FirstName + " " + account.LastName;
+                }
+            }
+            catch
+            {
+                throw new Exception("Could not get AccountEmail with an AccountID of: " + id );
+
+            }
+        }
+
+        //important to check as to not make account secondary to multiple accounts
+        //Checks SecondaryAccountAccess table NOT Account.Type property
+        public static bool IsAccountAlreadySecondary(string secondaryEmail)
+        {
+            try
+            {
+                using (var db = new AllStockedDBEntities())
+                {
+                    SecondaryAccountAccess secondaryAccount = db.SecondaryAccountAccesses.Where(a => a.SecondaryAccountEmail == secondaryEmail).Single();
+                    if(secondaryAccount == null)
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        return true;
+                    }
+                }
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        // This method checks changes the OwnerEnabled fields to the opposite
+        // of what they currently are. Activates or deactivates secondary account.
+        public static bool ModifySecondaryAccountStatus(string secondaryEmail)
+        {
+            try
+            {
+                using (var db = new AllStockedDBEntities())
+                {
+                    SecondaryAccountAccess secondaryAccount = db.SecondaryAccountAccesses.Where(a => a.SecondaryAccountEmail == secondaryEmail).Single();
+                    if (secondaryAccount.OwnerEnabled == true)
+                    {
+                        secondaryAccount.OwnerEnabled = false;
+                    }
+                    else
+                    {
+                        secondaryAccount.OwnerEnabled = true;
+                    }
+                    db.SaveChanges();
+
+                    return true;
+                }
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        //Deletes the Access of a Secondary Account
+        public static bool DeleteSecondaryAccessAccount( string secondaryEmail)
+        {
+            try
+            {
+                using (var db = new AllStockedDBEntities())
+                {
+                    //Remove from database
+                    var secondaryRecord = db.SecondaryAccountAccesses.Where(a => a.SecondaryAccountEmail == secondaryEmail).First();
+
+                    //Update Secondary Account to owner Account 
+                    var account = db.Accounts.Where(a => a.AccountEmail == secondaryEmail).Single();
+                    account.Type = 1;
+
+                    db.SecondaryAccountAccesses.Remove(secondaryRecord);
+                    db.SaveChanges();
+                    return true;
+
+                }
+            }
+            catch
+            {
+                //TO Do: log error
+                return false;
             }
         }
 
@@ -166,6 +265,61 @@ namespace AllStocked.Models
         }
 
 
+        //TO DO: Refactor Emails
+
+        //Sends access key to join Owner Account
+        //This gives permissions to edit another persons inventory
+        //
+        public static bool EmailSecondaryAccessRequest(string senderFullName, string secondaryEmail, string accessKey)
+        {
+            //email message
+            MailMessage mail = new MailMessage();
+            mail.To.Add(secondaryEmail.Trim());
+            mail.From = new MailAddress(EmailCreds(), "Message: Account Requests Action", System.Text.Encoding.UTF8);
+            mail.Subject = "AllStocked Account Permission Request";
+            mail.SubjectEncoding = System.Text.Encoding.UTF8;
+            mail.Body = "Hello, You have been invited to become a secondary account on AllStocked <br>";
+            mail.Body += "Please login and manage your accounts on your settings page.<br>";
+            mail.Body += "Here is your Access Key: " + accessKey + " <br>";
+            mail.Body += "For the Account Owner: " + senderFullName;
+
+            mail.BodyEncoding = System.Text.Encoding.UTF8;
+            mail.IsBodyHtml = true;
+            mail.Priority = MailPriority.High;
+
+            //email Credential for outlook
+            SmtpClient client = new SmtpClient();
+            client.Credentials = new System.Net.NetworkCredential(EmailCreds(), Psswrd());
+            client.Port = 587;
+            client.Host = "smtp-mail.outlook.com";
+            client.EnableSsl = true;
+
+            try
+            {
+                client.Send(mail);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                //TO DO: Some exception handling I viewed on the Stack, will look into it..
+                Exception ex2 = ex;
+                string errorMessage = string.Empty;
+                while (ex2 != null)
+                {
+                    errorMessage += ex2.ToString();
+                    ex2 = ex2.InnerException;
+                }
+
+                return false;
+            }
+            finally
+            {
+                mail.Dispose();
+                client.Dispose();
+            }
+        }
+
+
         /// <summary>
         /// sends recoveryKey to userEmail
         /// </summary>
@@ -177,7 +331,7 @@ namespace AllStocked.Models
             //email message
             MailMessage mail = new MailMessage();
             mail.To.Add(userEmail.Trim());
-            mail.From = new MailAddress("CompanyEmail@fake.com", "Password Recovery", System.Text.Encoding.UTF8);
+            mail.From = new MailAddress(EmailCreds(), "Password Recovery", System.Text.Encoding.UTF8);
             mail.Subject = "AllStocked password recovery";
             mail.SubjectEncoding = System.Text.Encoding.UTF8;
             mail.Body = "Your Recovery Key is =  " + recoveryKey;
@@ -187,7 +341,7 @@ namespace AllStocked.Models
 
             //email Credential for outlook
             SmtpClient client = new SmtpClient();
-            client.Credentials = new System.Net.NetworkCredential("CompanyEmail@fake.com", "password");
+            client.Credentials = new System.Net.NetworkCredential(EmailCreds(), Psswrd());
             client.Port = 587;
             client.Host = "smtp-mail.outlook.com";
             client.EnableSsl = true;
@@ -216,7 +370,17 @@ namespace AllStocked.Models
                 client.Dispose();
             }   
         }
+        
+        //To Do: Update these when testing// put in gitIgnore//
+        public static string EmailCreds()
+        {
+            return "CompanyEmail@fake.com";
+        }
 
+        public static string Psswrd()
+        {
+            return "password";
+        }
 
     }
 }
