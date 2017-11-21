@@ -2,13 +2,15 @@
 @{
     ViewBag.Title = "Settings";
 }
-
 <h2>Settings</h2>
 
+
+<br />
 <br />
 @*display editAccount Partial View*@
 @Html.Partial("EditAccount", @Model.Account)
 
+<br />
 <br />
 @*display list of Accounts Partial View*@
 @Html.Partial("SecondaryAccountList", @Model.ListSecondaryAccounts)

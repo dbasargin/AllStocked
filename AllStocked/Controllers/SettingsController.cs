@@ -15,6 +15,13 @@ namespace AllStocked.Controllers
         /// <returns></returns>
         public ActionResult Settings()
         {
+            //Error Handling for View 
+            var errorMessage = TempData["ErrorMessage"] as string;
+            if (errorMessage != null || errorMessage != "")
+            {
+                ModelState.AddModelError("", errorMessage);
+            }
+
             if (SessionHelper.IsMemberLoggedIn())
             {
                 var model = new SettingsViewModel();
@@ -37,6 +44,7 @@ namespace AllStocked.Controllers
                     }
 
                 }
+
                 return View(model);
 
             }
@@ -45,62 +53,84 @@ namespace AllStocked.Controllers
                 return RedirectToAction("Login", "Login");
             }
         }
-        
+
         //Updates Account information
         [HttpPost]
         public ActionResult EditAccount(EditAccountViewModel account)
         {
-            using(var db = new AllStockedDBEntities())
+            if (!SessionHelper.IsMemberLoggedIn())
             {
-                var currentSessionId = SessionHelper.getAccountIdFromSession();
-                Account accountInSession = db.Accounts.Where(a => a.AccountID == currentSessionId).Single();
-                accountInSession.FirstName = account.FirstName;
-                accountInSession.LastName = account.LastName;
-                accountInSession.AccountEmail = account.AccountEmail;
-                try
+                return RedirectToAction("Login", "Login");
+            }
+            else
+            {
+                using (var db = new AllStockedDBEntities())
                 {
-                    db.SaveChanges();
+                    var currentSessionId = SessionHelper.getAccountIdFromSession();
+                    Account accountInSession = db.Accounts.Where(a => a.AccountID == currentSessionId).Single();
+                    accountInSession.FirstName = account.FirstName;
+                    accountInSession.LastName = account.LastName;
+                    accountInSession.AccountEmail = account.AccountEmail;
+                    try
+                    {
+                        db.SaveChanges();
+                    }
+                    catch (Exception ex)
+                    {
+                        //To Do: Log Error (ex)
+                        TempData["ErrorMessage"] = "Error Processing your request";
+                    }
                 }
-                catch(Exception ex)
-                {
-                    ModelState.AddModelError("", "Error Processing your request");
-                    throw ex;
-                }
+
+                return RedirectToAction("Settings", "Settings");
             }
 
-            return RedirectToAction("Settings", "Settings");
         }
-        
+
         // navigates to SecondaryAccountsList Partial class which displays 
         // a list of an Accounts secondary accounts.
         [HttpGet]
         public ActionResult SecondaryAccountList(List<SecondaryAccountAccessViewModel> listSecondaryAccounts)
         {
-            return View(listSecondaryAccounts);
+            if (!SessionHelper.IsMemberLoggedIn())
+            {
+                return RedirectToAction("Login", "Login");
+            }
+            else
+            {
+                return PartialView(listSecondaryAccounts);
+
+            }
         }
 
         //Deletes the SecondaryAccountAccess record for the given email
         [HttpPost]
         public ActionResult DeleteSecondaryAccount(string email)
         {
-
-            bool accountDeleted = DbHelper.DeleteSecondaryAccessAccount(email);
-            if (!accountDeleted)
+            if (!SessionHelper.IsMemberLoggedIn())
             {
-                ModelState.AddModelError("", "Error deleting Secondary Access Account");
+                return RedirectToAction("Login", "Login");
             }
+            else
+            {
+                bool accountDeleted = DbHelper.DeleteSecondaryAccessAccount(email);
+                if (!accountDeleted)
+                {
+                    TempData["ErrorMessage"] = "Error deleting Secondary Access Account";
+                }
 
-            return RedirectToAction("Settings", "Settings");
+                return RedirectToAction("Settings", "Settings");
+            }
         }
 
         [HttpPost]
         public ActionResult ChangeSecondaryAccountStatus(string email)
         {
             bool isStatusChanged = DbHelper.ModifySecondaryAccountStatus(email);
+
             if (!isStatusChanged)
             {
-                //log error AND
-                ModelState.AddModelError("", "Error deleting Secondary Access Account");
+                    TempData["ErrorMessage"] = "Error deleting Secondary Access Account";
             }
 
             return RedirectToAction("Settings", "Settings");
@@ -121,15 +151,16 @@ namespace AllStocked.Controllers
         [HttpPost]
         public ActionResult CreateSecondaryAccountAccess(SecondaryAccountAccess secondaryAccountAccess)
         {
+            string errorMessage = "";
             //Check to see if the account exists
-            if(DbHelper.DoesAccountExist(secondaryAccountAccess.SecondaryAccountEmail))
+            if (!DbHelper.DoesAccountExist(secondaryAccountAccess.SecondaryAccountEmail))
             {
-                ModelState.AddModelError("", "Invalid Email");
+                errorMessage = "Invalid Email";
             }
             // make sure the account isnt already a secondary account
             else if (DbHelper.IsAccountAlreadySecondary(secondaryAccountAccess.SecondaryAccountEmail))
             {
-                ModelState.AddModelError("", "This Account is already a secondary account.");
+                errorMessage = "This Account is already a secondary account.";
             }
             else
             {
@@ -151,18 +182,23 @@ namespace AllStocked.Controllers
                         // Sends email to requested account with the Access token to become secondary Account 
                         // TO Do: Production Send to secondaryAccountAccess.SecondaryAccountEmail:
                         // I am sending these emails to self for testing purposes. 
-                        DbHelper.EmailSecondaryAccessRequest(senderName, DbHelper.EmailCreds(),  secondaryAccountAccess.AccessToken);
+                        //DbHelper.EmailSecondaryAccessRequest(senderName, DbHelper.EmailCreds(),  secondaryAccountAccess.AccessToken);
                     }
                     catch
                     {
-                        ModelState.AddModelError("", "Error Processing your request");
+                        errorMessage = "Error Processing your request";
                     }
                 }
             }
 
+            //Add Error Message
+            if(!String.IsNullOrEmpty(errorMessage))
+            {
+                TempData["ErrorMessage"] = errorMessage;
+            }
+
             return RedirectToAction("Settings", "Settings");
-
-
         }
+
     }
 }

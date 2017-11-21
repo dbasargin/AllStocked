@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<AllStocked.Models.SecondaryAccountAccessViewModel>
 
-<h4>Manage Accounts</h4>
+<h4>Manage Secondary Accounts</h4>
 <table class="table">
     <tr>
         <th>
@@ -16,7 +16,8 @@
         <th>
             @Html.DisplayNameFor(model => model.LastEdited)
         </th>
-        <th></th>
+        
+        <th>        </th>
     </tr>
 
 @foreach (var item in Model) {
@@ -36,9 +37,6 @@
         <td>
             @Html.DisplayFor(modelItem => item.LastEdited)
         </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ })
-        </td>
 
         @*Only Display this message if account is of type Owner*@
         <td>
@@ -47,7 +45,7 @@
                 <button type="submit" name ="email"value="@item.SecondaryAccountEmail"> @item.GetChangeStatusButtonName()</button>
             }
         </td>
-</tr>
+    </tr>
 }
 
 </table>

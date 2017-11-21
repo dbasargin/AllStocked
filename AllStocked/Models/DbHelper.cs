@@ -58,21 +58,16 @@ namespace AllStocked.Models
         public static bool DoesAccountExist(string email)
         {
             bool exists = false;
-            try
+
+            using (var db = new AllStockedDBEntities())
             {
-                using (var db = new AllStockedDBEntities())
+                Account account = db.Accounts.FirstOrDefault(a => a.AccountEmail == email);
+                if(account != null)
                 {
-                    Account account = db.Accounts.Where(a => a.AccountEmail == email).Single();
-                    if(account != null)
-                    {
-                        exists = true;
-                    }
+                    exists = true;
                 }
             }
-            catch(Exception ex)
-            {
-                throw ex;
-            }
+
             return exists;
         }
 
@@ -116,8 +111,12 @@ namespace AllStocked.Models
             }
         }
 
-        //important to check as to not make account secondary to multiple accounts
-        //Checks SecondaryAccountAccess table NOT Account.Type property
+        /// <summary>
+        /// Checks SecondaryAccountAccess table NOT Account.Type property
+        /// important to check as to not make account secondary to multiple accounts
+        /// </summary>
+        /// <param name="secondaryEmail"></param>
+        /// <returns></returns>
         public static bool IsAccountAlreadySecondary(string secondaryEmail)
         {
             try
@@ -141,8 +140,13 @@ namespace AllStocked.Models
             }
         }
 
-        // This method checks changes the OwnerEnabled fields to the opposite
-        // of what they currently are. Activates or deactivates secondary account.
+        /// <summary>
+        /// This method checks changes the OwnerEnabled fields to the opposite
+        /// of what they currently are. Activates or deactivates secondary account.
+        /// This also updates the lastEdited property to current time.
+        /// </summary>
+        /// <param name="secondaryEmail"></param>
+        /// <returns></returns>
         public static bool ModifySecondaryAccountStatus(string secondaryEmail)
         {
             try
@@ -158,6 +162,8 @@ namespace AllStocked.Models
                     {
                         secondaryAccount.OwnerEnabled = true;
                     }
+
+                    secondaryAccount.LastEdited = DateTime.Now;
                     db.SaveChanges();
 
                     return true;
@@ -264,12 +270,15 @@ namespace AllStocked.Models
             return new string(Enumerable.Repeat(chars, 8).Select(s => s[random.Next(s.Length)]).ToArray());
         }
 
-
-        //TO DO: Refactor Emails
-
-        //Sends access key to join Owner Account
-        //This gives permissions to edit another persons inventory
-        //
+        //To Do: Test email functionality
+        /// <summary>
+        /// Sends access key to join Owner Account via email
+        /// This gives permissions to edit another persons inventory
+        /// </summary>
+        /// <param name="senderFullName"></param>
+        /// <param name="secondaryEmail"></param>
+        /// <param name="accessKey"></param>
+        /// <returns></returns>
         public static bool EmailSecondaryAccessRequest(string senderFullName, string secondaryEmail, string accessKey)
         {
             //email message
@@ -287,7 +296,7 @@ namespace AllStocked.Models
             mail.IsBodyHtml = true;
             mail.Priority = MailPriority.High;
 
-            //email Credential for outlook
+            //email Credentials for outlook
             SmtpClient client = new SmtpClient();
             client.Credentials = new System.Net.NetworkCredential(EmailCreds(), Psswrd());
             client.Port = 587;
@@ -318,7 +327,6 @@ namespace AllStocked.Models
                 client.Dispose();
             }
         }
-
 
         /// <summary>
         /// sends recoveryKey to userEmail
@@ -370,7 +378,7 @@ namespace AllStocked.Models
                 client.Dispose();
             }   
         }
-        
+
         //To Do: Update these when testing// put in gitIgnore//
         public static string EmailCreds()
         {
