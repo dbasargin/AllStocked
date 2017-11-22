@@ -68,7 +68,7 @@ namespace AllStocked.Controllers
                 using (var db = new AllStockedDBEntities())
                 {
                     var currentSessionId = SessionHelper.getAccountIdFromSession();
-                    Account accountInSession = db.Accounts.Where(a => a.AccountID == currentSessionId).Single();
+                    Account accountInSession = db.Accounts.FirstOrDefault(a => a.AccountID == currentSessionId);
                     accountInSession.FirstName = account.FirstName;
                     accountInSession.LastName = account.LastName;
                     accountInSession.AccountEmail = account.AccountEmail;
@@ -172,9 +172,9 @@ namespace AllStocked.Controllers
             return View();
         }
 
+        //To do: Optimize this method: Queries db too many times.
         /// <summary>
         /// This controller adds a new SecondaryAccountAccess row to the database
-        /// To do: Optimize this method: Queries db many times.
         /// </summary>
         /// <param name="secondaryAccountAccess"></param>
         /// <returns></returns>
@@ -195,6 +195,8 @@ namespace AllStocked.Controllers
             else
             {
                 secondaryAccountAccess.OwnerAccountID = SessionHelper.getAccountIdFromSession();
+                secondaryAccountAccess.OwnerEmail = DbHelper.GetEmailById(SessionHelper.getAccountIdFromSession());
+                secondaryAccountAccess.SecondaryAccountID = DbHelper.GetAccountIdByEmail(secondaryAccountAccess.SecondaryAccountEmail);
                 secondaryAccountAccess.AccessToken = DbHelper.RandomString();
                 secondaryAccountAccess.OwnerEnabled = true;
                 secondaryAccountAccess.SecondaryEnabled = false;

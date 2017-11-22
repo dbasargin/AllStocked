@@ -45,7 +45,7 @@ namespace AllStocked.Controllers
         {
             if (SessionHelper.IsMemberLoggedIn())
             {
-                int currentId = Convert.ToInt32(HttpContext.Session["AccountID"]);
+                int currentId = SessionHelper.getAccountIdFromSession();
                 //Get list of products that have a an account id that match current session.
                 var products = db.Products.Where(p => p.AccountID == currentId && p.Supply <= p.Demand ).OrderBy(p => p.Category.CategoryName).Include(p => p.Account).Include(p => p.Category);
 
@@ -158,7 +158,7 @@ namespace AllStocked.Controllers
         // GET: Products/Create controller
         public ActionResult Create()
         {
-            int currentId = Convert.ToInt32(HttpContext.Session["AccountID"]);
+            int currentId = SessionHelper.getAccountIdFromSession();
 
             if (SessionHelper.IsMemberLoggedIn())
             {
@@ -181,7 +181,7 @@ namespace AllStocked.Controllers
         {
             if (ModelState.IsValid)
             {
-                product.AccountID = Convert.ToInt32(HttpContext.Session["AccountID"]);
+                product.AccountID = SessionHelper.getAccountIdFromSession();
                 db.Products.Add(product);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -195,7 +195,7 @@ namespace AllStocked.Controllers
         // GET: Products/Edit/5
         public ActionResult Edit(int? id)
         {
-            int currentId = Convert.ToInt32(HttpContext.Session["AccountID"]);
+            int currentId = SessionHelper.getAccountIdFromSession();
             if (SessionHelper.IsMemberLoggedIn())
             {
                 if (id == null)
@@ -227,7 +227,7 @@ namespace AllStocked.Controllers
         {
             if (ModelState.IsValid)
             {
-                product.AccountID = Convert.ToInt32(HttpContext.Session["AccountID"]);
+                product.AccountID = SessionHelper.getAccountIdFromSession();
                 db.Entry(product).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

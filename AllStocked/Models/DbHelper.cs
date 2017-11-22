@@ -62,6 +62,16 @@ namespace AllStocked.Models
                 }
         }
 
+        public static string GetEmailById(int id)
+        {
+            using (var db = new AllStockedDBEntities())
+            {
+                Account account = db.Accounts.FirstOrDefault(a => a.AccountID == id);
+
+                return account.AccountEmail;
+            }
+        }
+
         /// <summary>
         /// Checks database if the account exists by email
         /// </summary>

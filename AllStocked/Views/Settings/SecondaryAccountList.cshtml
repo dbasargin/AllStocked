@@ -1,6 +1,9 @@
 ﻿@model IEnumerable<AllStocked.Models.SecondaryAccountAccessViewModel>
 
-@{ int AccountType = AllStocked.Models.SessionHelper.getAccountIdFromSession();}
+@{ 
+    int AccountType = AllStocked.Models.SessionHelper.getAccountTypeFromSession();
+    int AccountId = AllStocked.Models.SessionHelper.getAccountIdFromSession();
+    }
 
 <h4>Manage Secondary Accounts</h4>
 <table class="table">
@@ -26,10 +29,11 @@
             @Html.DisplayNameFor(model => model.LastEdited)
         </th>
         
-        <th>        </th>
+        <th>  </th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model)
+{
     <tr>
         <td>
             @using (Html.BeginForm("DeleteSecondaryAccount", "Settings"))
@@ -38,12 +42,14 @@
             }
         </td>
         <td>
-            @if (AccountType == 1) {
-                @Html.DisplayFor(modelItem => item.SecondaryAccountEmail)
+            @if (AccountType == 1 && item.SecondaryAccountID == AccountId)
+            {
+                @Html.DisplayFor(modelItem => item.OwnerEmail)
+
             }
             else
             {
-                @Html.DisplayFor(modelItem => item.OwnerEmail)
+                @Html.DisplayFor(modelItem => item.SecondaryAccountEmail)
             }
         </td>
         <td>
@@ -53,31 +59,30 @@
             @Html.DisplayFor(modelItem => item.LastEdited)
         </td>
 
-        @*Only Display this message if account is of type Owner*@
-        
-        
+        @*Only Display Activate button if Type equals owner else *@        
         <td>
             @if (AccountType == 1)
             {
-                using (Html.BeginForm("ChangeSecondaryAccountStatus", "Settings"))
+                if (item.SecondaryAccountID == AccountId && item.Status == "Pending")
                 {
-                    <button type="submit" name ="email" value="@item.SecondaryAccountEmail"> @item.GetChangeStatusButtonName()</button>
+                    using (Html.BeginForm("ValidateTokenSubmission", "Settings", FormMethod.Post))
+                    {
+                        <p>
+                            Check email for Access Token: @Html.TextBox("accessToken", ViewBag.CurrentFilter as string)
+                            <input type="submit" name="accessToken" value="Submit" />
+                        </p>
+                    }
+                }
+                else
+                {
+                    using (Html.BeginForm("ChangeSecondaryAccountStatus", "Settings"))
+                    {
+                        <button type = "submit" name = "email" value = "@item.SecondaryAccountEmail" > @item.GetChangeStatusButtonName() </button>
+                    }
                 }
             }
-            @if (AccountType == 2 && item.Status == "Pending")
-            {
-                using (Html.BeginForm("ValidateTokenSubmission", "Settings", FormMethod.Post))
-                {
-                    <p>
-                        Check email for Access Token: @Html.TextBox("accessToken", ViewBag.CurrentFilter as string)
-                        <input type="submit" name ="accessToken"value="Submit" />
-                    </p>
-                }
-            }
+
         </td>
-
-
     </tr>
 }
-
 </table>

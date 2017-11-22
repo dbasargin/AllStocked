@@ -11,26 +11,35 @@ namespace AllStocked.Models
     /// </summary>
     public class SecondaryAccountAccessViewModel
     {
+        public int SecondaryAccountID { get; set; }
+
         [Display(Name = "Owner Email")]
         public string OwnerEmail { get; set; }
+
         [Display(Name = "Secondary Account Email")]
         public string SecondaryAccountEmail { get; set; }
+
         public string Status { get; set; }
+
         [Display(Name = "Last Edited")]
         public Nullable<System.DateTime> LastEdited { get; set; }
 
         //Turns model into View Model
         public SecondaryAccountAccessViewModel(SecondaryAccountAccess model)
         {
+            SecondaryAccountID = model.SecondaryAccountID;
             SecondaryAccountEmail = model.SecondaryAccountEmail;
             OwnerEmail = model.OwnerEmail;
             LastEdited = model.LastEdited;
             Status = model.getStatus();
-        }
+        }    
 
-        // On The SecondaryAccountAccessList Partial View there is a button that needs to be calculated.
-        // If Account is Active or Pending the button needs to say Disable else Activate.
-        // This method makes this easier 
+        /// <summary>
+        /// On The SecondaryAccountAccessList Partial View there is a button that needs to be calculated.
+        /// If Account is Active or Pending the button needs to say Disable else Activate.
+        /// This method makes this easier 
+        /// </summary>
+        /// <returns></returns>
         public string GetChangeStatusButtonName()
         {
             if(Status == "Pending" || Status ==  "Active")

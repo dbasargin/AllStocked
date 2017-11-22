@@ -22,6 +22,7 @@ namespace AllStocked
         public bool SecondaryEnabled { get; set; }
         public Nullable<System.DateTime> LastEdited { get; set; }
         public string OwnerEmail { get; set; }
+        public int SecondaryAccountID { get; set; }
     
         public virtual Account Account { get; set; }
     }
