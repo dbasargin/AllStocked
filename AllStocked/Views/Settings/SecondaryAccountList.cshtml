@@ -1,5 +1,7 @@
 ﻿@model IEnumerable<AllStocked.Models.SecondaryAccountAccessViewModel>
 
+@{ int AccountType = AllStocked.Models.SessionHelper.getAccountIdFromSession();}
+
 <h4>Manage Secondary Accounts</h4>
 <table class="table">
     <tr>
@@ -8,7 +10,14 @@
         </th>
 
         <th>
-            @Html.DisplayNameFor(model => model.SecondaryAccountEmail)
+            @if (AccountType == 1) {
+
+                @Html.DisplayNameFor(model => model.SecondaryAccountEmail);
+            }
+            else
+            {
+                @Html.DisplayNameFor(model => model.OwnerEmail);
+            }
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Status)
@@ -29,7 +38,13 @@
             }
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.SecondaryAccountEmail)
+            @if (AccountType == 1) {
+                @Html.DisplayFor(modelItem => item.SecondaryAccountEmail)
+            }
+            else
+            {
+                @Html.DisplayFor(modelItem => item.OwnerEmail)
+            }
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Status)
@@ -39,12 +54,29 @@
         </td>
 
         @*Only Display this message if account is of type Owner*@
+        
+        
         <td>
-            @using (Html.BeginForm("ChangeSecondaryAccountStatus", "Settings"))
+            @if (AccountType == 1)
             {
-                <button type="submit" name ="email"value="@item.SecondaryAccountEmail"> @item.GetChangeStatusButtonName()</button>
+                using (Html.BeginForm("ChangeSecondaryAccountStatus", "Settings"))
+                {
+                    <button type="submit" name ="email" value="@item.SecondaryAccountEmail"> @item.GetChangeStatusButtonName()</button>
+                }
+            }
+            @if (AccountType == 2 && item.Status == "Pending")
+            {
+                using (Html.BeginForm("ValidateTokenSubmission", "Settings", FormMethod.Post))
+                {
+                    <p>
+                        Check email for Access Token: @Html.TextBox("accessToken", ViewBag.CurrentFilter as string)
+                        <input type="submit" name ="accessToken"value="Submit" />
+                    </p>
+                }
             }
         </td>
+
+
     </tr>
 }
 

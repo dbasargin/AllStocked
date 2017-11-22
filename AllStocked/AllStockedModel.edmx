@@ -66,6 +66,7 @@
           <Property Name="OwnerEnabled" Type="bit" Nullable="false" />
           <Property Name="SecondaryEnabled" Type="bit" Nullable="false" />
           <Property Name="LastEdited" Type="datetime" />
+          <Property Name="OwnerEmail" Type="varchar" MaxLength="50" />
         </EntityType>
         <Association Name="FK__Account__Status__03F0984C">
           <End Role="AccountStatus" Type="Self.AccountStatus" Multiplicity="0..1" />
@@ -395,6 +396,7 @@ warning 6035: The relationship 'FK__Secondary__Secon__2A164134' has columns that
           <Property Name="SecondaryEnabled" Type="Boolean" Nullable="false" />
           <Property Name="LastEdited" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Account" Relationship="AllStockedDBModel.FK__Secondary__Owner__29221CFB" FromRole="SecondaryAccountAccess" ToRole="Account" />
+          <Property Name="OwnerEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Account">
           <Key>
@@ -524,6 +526,7 @@ warning 6035: The relationship 'FK__Secondary__Secon__2A164134' has columns that
           <EntitySetMapping Name="SecondaryAccountAccesses">
             <EntityTypeMapping TypeName="AllStockedDBModel.SecondaryAccountAccess">
               <MappingFragment StoreEntitySet="SecondaryAccountAccess">
+                <ScalarProperty Name="OwnerEmail" ColumnName="OwnerEmail" />
                 <ScalarProperty Name="LastEdited" ColumnName="LastEdited" />
                 <ScalarProperty Name="SecondaryEnabled" ColumnName="SecondaryEnabled" />
                 <ScalarProperty Name="OwnerEnabled" ColumnName="OwnerEnabled" />

@@ -23,7 +23,7 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    @if (HttpContext.Current.Session["AccountID"] == null)
+                    @if (HttpContext.Current.Session["CurrentSession"] == null)
                     {
                     <li class="navbarD">@Html.ActionLink("Log In", "login", "Login", null, new { @class = "navToBlack" })</li>
                     }
@@ -35,7 +35,7 @@
                     <li class="navbarD">@Html.ActionLink("Settings", "Settings", "Settings", null, new { @class = "navToBlack" }) </li> //Create Products Page
                     }
                 </ul>
-                @if (HttpContext.Current.Session["AccountID"] != null)
+                @if (HttpContext.Current.Session["CurrentSession"] != null)
                 {
                 <ul class="nav navbar-nav navbar-right">
                     <li class="logoff">@Html.ActionLink("Log Off", "LogOff", "Login", null, new { @class = "logofflink" })</li>

@@ -11,6 +11,8 @@ namespace AllStocked.Models
     /// </summary>
     public class SecondaryAccountAccessViewModel
     {
+        [Display(Name = "Owner Email")]
+        public string OwnerEmail { get; set; }
         [Display(Name = "Secondary Account Email")]
         public string SecondaryAccountEmail { get; set; }
         public string Status { get; set; }
@@ -21,6 +23,7 @@ namespace AllStocked.Models
         public SecondaryAccountAccessViewModel(SecondaryAccountAccess model)
         {
             SecondaryAccountEmail = model.SecondaryAccountEmail;
+            OwnerEmail = model.OwnerEmail;
             LastEdited = model.LastEdited;
             Status = model.getStatus();
         }

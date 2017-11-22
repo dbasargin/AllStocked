@@ -35,6 +35,7 @@ namespace AllStocked.Controllers
 
             }
         }
+
         [HttpPost]
         public ActionResult Index(RegisterViewModel model)
         {
@@ -46,6 +47,7 @@ namespace AllStocked.Controllers
                 if (isSuccessful)
                 {
                     Session["AccountID"] = DbHelper.GetAccountIdByEmail(model.Email);
+                    Session["AccountType"] = 1;
                     return RedirectToAction("Index", "Home");
                 }
                 // todo return to home page

@@ -30,7 +30,8 @@ namespace AllStocked.Controllers
                 using (var db = new AllStockedDBEntities())
                 {
                     Account accountInSession = db.Accounts.Where(a => a.AccountID == currentSessionId).Single();
-                    var listSecondaryAccountAccess = db.SecondaryAccountAccesses.Where(a => a.OwnerAccountID == currentSessionId).ToList();
+
+                    var listSecondaryAccountAccess = db.SecondaryAccountAccesses.Where(a => a.OwnerAccountID == currentSessionId || a.SecondaryAccountEmail == accountInSession.AccountEmail).ToList();
 
                     //modify account into editAccount for view model
                     model.Account = new EditAccountViewModel(accountInSession);
@@ -135,6 +136,35 @@ namespace AllStocked.Controllers
 
             return RedirectToAction("Settings", "Settings");
         }
+
+        
+        /// <summary>
+        /// This Action method recieves an access token from the ui and if it matches
+        /// the database, updates the current user accounts Type to secondary and give it permissions
+        /// to edit an Owner Accounts inventory.
+        /// </summary>
+        /// <param name="accessToken"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult ValidateTokenSubmission(string accessToken)
+        {
+
+            int id = SessionHelper.getAccountIdFromSession();
+
+
+            if (DbHelper.ValidateSecondaryAccount(accessToken))
+            {
+                
+                SessionHelper.SessionAccountTypeToSecondary();
+            }
+            else
+            {
+                TempData["ErrorMessage"] = "Access Token Invalid";
+            }
+
+            return RedirectToAction("Settings", "Settings");
+        }
+        
 
         [HttpGet]
         public ActionResult CreateSecondaryAccountAccess()

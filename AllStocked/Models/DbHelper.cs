@@ -50,6 +50,18 @@ namespace AllStocked.Models
             }
         }
 
+        public static int GetAccountTypeById(int id)
+        {
+            
+                using (var db = new AllStockedDBEntities())
+                {
+
+                    Account account = db.Accounts.FirstOrDefault(a => a.AccountID == id);
+
+                    return account.AccountType.TypeID ;
+                }
+        }
+
         /// <summary>
         /// Checks database if the account exists by email
         /// </summary>
@@ -200,6 +212,46 @@ namespace AllStocked.Models
                 //TO Do: log error
                 return false;
             }
+        }
+
+        /// <summary>
+        /// Checks whether access Token provided by user is valid. If it is valid current accounts  
+        /// type changes to secondary and the SecondaryAccessAccount records SecondaryAccountEnabled property
+        /// is changed to true.
+        /// </summary>
+        /// <param name="accessToken"></param>
+        /// <returns>true if Access Token matches database if not returns false</returns>
+        public static bool ValidateSecondaryAccount(string accessToken)
+        {
+            int currAccountId = SessionHelper.getAccountIdFromSession();
+            try
+            {
+                using (var db = new AllStockedDBEntities())
+                {
+                    
+                    var account = db.Accounts.FirstOrDefault(a => a.AccountID == currAccountId);
+
+                    var secondaryAccountAccessRecord = db.SecondaryAccountAccesses.FirstOrDefault(a => a.SecondaryAccountEmail == account.AccountEmail);
+
+                    if (secondaryAccountAccessRecord.AccessToken == accessToken)
+                    {
+                        account.Type = 2;
+                        secondaryAccountAccessRecord.SecondaryEnabled = true;
+                        db.SaveChanges();
+
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+            catch
+            {
+                return false;
+            }
+
         }
 
         /// <summary>

@@ -25,6 +25,7 @@ namespace AllStocked.Controllers
             return View();
         }
 
+        // To Do: refactor this method.. Too many call to the db.
         [HttpPost]
         public ActionResult LogIn(LoginViewModel model)
         {
@@ -38,9 +39,11 @@ namespace AllStocked.Controllers
                     ModelState.AddModelError("", "Invalid Username or Password");
                     return View();
                 }
-                // create session
-                Session["AccountID"] = currAccount.AccountID;
 
+                int accountType = DbHelper.GetAccountTypeById(currAccount.AccountID);
+                
+                // create session
+                SessionHelper.createSession(currAccount.AccountID, accountType);
 
                 //update Account lastLogin property
                 DbHelper.UpdateUsersLastLogin(currAccount);
@@ -96,7 +99,8 @@ namespace AllStocked.Controllers
                 }
                 catch (Exception ex)
                 {
-                    TempData["Message"] = "Error occured while sending email." + ex.Message;
+                    //To Do: log error
+                    TempData["Message"] = "Error occured while sending email.";
                 }
             }
 

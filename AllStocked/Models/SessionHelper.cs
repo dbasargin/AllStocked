@@ -9,7 +9,8 @@ namespace AllStocked.Models
     {
         public static bool IsMemberLoggedIn()
         {
-            if (HttpContext.Current.Session["AccountID"] == null)
+            var currSession = HttpContext.Current.Session["CurrentSession"] as MySession;
+            if (currSession == null || currSession.AccountID < 1)
             {
                 return false;
             }
@@ -19,14 +20,47 @@ namespace AllStocked.Models
             }
         }
 
+        public static void createSession(int id, int accountType)
+        {
+            var mySession = new MySession();
+            mySession.AccountID = id;
+            mySession.AccountType = accountType;
+            HttpContext.Current.Session["CurrentSession"] = mySession;
+        }
+
+        //Turns the current Session, Account Type to type Secondary
+        public static void SessionAccountTypeToSecondary()
+        {
+            var currSession = HttpContext.Current.Session["CurrentSession"] as MySession;
+            currSession.AccountType = 2;
+            HttpContext.Current.Session["CurrentSession"] = currSession;
+        }
+
+        //Abandons Sessions
         public static void AbandonSession()
         {
-            HttpContext.Current.Session.Remove("AccountID");
+            HttpContext.Current.Session.Remove("CurrentSession");
         }
 
         public static int getAccountIdFromSession(){
 
-            return Convert.ToInt32(HttpContext.Current.Session["AccountID"]);
+            var currSession = HttpContext.Current.Session["CurrentSession"] as MySession;
+
+            return currSession.AccountID;
         }
+
+        public static int getAccountTypeFromSession()
+        {
+
+            var currSession = HttpContext.Current.Session["CurrentSession"] as MySession;
+
+            return currSession.AccountType;
+        }
+    }
+
+    public class MySession
+    {
+        public int AccountID { get; set; }
+        public int AccountType { get; set; }
     }
 }
