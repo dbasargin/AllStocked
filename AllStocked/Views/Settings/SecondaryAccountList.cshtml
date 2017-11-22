@@ -42,7 +42,7 @@
             }
         </td>
         <td>
-            @if (AccountType == 1 && item.SecondaryAccountID == AccountId)
+            @if (AccountType == 1 && item.SecondaryAccountID == AccountId || AccountType == 2)
             {
                 @Html.DisplayFor(modelItem => item.OwnerEmail)
 

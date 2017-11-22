@@ -1,7 +1,9 @@
 ﻿@model AllStocked.Models.SettingsViewModel
 @{
     ViewBag.Title = "Settings";
+    int AccountType = AllStocked.Models.SessionHelper.getAccountTypeFromSession();
 }
+
 <h2>Settings</h2>
 
 
@@ -16,7 +18,8 @@
 @Html.Partial("SecondaryAccountList", @Model.ListSecondaryAccounts)
 
 <br />
-@*display Create Secondary Account Partial View*@
-@Html.Partial("CreateSecondaryAccountAccess", new SecondaryAccountAccess())
-
+@if (AccountType == 1) {
+    @*display Create Secondary Account Partial View*@
+    @Html.Partial("CreateSecondaryAccountAccess", new SecondaryAccountAccess())
+}
 <hr />

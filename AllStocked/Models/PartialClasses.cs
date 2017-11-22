@@ -29,7 +29,7 @@ namespace AllStocked
         }
 
         // Parameterless constructor
-        public SecondaryAccountAccess(){ } 
+        public SecondaryAccountAccess() { }
 
         //Determines the status of the secondary account
         public string getStatus()
@@ -49,4 +49,13 @@ namespace AllStocked
         }
     }
 
+
+    public partial class Account
+    {
+
+        public string GetFullName()
+        {
+            return FirstName + " " + LastName;
+        }
+    }
 }

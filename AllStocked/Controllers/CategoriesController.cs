@@ -20,7 +20,7 @@ namespace AllStocked.Controllers
         {
             if (SessionHelper.IsMemberLoggedIn())
             {
-                int currentId = Convert.ToInt32(HttpContext.Session["AccountID"]);
+                int currentId = SessionHelper.getAccountIdFromSession();
                 var categories = db.Categories.Where(p => p.AccountID == currentId).OrderBy(p=> p.CategoryName).Include(c => c.Account);
             return View(categories.ToList());
             }
@@ -59,7 +59,7 @@ namespace AllStocked.Controllers
         {
             if (SessionHelper.IsMemberLoggedIn())
             {
-                ViewBag.AccountID = new SelectList(db.Accounts, "AccountID", "AccountName");
+                ViewBag.AccountID = new SelectList(db.Accounts, "AccountID", "FirstName");
                 return View();
             }
             else
@@ -80,7 +80,7 @@ namespace AllStocked.Controllers
             {
                 try
                 {
-                    category.AccountID = Convert.ToInt32(HttpContext.Session["AccountID"]);
+                    category.AccountID = SessionHelper.getAccountIdFromSession(); ;
                     db.Categories.Add(category);
                     db.SaveChanges();
                 }
@@ -91,7 +91,7 @@ namespace AllStocked.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.AccountID = new SelectList(db.Accounts, "AccountID", "AccountName", category.AccountID);
+            ViewBag.AccountID = new SelectList(db.Accounts, "AccountID", "FirstName", category.AccountID);
             return View(category);
         }
 
@@ -109,7 +109,7 @@ namespace AllStocked.Controllers
                 {
                     return HttpNotFound();
                 }
-                ViewBag.AccountID = new SelectList(db.Accounts, "AccountID", "AccountName", category.AccountID);
+                ViewBag.AccountID = new SelectList(db.Accounts, "AccountID", "FirstName", category.AccountID);
                 return View(category);
             }
             else
@@ -126,7 +126,7 @@ namespace AllStocked.Controllers
         {
             if (ModelState.IsValid)
             {
-                int currentAccount = Convert.ToInt32(HttpContext.Session["AccountID"]);
+                int currentAccount = SessionHelper.getAccountIdFromSession(); ;
                 using (db)
                 {
                     //find category in database
@@ -138,7 +138,7 @@ namespace AllStocked.Controllers
                 }
                 return RedirectToAction("Index");
             }
-            ViewBag.AccountID = new SelectList(db.Accounts, "AccountID", "AccountName", category.AccountID);
+            ViewBag.AccountID = new SelectList(db.Accounts, "AccountID", "FirstName", category.AccountID);
             return View(category);
         }
 

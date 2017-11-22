@@ -20,11 +20,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Account.AccountName)
+            Account Name
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Account.AccountName)
+            @Model.Account.GetFullName()
         </dd>
 
     </dl>
