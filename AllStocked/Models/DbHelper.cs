@@ -162,6 +162,18 @@ namespace AllStocked.Models
             }
         }
 
+        public static int GetAccountOwnerIdBySecondaryId(int secondaryId)
+        {
+
+            using (var db = new AllStockedDBEntities())
+            {
+
+                SecondaryAccountAccess accessAccount = db.SecondaryAccountAccesses.FirstOrDefault(a => a.SecondaryAccountID == secondaryId);
+
+                return accessAccount.OwnerAccountID;
+            }
+        }
+
         /// <summary>
         /// This method checks changes the OwnerEnabled fields to the opposite
         /// of what they currently are. Activates or deactivates secondary account.
@@ -175,17 +187,21 @@ namespace AllStocked.Models
             {
                 using (var db = new AllStockedDBEntities())
                 {
-                    SecondaryAccountAccess secondaryAccount = db.SecondaryAccountAccesses.Where(a => a.SecondaryAccountEmail == secondaryEmail).Single();
-                    if (secondaryAccount.OwnerEnabled == true)
+                    SecondaryAccountAccess secondaryAccountAccess = db.SecondaryAccountAccesses.Where(a => a.SecondaryAccountEmail == secondaryEmail).Single();
+                    Account secondaryAccount = db.Accounts.Where(a => a.AccountID == secondaryAccountAccess.SecondaryAccountID).Single();
+
+                    if (secondaryAccountAccess.OwnerEnabled == true)
                     {
-                        secondaryAccount.OwnerEnabled = false;
+                        secondaryAccountAccess.OwnerEnabled = false;
+                        secondaryAccount.AccountType = db.AccountTypes.First(a => a.TypeID == 1);
                     }
                     else
                     {
-                        secondaryAccount.OwnerEnabled = true;
+                        secondaryAccountAccess.OwnerEnabled = true;
+                        secondaryAccount.AccountType = db.AccountTypes.First(a => a.TypeID == 2);
                     }
 
-                    secondaryAccount.LastEdited = DateTime.Now;
+                    secondaryAccountAccess.LastEdited = DateTime.Now;
                     db.SaveChanges();
 
                     return true;
@@ -233,7 +249,7 @@ namespace AllStocked.Models
         /// <returns>true if Access Token matches database if not returns false</returns>
         public static bool ValidateSecondaryAccount(string accessToken)
         {
-            int currAccountId = SessionHelper.getAccountIdFromSession();
+            int currAccountId = SessionHelper.GetAccountIdFromSession();
             try
             {
                 using (var db = new AllStockedDBEntities())

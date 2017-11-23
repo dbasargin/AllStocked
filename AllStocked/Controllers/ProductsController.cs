@@ -45,9 +45,14 @@ namespace AllStocked.Controllers
         {
             if (SessionHelper.IsMemberLoggedIn())
             {
-                int currentId = SessionHelper.getAccountIdFromSession();
-                //Get list of products that have a an account id that match current session.
-                var products = db.Products.Where(p => p.AccountID == currentId && p.Supply <= p.Demand ).OrderBy(p => p.Category.CategoryName).Include(p => p.Account).Include(p => p.Category);
+                int currentId = SessionHelper.GetAccountIdFromSession();
+
+                if (SessionHelper.GetAccountTypeFromSession() == 2)
+                {
+                    currentId = SessionHelper.GetAccountOwnerIDFromSession();
+                }
+                    //Get list of products that have a an account id that match current session.
+                    var products = db.Products.Where(p => p.AccountID == currentId && p.Supply <= p.Demand ).OrderBy(p => p.Category.CategoryName).Include(p => p.Account).Include(p => p.Category);
 
                 List<ShoppingListViewModel> prodShoppingList = new List<ShoppingListViewModel>();
                 foreach (var p in products)
@@ -91,8 +96,13 @@ namespace AllStocked.Controllers
 
             if (SessionHelper.IsMemberLoggedIn())
             {
-                int currentId = SessionHelper.getAccountIdFromSession();
-                
+                int currentId = SessionHelper.GetAccountIdFromSession();
+
+                if (SessionHelper.GetAccountTypeFromSession() == 2)
+                {
+                    currentId = SessionHelper.GetAccountOwnerIDFromSession();
+                }
+
                 //Get list of products that have a an account id that match current session.
                 var products = db.Products.Where(p => p.AccountID == currentId).OrderBy(p => p.Category.CategoryName).ThenBy(p => p.ProductName).Include(p => p.Account).Include(p => p.Category);
                 if (!String.IsNullOrEmpty(searchString))
@@ -158,10 +168,15 @@ namespace AllStocked.Controllers
         // GET: Products/Create controller
         public ActionResult Create()
         {
-            int currentId = SessionHelper.getAccountIdFromSession();
-
             if (SessionHelper.IsMemberLoggedIn())
             {
+                int currentId = SessionHelper.GetAccountIdFromSession();
+
+                if (SessionHelper.GetAccountTypeFromSession() == 2)
+                {
+                    currentId = SessionHelper.GetAccountOwnerIDFromSession();
+                }
+
                 ViewBag.AccountID = new SelectList(db.Accounts, "AccountID", "AccountName");
                 //Make sure to only pull Categories that are associated with currently logged in user.
                 ViewBag.CategoryID = new SelectList(db.Categories.Where(c => c.AccountID == currentId), "CategoryID", "CategoryName");
@@ -181,7 +196,13 @@ namespace AllStocked.Controllers
         {
             if (ModelState.IsValid)
             {
-                product.AccountID = SessionHelper.getAccountIdFromSession();
+                product.AccountID = SessionHelper.GetAccountIdFromSession();
+
+                if (SessionHelper.GetAccountTypeFromSession() == 2)
+                {
+                    product.AccountID = SessionHelper.GetAccountOwnerIDFromSession();
+                }
+
                 db.Products.Add(product);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -195,9 +216,16 @@ namespace AllStocked.Controllers
         // GET: Products/Edit/5
         public ActionResult Edit(int? id)
         {
-            int currentId = SessionHelper.getAccountIdFromSession();
+            
             if (SessionHelper.IsMemberLoggedIn())
             {
+                int currentId = SessionHelper.GetAccountIdFromSession();
+
+                if (SessionHelper.GetAccountTypeFromSession() == 2)
+                {
+                    currentId = SessionHelper.GetAccountOwnerIDFromSession();
+                }
+
                 if (id == null)
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -227,7 +255,13 @@ namespace AllStocked.Controllers
         {
             if (ModelState.IsValid)
             {
-                product.AccountID = SessionHelper.getAccountIdFromSession();
+                product.AccountID = SessionHelper.GetAccountIdFromSession();
+
+                if (SessionHelper.GetAccountTypeFromSession() == 2)
+                {
+                    product.AccountID = SessionHelper.GetAccountOwnerIDFromSession();
+                }
+
                 db.Entry(product).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

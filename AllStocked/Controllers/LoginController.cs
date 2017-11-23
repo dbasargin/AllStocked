@@ -41,9 +41,18 @@ namespace AllStocked.Controllers
                 }
 
                 int accountType = DbHelper.GetAccountTypeById(currAccount.AccountID);
-                
+
                 // create session
-                SessionHelper.createSession(currAccount.AccountID, accountType);
+                if (accountType == 2) {
+
+                    int secondaryAccountOwnerId = DbHelper.GetAccountOwnerIdBySecondaryId(currAccount.AccountID);
+
+                    SessionHelper.CreateSession(currAccount.AccountID, accountType, secondaryAccountOwnerId);
+                }
+                else
+                {
+                    SessionHelper.CreateSession(currAccount.AccountID, accountType);
+                }
 
                 //update Account lastLogin property
                 DbHelper.UpdateUsersLastLogin(currAccount);

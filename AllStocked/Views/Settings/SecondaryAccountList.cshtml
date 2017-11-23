@@ -1,8 +1,8 @@
 ﻿@model IEnumerable<AllStocked.Models.SecondaryAccountAccessViewModel>
 
 @{ 
-    int AccountType = AllStocked.Models.SessionHelper.getAccountTypeFromSession();
-    int AccountId = AllStocked.Models.SessionHelper.getAccountIdFromSession();
+    int AccountType = AllStocked.Models.SessionHelper.GetAccountTypeFromSession();
+    int AccountId = AllStocked.Models.SessionHelper.GetAccountIdFromSession();
     }
 
 <h4>Manage Secondary Accounts</h4>
@@ -73,16 +73,20 @@
                         </p>
                     }
                 }
+                else if (item.SecondaryAccountID == AccountId && item.Status == "Disabled")
+                {
+                    <p>Owner has temporarily disable account access</p>
+                }
                 else
                 {
                     using (Html.BeginForm("ChangeSecondaryAccountStatus", "Settings"))
                     {
-                        <button type = "submit" name = "email" value = "@item.SecondaryAccountEmail" > @item.GetChangeStatusButtonName() </button>
+                        <button type="submit" name="email" value="@item.SecondaryAccountEmail"> @item.GetChangeStatusButtonName() </button>
                     }
                 }
             }
 
-        </td>
+</td>
     </tr>
 }
 </table>

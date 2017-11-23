@@ -25,7 +25,7 @@ namespace AllStocked.Controllers
             if (SessionHelper.IsMemberLoggedIn())
             {
                 var model = new SettingsViewModel();
-                var currentSessionId = SessionHelper.getAccountIdFromSession();
+                var currentSessionId = SessionHelper.GetAccountIdFromSession();
                 
                 using (var db = new AllStockedDBEntities())
                 {
@@ -67,7 +67,7 @@ namespace AllStocked.Controllers
             {
                 using (var db = new AllStockedDBEntities())
                 {
-                    var currentSessionId = SessionHelper.getAccountIdFromSession();
+                    var currentSessionId = SessionHelper.GetAccountIdFromSession();
                     Account accountInSession = db.Accounts.FirstOrDefault(a => a.AccountID == currentSessionId);
                     accountInSession.FirstName = account.FirstName;
                     accountInSession.LastName = account.LastName;
@@ -131,8 +131,13 @@ namespace AllStocked.Controllers
 
             if (!isStatusChanged)
             {
-                    TempData["ErrorMessage"] = "Error deleting Secondary Access Account";
+                    TempData["ErrorMessage"] = "Error Editing Secondary Access Account";
             }
+            else
+            {
+
+            }
+
 
             return RedirectToAction("Settings", "Settings");
         }
@@ -149,7 +154,7 @@ namespace AllStocked.Controllers
         public ActionResult ValidateTokenSubmission(string accessToken)
         {
 
-            int id = SessionHelper.getAccountIdFromSession();
+            int id = SessionHelper.GetAccountIdFromSession();
 
 
             if (DbHelper.ValidateSecondaryAccount(accessToken))
@@ -194,8 +199,8 @@ namespace AllStocked.Controllers
             }
             else
             {
-                secondaryAccountAccess.OwnerAccountID = SessionHelper.getAccountIdFromSession();
-                secondaryAccountAccess.OwnerEmail = DbHelper.GetEmailById(SessionHelper.getAccountIdFromSession());
+                secondaryAccountAccess.OwnerAccountID = SessionHelper.GetAccountIdFromSession();
+                secondaryAccountAccess.OwnerEmail = DbHelper.GetEmailById(SessionHelper.GetAccountIdFromSession());
                 secondaryAccountAccess.SecondaryAccountID = DbHelper.GetAccountIdByEmail(secondaryAccountAccess.SecondaryAccountEmail);
                 secondaryAccountAccess.AccessToken = DbHelper.RandomString();
                 secondaryAccountAccess.OwnerEnabled = true;

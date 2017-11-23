@@ -20,9 +20,16 @@ namespace AllStocked.Controllers
         {
             if (SessionHelper.IsMemberLoggedIn())
             {
-                int currentId = SessionHelper.getAccountIdFromSession();
+                int currentId = SessionHelper.GetAccountIdFromSession();
+
+                if (SessionHelper.GetAccountTypeFromSession() == 2)
+                {
+                    currentId = SessionHelper.GetAccountOwnerIDFromSession();
+                }
+
                 var categories = db.Categories.Where(p => p.AccountID == currentId).OrderBy(p=> p.CategoryName).Include(c => c.Account);
-            return View(categories.ToList());
+
+                return View(categories.ToList());
             }
             else
             {
@@ -80,7 +87,13 @@ namespace AllStocked.Controllers
             {
                 try
                 {
-                    category.AccountID = SessionHelper.getAccountIdFromSession(); ;
+                    category.AccountID = SessionHelper.GetAccountIdFromSession();
+
+                    if (SessionHelper.GetAccountTypeFromSession() == 2)
+                    {
+                        category.AccountID = SessionHelper.GetAccountOwnerIDFromSession();
+
+                    }
                     db.Categories.Add(category);
                     db.SaveChanges();
                 }
@@ -126,7 +139,14 @@ namespace AllStocked.Controllers
         {
             if (ModelState.IsValid)
             {
-                int currentAccount = SessionHelper.getAccountIdFromSession(); ;
+                int currentAccount = SessionHelper.GetAccountIdFromSession();
+
+                if (SessionHelper.GetAccountTypeFromSession() == 2)
+                {
+                    currentAccount = SessionHelper.GetAccountOwnerIDFromSession();
+
+                }
+
                 using (db)
                 {
                     //find category in database
