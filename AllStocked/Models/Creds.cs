@@ -8,6 +8,6 @@ namespace AllStocked.Models
     //Gets credentials needed for the applications
     public class Creds
     {
-        //TESt to See if ignore is working here
+        //TESt 2: to See if ignore is working here
     }
 }
