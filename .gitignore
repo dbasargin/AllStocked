@@ -243,3 +243,6 @@ ModelManifest.xml
 
 Creds.cs
 *.config
+
+Web.Debug.config
+Web.Release.config

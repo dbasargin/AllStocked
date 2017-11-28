@@ -5,8 +5,9 @@ using System.Web;
 
 namespace AllStocked.Models
 {
+    //Gets credentials needed for the applications
     public class Creds
     {
-        //This should be ignored when Im done with my git changes.
+        //TESt to See if ignore is working here
     }
 }
