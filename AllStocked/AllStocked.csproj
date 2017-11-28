@@ -173,6 +173,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Creds.cs" />
     <Compile Include="Models\DbHelper.cs" />
     <Compile Include="Models\EditAccountViewModel.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
@@ -221,6 +222,7 @@
     <Content Include="AllStockedModel.edmx.diagram">
       <DependentUpon>AllStockedModel.edmx</DependentUpon>
     </Content>
+    <Content Include=".gitignore" />
     <None Include="Properties\PublishProfiles\allstocked - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\customcompare.js" />

@@ -9,10 +9,10 @@ namespace AllStocked.Models
     public class RegisterViewModel
     {
         [Required]
-        [Display(Name = "First Name ")]
+        [Display(Name = "First")]
         public string FirstName { get; set; }
         [Required]
-        [Display(Name = "Last Name")]
+        [Display(Name = "Last")]
         public string LastName { get; set; }
 
         [Required]
@@ -26,7 +26,7 @@ namespace AllStocked.Models
 
         [DataType(DataType.Password)]
         [Compare("Password", ErrorMessage = "Your Passwords must match")]
-        [Display(Name = "Confirm Password")]
+        [Display(Name = "Confirm")]
         public string ConfirmPassword { get; set; }
         
     }
