@@ -250,6 +250,7 @@ namespace AllStocked.Models
         public static bool ValidateSecondaryAccount(string accessToken)
         {
             int currAccountId = SessionHelper.GetAccountIdFromSession();
+
             try
             {
                 using (var db = new AllStockedDBEntities())
@@ -290,7 +291,7 @@ namespace AllStocked.Models
             //Generate new Salt
             string newSalt = Crypto.GenerateSalt();
             //HashPassword with salt
-            string hashedPassword = Crypto.Hash(newSalt + model.Password, "SHA256" );
+            string hashedPassword = Crypto.Hash(newSalt + model.Password.Trim(), "SHA256" );
 
             using (var db = new AllStockedDBEntities())
             {
@@ -298,9 +299,9 @@ namespace AllStocked.Models
                 {
                     var newAccount = new Account
                     {
-                        FirstName = model.FirstName,
-                        LastName = model.LastName,
-                        AccountEmail = model.Email,
+                        FirstName = model.FirstName.Trim(),
+                        LastName = model.LastName.Trim(),
+                        AccountEmail = model.Email.Trim(),
                         Status = 1,                     //Initialize status to be active
                         LastLogin = DateTime.Now,
                         Type = 1,                       //Initialize Account type to be owner
@@ -362,7 +363,7 @@ namespace AllStocked.Models
             //email message
             MailMessage mail = new MailMessage();
             mail.To.Add(secondaryEmail.Trim());
-            mail.From = new MailAddress(EmailCreds(), "Message: Account Requests Action", System.Text.Encoding.UTF8);
+            mail.From = new MailAddress(Creds.EmailCreds(), "Message: Account Requests Action", System.Text.Encoding.UTF8);
             mail.Subject = "AllStocked Account Permission Request";
             mail.SubjectEncoding = System.Text.Encoding.UTF8;
             mail.Body = "Hello, You have been invited to become a secondary account on AllStocked <br>";
@@ -376,7 +377,7 @@ namespace AllStocked.Models
 
             //email Credentials for outlook
             SmtpClient client = new SmtpClient();
-            client.Credentials = new System.Net.NetworkCredential(EmailCreds(), Psswrd());
+            client.Credentials = new System.Net.NetworkCredential(Creds.EmailCreds(), Creds.Psswrd());
             client.Port = 587;
             client.Host = "smtp-mail.outlook.com";
             client.EnableSsl = true;
@@ -417,7 +418,7 @@ namespace AllStocked.Models
             //email message
             MailMessage mail = new MailMessage();
             mail.To.Add(userEmail.Trim());
-            mail.From = new MailAddress(EmailCreds(), "Password Recovery", System.Text.Encoding.UTF8);
+            mail.From = new MailAddress(Creds.EmailCreds(), "Password Recovery", System.Text.Encoding.UTF8);
             mail.Subject = "AllStocked password recovery";
             mail.SubjectEncoding = System.Text.Encoding.UTF8;
             mail.Body = "Your Recovery Key is =  " + recoveryKey;
@@ -427,7 +428,7 @@ namespace AllStocked.Models
 
             //email Credential for outlook
             SmtpClient client = new SmtpClient();
-            client.Credentials = new System.Net.NetworkCredential(EmailCreds(), Psswrd());
+            client.Credentials = new System.Net.NetworkCredential(Creds.EmailCreds(), Creds.Psswrd());
             client.Port = 587;
             client.Host = "smtp-mail.outlook.com";
             client.EnableSsl = true;
@@ -456,17 +457,6 @@ namespace AllStocked.Models
                 client.Dispose();
             }   
         }
-
-        //To Do: Update these when testing// put in gitIgnore//
-        public static string EmailCreds()
-        {
-            return "CompanyEmail@fake.com";
-        }
-
-        public static string Psswrd()
-        {
-            return "password";
-        }
-
+        
     }
 }

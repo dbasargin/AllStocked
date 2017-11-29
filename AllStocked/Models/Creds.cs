@@ -6,8 +6,17 @@ using System.Web;
 namespace AllStocked.Models
 {
     //Gets credentials needed for the applications
-    public class Creds
+    public static class Creds
     {
-        //TESt 3: to See if ignore is working here
+        //To Do: Add this to .gitignore and test
+        public static string EmailCreds()
+        {
+            return "CompanyEmail@fake.com";
+        }
+
+        public static string Psswrd()
+        {
+            return "password";
+        }
     }
 }

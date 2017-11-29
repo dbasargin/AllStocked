@@ -17,6 +17,7 @@ namespace AllStocked.Controllers
         {
             //Error Handling for View 
             var errorMessage = TempData["ErrorMessage"] as string;
+
             if (errorMessage != null || errorMessage != "")
             {
                 ModelState.AddModelError("", errorMessage);
@@ -133,11 +134,6 @@ namespace AllStocked.Controllers
             {
                     TempData["ErrorMessage"] = "Error Editing Secondary Access Account";
             }
-            else
-            {
-
-            }
-
 
             return RedirectToAction("Settings", "Settings");
         }
@@ -153,9 +149,6 @@ namespace AllStocked.Controllers
         [HttpPost]
         public ActionResult ValidateTokenSubmission(string accessToken)
         {
-
-            int id = SessionHelper.GetAccountIdFromSession();
-
 
             if (DbHelper.ValidateSecondaryAccount(accessToken))
             {
@@ -223,7 +216,7 @@ namespace AllStocked.Controllers
                     }
                     catch
                     {
-                        errorMessage = "Error Processing your request";
+                        errorMessage = "Error processing your request";
                     }
                 }
             }

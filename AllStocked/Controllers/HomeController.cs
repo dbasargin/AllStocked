@@ -41,16 +41,23 @@ namespace AllStocked.Controllers
         {
             if (ModelState.IsValid)
             {
-                // if data valid add to database
-                bool isSuccessful = DbHelper.RegisterMember(model);
 
-                if (isSuccessful)
+                if (DbHelper.DoesAccountExist(model.Email))
+                {
+                    ModelState.AddModelError("Email", "Email is taken");
+                }
+
+                else if (DbHelper.RegisterMember(model))
                 {
                     Session["AccountID"] = DbHelper.GetAccountIdByEmail(model.Email);
                     Session["AccountType"] = 1;
+
                     return RedirectToAction("Index", "Home");
                 }
-                // todo return to home page
+                else
+                {
+                    ModelState.AddModelError("", "Error Creating Account");
+                }
             }
             return View(model);
         }
