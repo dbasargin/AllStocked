@@ -44,6 +44,20 @@ namespace AllStocked
         public virtual Category Category { get; set; }
     }
 
+    public class SecondaryAccountAccessMetadata
+    {
+        public int SecondaryAccountAccessID { get; set; }
+        public int OwnerAccountID { get; set; }
+
+        [Display(Name = "Secondary Email")]
+        public string SecondaryAccountEmail { get; set; }
+        public string AccessToken { get; set; }
+        public bool OwnerEnabled { get; set; }
+        public bool SecondaryEnabled { get; set; }
+        public Nullable<System.DateTime> LastEdited { get; set; }
+        public string OwnerEmail { get; set; }
+        public int SecondaryAccountID { get; set; }
+    }
     //Enum needed for custom Data Anotations
     public enum GenericCompareOperator
     {

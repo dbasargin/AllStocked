@@ -79,7 +79,7 @@ namespace AllStocked.Controllers
                     }
                     catch (Exception ex)
                     {
-                        //To Do: Log Error (ex)
+                        //To Do: LogError(ex, Message)
                         TempData["ErrorMessage"] = "Error Processing your request";
                     }
                 }
@@ -169,8 +169,7 @@ namespace AllStocked.Controllers
         {
             return View();
         }
-
-        //To do: Optimize this method: Queries db too many times.
+        
         /// <summary>
         /// This controller adds a new SecondaryAccountAccess row to the database
         /// </summary>

@@ -122,14 +122,15 @@ namespace AllStocked.Models
             {
                 using (var db = new AllStockedDBEntities())
                 {
-                    Account account = db.Accounts.Where(a => a.AccountID == id).Single();
-                    return account.FirstName + " " + account.LastName;
+                    Account account = db.Accounts.FirstOrDefault(a => a.AccountID == id);
+                    return account.GetFullName();
                 }
             }
-            catch
+            catch(Exception ex)
             {
-                throw new Exception("Could not get AccountEmail with an AccountID of: " + id );
 
+                throw new Exception("Error getting name with ID of: " + id);
+                //To Do: Log Error LogError("ErrorType: " ex.Type, ex.Type); Something like this
             }
         }
 

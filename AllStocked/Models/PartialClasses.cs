@@ -13,7 +13,8 @@ namespace AllStocked
     {
     }
 
-    //Gives the ability to add functionality to SecondaryAccountAccess model 
+    //Gives the ability to add functionality to SecondaryAccountAccess model including metadata
+    [MetadataType(typeof(SecondaryAccountAccessMetadata))]
     public partial class SecondaryAccountAccess
     {
         // Instructor accepts three parameters helpful in creating a secondaryAccount
