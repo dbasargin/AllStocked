@@ -1,13 +1,15 @@
 ﻿@model AllStocked.Models.EditAccountViewModel
 
+<div class="informationWindow">
+    <h4>Edit Account</h4>
+    To change account information, edit account info here and submit your changes.</div>
+
 @using (Html.BeginForm("EditAccount", "Settings"))
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Edit Account</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <br>
         <div class="form-group">
             @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">

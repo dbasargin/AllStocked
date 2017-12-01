@@ -6,9 +6,10 @@
 
 <h2>Settings</h2>
 
+<br />
+@Html.ValidationSummary(true, "", new { @class = "text-danger pageError" })
+<br />
 
-<br />
-<br />
 @*display editAccount Partial View*@
 @Html.Partial("EditAccount", @Model.Account)
 
@@ -22,4 +23,5 @@
     @*display Create Secondary Account Partial View*@
     @Html.Partial("CreateSecondaryAccountAccess", new SecondaryAccountAccess())
 }
-<hr />
+
+<br />

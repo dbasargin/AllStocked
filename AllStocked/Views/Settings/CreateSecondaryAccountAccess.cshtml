@@ -1,12 +1,18 @@
 ﻿@model AllStocked.SecondaryAccountAccess
 
+<div class="informationWindow">
+    <h4> Request Secondary Account Access</h4>
+    To give inventory management permissions to another current All Stocked User, invite them by submitting their email address corresponding with their 
+    All Stocked account. The invite will be sent with a status of pending until they accept the invitation.</div>
+
+<p class="small"></p>
+
 @using (Html.BeginForm("CreateSecondaryAccountAccess", "Settings")) 
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4> Request Secondary Account Access</h4>
-        <hr />
+        
 
         <div class="form-group">
             @Html.LabelFor(model => model.SecondaryAccountEmail, htmlAttributes: new { @class = "control-label col-md-2" })

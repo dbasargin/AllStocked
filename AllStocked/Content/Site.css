@@ -7,12 +7,23 @@
     font-size: 16px;
     box-shadow: inset 0px 1px 5px 0px #000000;
 }
+
+.pageError{
+    background-color: lightgoldenrodyellow;
+}
+
 .searchform h4{
     color: white;
     font-weight: 600;
     font-size: 20px;
     /*font-weight: 200;*/
 }
+
+/*line spacing*/
+p.small {
+    line-height: 0.5;
+}
+
 .shoppinglist{
     background-color: lightsteelblue;
     /*width: 420px;*/
@@ -201,7 +212,7 @@ body.home_index{
 }
 
 
-/*                     DENNIS Last thing you tried to maake register form not bleed              */
+/*                     DENNIS Last thing you tried to make register form not bleed              */
 
 
 /*home page body content in transparent*/
@@ -286,7 +297,7 @@ body.home_index .body-content{
         overflow: auto;
         position: absolute;
         top: 175px;
-        right: 15%;
+        right: 17%;
         width: 270px;
         height: 220px;
         border-style: solid;
@@ -327,4 +338,22 @@ body.home_index .body-content{
     body{
         margin-top: 30px;
     }
+}
+
+
+.body-content div.informationWindow {
+    background-color: lightsteelblue;
+    /*width: 420px;*/
+    padding: 2px 5px 10px;
+    /*margin-bottom: 10px;*/
+    /*border-colo/*r: black;*/
+    font-size: 16px;
+    box-shadow: inset 0px 1px 5px 0px #000000;
+}
+
+.body-content div.informationWindow h4 {
+    color: white;
+    font-weight: 600;
+    font-size: 20px;
+    /*font-weight: 200;*/
 }
