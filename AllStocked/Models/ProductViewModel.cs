@@ -15,6 +15,8 @@ namespace AllStocked.Models
         public int Demand { get; set; }
         public int Supply { get; set; }
         public string Description { get; set; }
+        public string LastUpdatedBy { get; set; }
+        public DateTime LastUpdated { get; set; }
 
         public virtual Account Account { get; set; }
         public virtual Category Category { get; set; }

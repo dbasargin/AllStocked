@@ -196,13 +196,17 @@ namespace AllStocked.Controllers
         {
             if (ModelState.IsValid)
             {
-                product.AccountID = SessionHelper.GetAccountIdFromSession();
+                int currUserId = SessionHelper.GetAccountIdFromSession();
+                product.AccountID = currUserId;
 
                 if (SessionHelper.GetAccountTypeFromSession() == 2)
                 {
                     product.AccountID = SessionHelper.GetAccountOwnerIDFromSession();
                 }
 
+
+                product.LastUpdatedByUser = DbHelper.GetAccountFullNameById(currUserId);
+                product.LastUpdated = DateTime.Now;
                 db.Products.Add(product);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -255,13 +259,17 @@ namespace AllStocked.Controllers
         {
             if (ModelState.IsValid)
             {
-                product.AccountID = SessionHelper.GetAccountIdFromSession();
+                int currUserId = SessionHelper.GetAccountIdFromSession();
+                product.AccountID = currUserId;
 
                 if (SessionHelper.GetAccountTypeFromSession() == 2)
                 {
                     product.AccountID = SessionHelper.GetAccountOwnerIDFromSession();
                 }
 
+
+                product.LastUpdatedByUser = DbHelper.GetAccountFullNameById(currUserId);
+                product.LastUpdated = DateTime.Now;
                 db.Entry(product).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

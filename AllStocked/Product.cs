@@ -22,6 +22,8 @@ namespace AllStocked
         public int Demand { get; set; }
         public int Supply { get; set; }
         public string Description { get; set; }
+        public string LastUpdatedByUser { get; set; }
+        public Nullable<System.DateTime> LastUpdated { get; set; }
     
         public virtual Category Category { get; set; }
         public virtual Account Account { get; set; }
