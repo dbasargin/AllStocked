@@ -54,6 +54,8 @@
           <Property Name="Demand" Type="int" Nullable="false" />
           <Property Name="Supply" Type="int" Nullable="false" />
           <Property Name="Description" Type="varchar" MaxLength="250" />
+          <Property Name="LastUpdatedByUser" Type="varchar" MaxLength="101" />
+          <Property Name="LastUpdated" Type="datetime" />
         </EntityType>
         <EntityType Name="SecondaryAccountAccess">
           <Key>
@@ -332,6 +334,8 @@ warning 6035: The relationship 'FK__Secondary__Secon__2A164134' has columns that
           <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Category" Relationship="Self.FK__Product__Categor__164452B1" FromRole="Product" ToRole="Category" />
           <NavigationProperty Name="Account" Relationship="AllStockedDBModel.FK__Product__Account__15502E78" FromRole="Product" ToRole="Account" />
+          <Property Name="LastUpdatedByUser" Type="String" MaxLength="101" FixedLength="false" Unicode="false" />
+          <Property Name="LastUpdated" Type="DateTime" Precision="3" />
         </EntityType>
         <Association Name="FK__Product__Categor__164452B1">
           <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
@@ -506,6 +510,8 @@ warning 6035: The relationship 'FK__Secondary__Secon__2A164134' has columns that
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="AllStockedDBModel.Product">
               <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
+                <ScalarProperty Name="LastUpdatedByUser" ColumnName="LastUpdatedByUser" />
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
                 <ScalarProperty Name="AccountID" ColumnName="AccountID" />
                 <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
