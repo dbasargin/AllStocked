@@ -5,11 +5,13 @@ Added password encryption and password recovery with automated emailing.
 
 There is now a feature that allows accounts to become secondary accounts of a user. This gives the secondary
 account permission to make inventory changes to an owners account. The purpose of this feature is to have 
-multiple account manage one inventory, track changes inventory changes, and prevent the risks of shared login
+multiple accounts manage one inventory, track inventory changes, and prevent the risks of shared log in
 credentials within a business.
 
 A Setting page has been added which allows the user to update account information.
 The Setting page also includes the UI to manage and add secondary accounts.
+
+Other changes include: bug fixes, Error/Exception handling, and UI enhancements.
 
 
 **This is the first release of AllStocked developed from start to finish in under 3 months as part time work.
