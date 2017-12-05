@@ -208,10 +208,12 @@ namespace AllStocked.Controllers
 
                         string senderName = DbHelper.GetAccountFullNameById(secondaryAccountAccess.OwnerAccountID);
 
-                        // Sends email to requested account with the Access token to become secondary Account 
-                        // TO Do: Production Send to secondaryAccountAccess.SecondaryAccountEmail:
+                        // Sends email to requested account with the Access token to become secondary Account
                         // I am sending these emails to self for testing purposes. 
-                        //DbHelper.EmailSecondaryAccessRequest(senderName, DbHelper.EmailCreds(),  secondaryAccountAccess.AccessToken);
+                        //Debug
+                        DbHelper.EmailSecondaryAccessRequest(senderName, Creds.EmailCreds(), secondaryAccountAccess.AccessToken);
+                        //Production
+                        //DbHelper.EmailSecondaryAccessRequest(senderName, secondaryAccountAccess.SecondaryAccountEmail,  secondaryAccountAccess.AccessToken);
                     }
                     catch
                     {

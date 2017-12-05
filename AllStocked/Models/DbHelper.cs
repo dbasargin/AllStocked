@@ -367,8 +367,8 @@ namespace AllStocked.Models
             mail.From = new MailAddress(Creds.EmailCreds(), "Message: Account Requests Action", System.Text.Encoding.UTF8);
             mail.Subject = "AllStocked Account Permission Request";
             mail.SubjectEncoding = System.Text.Encoding.UTF8;
-            mail.Body = "Hello, You have been invited to become a secondary account on AllStocked <br>";
-            mail.Body += "Please login and manage your accounts on your settings page.<br>";
+            mail.Body = "Hello, You have been invited to become a secondary account on AllStocked. <br>";
+            mail.Body += "Please log in and manage your accounts on your settings page.<br>";
             mail.Body += "Here is your Access Key: " + accessKey + " <br>";
             mail.Body += "For the Account Owner: " + senderFullName;
 
